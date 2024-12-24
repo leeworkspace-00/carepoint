@@ -11,7 +11,7 @@
 	<!-- header -->
    <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
    <div style="height:500px;">
-   
+   	킴이슬 푸쉬 ㅋ
    </div>
    
    
