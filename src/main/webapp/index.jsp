@@ -11,8 +11,15 @@
 	<!-- header -->
    <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
    
+
    <a href="/LKH/userJoin.aws">회원가입 페이지</a>
    <a href="/LKH/userLogin.aws">로그인 페이지</a>
+
+   <a href="/LIA/freeBoardList.aws">자유게시판 페이지</a>
+   <a href="/LIA/exerciseMain.aws">운동 페이지</a> 
+   <a href="/KES/boardWrite.aws">게시판 글쓰기 페이지</a>
+   <a href="/KES/foodRecom.aws">식단추천 페이지</a> 
+
    <div style="height:500px;">
    </div>  
    
