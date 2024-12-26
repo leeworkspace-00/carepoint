@@ -13,19 +13,22 @@
    
 
    <a href="/LKH/userJoin.aws">회원가입 페이지</a>
+   <br>
    <a href="/LKH/userLogin.aws">로그인 페이지</a>
-
+   <br>
    <a href="/LIA/freeBoardList.aws">자유게시판 페이지</a>
-   <a href="/LIA/exerciseMain.aws">운동 페이지</a> 
+   <br>
+   <a href="/LIA/exerciseMain.aws">운동 페이지</a>
+   <br> 
    <a href="/KES/boardWrite.aws">게시판 글쓰기 페이지</a>
+   <br>
    <a href="/KES/foodRecom.aws">식단추천 페이지</a> 
-
-
-   <a href="/lia/freeBoardList.aws">회원가입 페이지</a>
    <br>
 	<a href="/KES/boardWrite.aws">게시판 글쓰기</a>
    <br>
 	<a href="/KES/foodRecom.aws">식단추천</a>
+   <br>
+   <a href="/KIS/freeBoardContents.aws">게시판 상세내용</a>
    <br>
 
 
