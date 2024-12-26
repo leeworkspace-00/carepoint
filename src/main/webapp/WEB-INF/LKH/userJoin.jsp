@@ -21,13 +21,17 @@
         </div>
         <div class="form-group">
           <label for="nickname">닉네임</label>
+          <div class="input-wrapper">
           <input type="text" id="nickname" name="nickname" placeholder="닉네임을 입력하세요" required>
           	<button type="button" class="check-btn" onclick="checkNickname()">중복확인</button>
         </div>
+        </div>
         <div class="form-group">
           <label for="id">아이디</label>
+           <div class="input-wrapper">
           <input type="text" id="id" name="id" placeholder="아이디를 입력하세요" required>
           	<button type="button" class="check-btn" onclick="checkUserId()">중복확인</button>
+        </div>
         </div>
         <div class="form-group">
           <label for="password">비밀번호</label>
