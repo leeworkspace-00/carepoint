@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value="/lia/")
+@RequestMapping(value="/LIA/")
 public class LIAController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LIAController.class);
@@ -15,9 +15,13 @@ public class LIAController {
 	@RequestMapping(value="freeBoardList.aws", method=RequestMethod.GET)
 	public String freeBoardList() {
 		
-		System.out.println("freeBoardList.aws µé¾î¿È");
+		return "WEB-INF/LIA/freeBoardList"; 
+	}
+	
+	@RequestMapping(value="exerciseMain.aws", method=RequestMethod.GET)
+	public String exerciseMain() {
 		
-		return "WEB-INF/lia/freeBoardList"; 
+		return "WEB-INF/LIA/exerciseMain"; 
 	}
 
 }

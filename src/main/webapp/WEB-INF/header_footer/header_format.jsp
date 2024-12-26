@@ -56,11 +56,11 @@
     <div><h3>CHAPTER</h3></div>
 
     <ul>
-        <li><a href="#">운동</a></li>
+        <li><a href="/LIA/exerciseMain.aws">운동</a></li>
         <li><a href="#">식단</a></li>
         <li><a href="#">TodoList</a></li>
         <li><a href="#">BMI계산기</a></li>
-        <li><a href="#">자유게시판</a></li>
+        <li><a href="/LIA/freeBoardList.aws">자유게시판</a></li>
         <li><a href="#">Q&A</a></li>
         <li><a href="#">공지사항</a></li>
     </ul>

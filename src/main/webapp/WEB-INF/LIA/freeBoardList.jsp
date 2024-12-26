@@ -9,39 +9,17 @@
 <link href="/resources/css/board/boardList.css" rel="stylesheet">
 </head>
 <body>
-
-	<style>
-		.searchDiv {
-			display: flex;
-			padding: 15px 380px;
-			justify-content: right; /* 수평 중앙 정렬 */
-			align-items: right;    /* 수직 중앙 정렬 */
-		}
-		
-		.searchDiv input {
-			margin-right: 5px;
-			border: 1px solid lightgray;
-			border-radius: 4px;
-		}
-		
-		.searchDiv button {
-			padding-top: 3px;
-			border: 1px solid lightgray;
-			color: white;
-		 	background-color: #87B9F8;
-		 	border-radius: 4px;
-		}
-	</style>
 	
 	<!-- header -->
 	<jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
 	
-	<form class="search" name="frm" action="/lia/freeBoardList.aws" method="get">
+	<form class="search" name="frm" action="/LIA/freeBoardList.aws" method="get">
 		<div class="searchDiv">
-			<input type="text" name="keyword">
+			<input type="text" name="keyword" onkeyup="showDropdown(this.value)" autocomplete="off">
+			<div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
 			<button type="submit" class="btn">
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  					<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+	  				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
 				</svg>
 			</button>
 		</div>
@@ -163,7 +141,15 @@
 		</table>
 	</div>
 	
-	
+	<div class="page">
+		<ul>
+			<li><a href="#" class="prev">◀</a></li>
+		
+			<li><a href="#">1 2 3 4 5 6 7 8 9 10</a></li>
+
+			<li><a href="#" class="next">▷</a></li>
+		</ul>	
+	</div>
 	
 	
 	
