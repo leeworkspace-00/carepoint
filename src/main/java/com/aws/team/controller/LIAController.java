@@ -15,11 +15,8 @@ public class LIAController {
 	@RequestMapping(value="freeBoardList.aws", method=RequestMethod.GET)
 	public String freeBoardList() {
 		
-<<<<<<< HEAD
 		System.out.println("freeBoardList.aws ����");
 		
-		return "WEB-INF/LIA/freeBoardList"; 
-=======
 		return "WEB-INF/LIA/freeBoardList"; 
 	}
 	
@@ -27,7 +24,6 @@ public class LIAController {
 	public String exerciseMain() {
 		
 		return "WEB-INF/LIA/exerciseMain"; 
->>>>>>> 6b9a59e74ca418e3e3ab2ac8bab3521ffc155f42
 	}
 
 }

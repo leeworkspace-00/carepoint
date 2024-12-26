@@ -11,7 +11,6 @@
 	<!-- header -->
    <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
    
-<<<<<<< HEAD
 
    <a href="/LKH/userJoin.aws">회원가입 페이지</a>
    <a href="/LKH/userLogin.aws">로그인 페이지</a>
@@ -21,7 +20,7 @@
    <a href="/KES/boardWrite.aws">게시판 글쓰기 페이지</a>
    <a href="/KES/foodRecom.aws">식단추천 페이지</a> 
 
-=======
+
    <a href="/lia/freeBoardList.aws">회원가입 페이지</a>
    <br>
 	<a href="/KES/boardWrite.aws">게시판 글쓰기</a>
@@ -31,7 +30,6 @@
 
 
    
->>>>>>> 479941927ab10f889bc0502a1b00d8bd67d60877
    <div style="height:500px;">
    </div>  
    
