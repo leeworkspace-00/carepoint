@@ -10,56 +10,61 @@
 
 <script>
 
-//DOMContentLoaded 이벤트로 DOM이 완전히 로드된 후 실행
 document.addEventListener("DOMContentLoaded", () => {
-  // 모든 카테고리 버튼과 콘텐츠 영역 가져오기
-  const categoryButtons = document.querySelectorAll('.category-button');
-  const categoryContents = document.querySelectorAll('.category-content');
+	  const categoryButtons = document.querySelectorAll('.category-button');
+	  const categoryContents = document.querySelectorAll('.category-content');
 
-  // 카테고리 버튼 클릭 이벤트 추가
-  categoryButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      // 모든 버튼과 콘텐츠에서 active 클래스 제거
-      categoryButtons.forEach((btn) => btn.classList.remove('active'));
-      categoryContents.forEach((content) => content.classList.remove('active'));
+	  const activeTabs = {};
 
-      // 클릭한 버튼에 active 클래스 추가
-      button.classList.add('active');
+	  categoryButtons.forEach((button) => {
+	    button.addEventListener('click', () => {
+	      categoryButtons.forEach((btn) => btn.classList.remove('active'));
+	      categoryContents.forEach((content) => content.classList.remove('active'));
 
-      // 클릭한 버튼과 연결된 콘텐츠 표시
-      const targetCategory = button.getAttribute('data-category');
-      document.getElementById(targetCategory).classList.add('active');
+	      button.classList.add('active');
+	      const targetCategory = button.getAttribute('data-category');
+	      const targetContent = document.getElementById(targetCategory);
+	      targetContent.classList.add('active');
 
-      // 하위 탭 초기화 (첫 번째 탭 활성화)
-      const firstTabButton = document.querySelector(`#${targetCategory} .tab-button`);
-      const firstTabContent = document.querySelector(`#${targetCategory} .tab-content`);
-      
-      if (firstTabButton && firstTabContent) {
-        document.querySelectorAll(`#${targetCategory} .tab-button`).forEach((btn) => btn.classList.remove('active'));
-        document.querySelectorAll(`#${targetCategory} .tab-content`).forEach((content) => content.classList.remove('active'));
-        firstTabButton.classList.add('active');
-        firstTabContent.classList.add('active');
-      }
-    });
-  });
+	      // 하위 탭 초기화
+	      const defaultTab = targetContent.querySelector('.tab-button');
+	      if (defaultTab) {
+	        targetContent.querySelectorAll('.tab-button').forEach((btn) => btn.classList.remove('active'));
+	        targetContent.querySelectorAll('.tab-content').forEach((content) => content.classList.remove('active'));
 
-  // 하위 탭(식단1, 식단2, 식단3) 버튼 클릭 이벤트 추가
-  document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("tab-button")) {
-      const parentCategory = e.target.closest('.category-content');
-      
-      // 해당 카테고리 내에서만 처리
-      parentCategory.querySelectorAll('.tab-button').forEach((btn) => btn.classList.remove('active'));
-      parentCategory.querySelectorAll('.tab-content').forEach((content) => content.classList.remove('active'));
+	        defaultTab.classList.add('active');
+	        const defaultTabId = defaultTab.getAttribute('data-tab');
+	        const defaultContent = targetContent.querySelector(`#${defaultTabId}`);
+	        if (defaultContent) {
+	          defaultContent.classList.add('active');
+	        }
+	        activeTabs[targetCategory] = defaultTabId;
+	      }
+	    });
+	  });
 
-      // 클릭한 탭 활성화
-      e.target.classList.add('active');
-      const targetTab = e.target.getAttribute('data-tab');
-      parentCategory.querySelector(`#${targetTab}`).classList.add('active');
-    }
-  });
-});
+	  categoryContents.forEach((categoryContent) => {
+	    const tabButtons = categoryContent.querySelectorAll('.tab-button');
+	    tabButtons.forEach((button) => {
+	      button.addEventListener('click', () => {
+	        const parentCategory = button.closest('.category-content');
+	        parentCategory.querySelectorAll('.tab-button').forEach((btn) => btn.classList.remove('active'));
+	        parentCategory.querySelectorAll('.tab-content').forEach((content) => content.classList.remove('active'));
 
+	        button.classList.add('active');
+	        const targetTab = button.getAttribute('data-tab');
+	        const targetContent = parentCategory.querySelector(`#${targetTab}`);
+	        if (targetContent) {
+	          targetContent.classList.add('active');
+	          const parentCategoryId = parentCategory.id;
+	          activeTabs[parentCategoryId] = targetTab;
+	        }
+	      });
+	    });
+	  });
+	});
+	
+	
 
 
 </script>
@@ -83,24 +88,59 @@ document.addEventListener("DOMContentLoaded", () => {
   <div class="category-content active" id="high-blood-pressure">
     <!-- 식단 버튼 -->
     <div class="sub-buttons">
-      <button class="tab-button active" data-tab="hb-tab1">식단 1️⃣</button>
-      <button class="tab-button" data-tab="hb-tab2">식단 2️⃣</button>
-      <button class="tab-button" data-tab="hb-tab3">식단 3️⃣</button>
+      <button class="tab-button active" data-tab="hb-tab1">식단1</button>
+      <button class="tab-button" data-tab="hb-tab2">식단2</button>
+      <button class="tab-button" data-tab="hb-tab3">식단3</button>
     </div>
-    <!-- 식단 내용 -->
-    <div class="tab-content active" id="hb-tab1">
-      <h3>고혈압 - 식단 1️⃣</h3>
-      <p>아침: 흑미밥, 재첩 맑은국<br>점심: 흑미밥, 된장국<br>저녁: 흑미밥, 미역국</p>
-    </div>
-    <div class="tab-content" id="hb-tab2">
-      <h3>고혈압 - 식단 2️⃣</h3>
-      <p>아침: 현미밥, 북엇국<br>점심: 현미밥, 김치찌개<br>저녁: 현미밥, 콩나물국</p>
-    </div>
-    <div class="tab-content" id="hb-tab3">
-      <h3>고혈압 - 식단 3️⃣</h3>
-      <p>아침: 보리밥, 소고기무국<br>점심: 보리밥, 된장찌개<br>저녁: 보리밥, 나물비빔밥</p>
-    </div>
-  </div>
+    
+  <!-- 식단 내용 -->
+  <div class="tab-content active" id="hb-tab1">
+  <table class="meal-table">
+    <!-- 제목 행 -->
+    <thead>
+      <tr>
+        <th>메뉴</th>
+        <th>영양 정보</th>
+      </tr>
+    </thead>
+    <!-- 내용 행 -->
+    <tbody>
+      <!-- 아침 식단 -->
+      <tr>
+        <td>
+          <strong>아침 식단 🌞</strong><br>
+          흑미밥<br>재첩 맑은국<br>꽈리고추찜<br>아삭이 고추무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>재첩 70g 무 70g<br>꽈리고추 70g 밀가루 10g<br>아삭이고추 70g 양파 35g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 점심 식단 -->
+      <tr>
+        <td>
+          <strong>점심 식단 🌤️</strong><br>
+          흑미밥<br>된장국<br>나물무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>된장국(무) 70g<br>나물무침(고사리) 50g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 저녁 식단 -->
+      <tr>
+        <td>
+          <strong>저녁 식단 🌙</strong><br>
+          흑미밥<br>미역국<br>나물비빔밥
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>미역국(미역) 70g<br>나물비빔밥(시금치) 50g
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
 
   <!-- 당뇨 콘텐츠 -->
   <div class="category-content" id="diabetes">
