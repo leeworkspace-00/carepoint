@@ -11,7 +11,8 @@
 	<!-- header -->
    <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
    
-   <a href="/lia/freeBoardList.aws">회원가입 페이지</a>
+   <a href="/LKH/userJoin.aws">회원가입 페이지</a>
+   <a href="/LKH/userLogin.aws">로그인 페이지</a>
    <div style="height:500px;">
    </div>  
    
