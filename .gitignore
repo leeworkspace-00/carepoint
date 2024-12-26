@@ -1,1 +1,7 @@
 /target/
+
+# Ignore the entire target directory
+target/
+
+# But allow pom.properties to be tracked
+!target/m2e-wtp/web-resources/META-INF/maven/com.aws/team/pom.properties
