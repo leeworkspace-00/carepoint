@@ -10,7 +10,7 @@
 
   <!-- 푸터 -->
   <footer>
-    <p>상호명 : (주)한국케어포인트 대표 : 이경현 개인정보처리담당자 : 이인아(inah@kbioh.com)</p>
+    <p>상호명 : (주)한국케어포인트 대표 : 이경현 개인정보처리담당자 : 이인아(22na@gmail.com)</p>
     <p>대표번호 TEL : 043-872-2360 김인서메일 E-mail : kbh@kbioh.com</p>
     <p>Copyright © (주)한국김이슬헬스. rights reserved.</p>
   </footer>
