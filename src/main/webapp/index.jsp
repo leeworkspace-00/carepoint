@@ -12,6 +12,14 @@
    <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
    
    <a href="/lia/freeBoardList.aws">회원가입 페이지</a>
+   <br>
+	<a href="/KES/boardWrite.aws">게시판 글쓰기</a>
+   <br>
+	<a href="/KES/foodRecom.aws">식단추천</a>
+   <br>
+
+
+   
    <div style="height:500px;">
    </div>  
    
