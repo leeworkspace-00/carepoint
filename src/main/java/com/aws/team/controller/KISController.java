@@ -19,4 +19,20 @@ private static final Logger logger = LoggerFactory.getLogger(KISController.class
 		
 		return "WEB-INF/KIS/freeBoardContents"; 
 	}
+	
+	@RequestMapping(value="noticeBoardContents.aws", method=RequestMethod.GET)
+	public String noticeBoardContents() {
+		
+		//System.out.println("noticeBoardContents.aws µé¾î¿È");
+		
+		return "WEB-INF/KIS/noticeBoardContents"; 
+	}
+	
+	@RequestMapping(value="qnaBoardContents.aws", method=RequestMethod.GET)
+	public String qnaBoardContents() {
+		
+		//System.out.println("qnaBoardContents.aws µé¾î¿È");
+		
+		return "WEB-INF/KIS/qnaBoardContents"; 
+	}
 }

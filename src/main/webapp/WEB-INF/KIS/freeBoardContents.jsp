@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>공지사항 상세보기</title>
+<title>자유게시판 상세보기</title>
 <link href="/resources/css/board/boardContents.css" rel="stylesheet">
 </head>
 <body>
