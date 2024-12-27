@@ -51,6 +51,13 @@ a {
 	font-size: 13px;
 }
 
+.listTable .No {
+	position: relative;
+  	left: -10px; /* 원하는 만큼 왼쪽으로 이동 */
+  	text-align: center; /* 여전히 텍스트를 중앙 정렬 */
+  	width: 10%;
+}
+
 .listTable .writer, .listTable .writeday {
 	width: 10%;
 	text-align: center;
@@ -95,7 +102,9 @@ a {
     outline: none; 
 }
 
-
+.searchDiv button:hover {
+	background-color: #569ADE; /* 호버 시 색상 변경 */
+}
 
 /* 검색 기록 드롭다운 */
 
@@ -116,31 +125,68 @@ a {
 /* paging */
 
 .page {
-	display: flex;
+    display: flex;
     justify-content: center; /* 수평 중앙 정렬 */
-    height: 900px;          /* 높이 설정 */
 }
 
 .page ul {
-	display: flex;
-	list-style: none;
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.page li {
+    margin: 0 5px; /* 버튼 간격 */
 }
 
 .page a {
-	letter-spacing: 10px;
+    display: flex;
+    justify-content: center; /* 텍스트 중앙 정렬 */
+    align-items: center;     /* 텍스트 중앙 정렬 */
+    width: 20px;             /* 정사각형 크기 (크기 조금 늘림) */
+    height: 20px;            /* 정사각형 크기 (크기 조금 늘림) */
+    border-radius: 2px;      /* 모서리 살짝 둥글게 */
+    text-decoration: none;   /* 링크 밑줄 제거 */
+    font-size: 14px;         /* 글자 크기 */
+    line-height: 1;          /* 텍스트의 세로 정렬 */
 }
 
-.prev {
-	color: white;
-	background-color: #87B9F8;
-	justify-content: center; /* 수평 중앙 정렬 */
+.prev, .next {
+    color: white;            /* 텍스트 색상 */
+    background-color: #87B9F8; /* 배경 색상 */
+}
+
+.prev:hover, .next:hover {
+    background-color: #569ADE; /* 호버 시 색상 변경 */
 }
 
 
 
+/* Q&A 게시판 List */
+
+.qnaListDiv {
+	display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center;     /* 수직 정렬 */
+    height: 1000px;          /* 높이 설정 */
+}
 
 
 
+/* 공지사항 게시판 List */
+
+.noticeListDiv {
+	display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center;     /* 수직 정렬 */
+    height: 1000px;          /* 높이 설정 */
+}
+
+.noticeNo {
+  	text-align: center; /* 여전히 텍스트를 중앙 정렬 */
+  	width: 10%;
+}
 
 
 

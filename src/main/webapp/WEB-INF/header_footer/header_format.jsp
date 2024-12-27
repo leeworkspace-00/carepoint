@@ -41,7 +41,9 @@
   <header>
     <div class="header-container">
       <!-- 로고 -->
-      <img src="<%=request.getContextPath()%>/resources/image/logo.jpg" alt="로고" class="logo">
+      <a href="/index.jsp">
+      	<img src="<%=request.getContextPath()%>/resources/image/logo.jpg" alt="로고" class="logo">
+      </a>
     </div>
     <ul class="menu">
         <li><a>회원가입</a></li>
@@ -59,10 +61,10 @@
         <li><a href="/LIA/exerciseMain.aws">운동</a></li>
         <li><a href="#">식단</a></li>
         <li><a href="#">TodoList</a></li>
-        <li><a href="#">BMI계산기</a></li>
+        <li><a href="/LIA/bmi.aws">BMI계산기</a></li>
         <li><a href="/LIA/freeBoardList.aws">자유게시판</a></li>
-        <li><a href="#">Q&A</a></li>
-        <li><a href="#">공지사항</a></li>
+        <li><a href="/LIA/qnaBoardList.aws">Q&A</a></li>
+        <li><a href="/LIA/noticeBoardList.aws">공지사항</a></li>
     </ul>
     <!-- Bottom Links for Login/Signup or My Page/Logout -->
     <div class="bottom-links">
