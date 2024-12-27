@@ -10,62 +10,56 @@
 
 <script>
 
-document.addEventListener("DOMContentLoaded", () => {
-	  const categoryButtons = document.querySelectorAll('.category-button');
-	  const categoryContents = document.querySelectorAll('.category-content');
+document.addEventListener("DOMContentLoaded", function () {
+	  // 상위 카테고리 버튼 (고혈압, 당뇨, 비만)
+	  const categoryButtons = document.querySelectorAll(".category-button");
+	  const categoryContents = document.querySelectorAll(".category-content");
 
-	  const activeTabs = {};
-
+	  // 상위 카테고리 버튼 클릭 이벤트
 	  categoryButtons.forEach((button) => {
-	    button.addEventListener('click', () => {
-	      categoryButtons.forEach((btn) => btn.classList.remove('active'));
-	      categoryContents.forEach((content) => content.classList.remove('active'));
+	    button.addEventListener("click", function () {
+	      // 모든 카테고리 버튼과 콘텐츠에서 'active' 클래스 제거
+	      categoryButtons.forEach((btn) => btn.classList.remove("active"));
+	      categoryContents.forEach((content) => content.classList.remove("active"));
 
-	      button.classList.add('active');
-	      const targetCategory = button.getAttribute('data-category');
-	      const targetContent = document.getElementById(targetCategory);
-	      targetContent.classList.add('active');
+	      // 클릭한 버튼과 해당 콘텐츠에 'active' 클래스 추가
+	      this.classList.add("active");
+	      const selectedCategory = this.getAttribute("data-category");
+	      document.getElementById(selectedCategory).classList.add("active");
 
-	      // 하위 탭 초기화
-	      const defaultTab = targetContent.querySelector('.tab-button');
-	      if (defaultTab) {
-	        targetContent.querySelectorAll('.tab-button').forEach((btn) => btn.classList.remove('active'));
-	        targetContent.querySelectorAll('.tab-content').forEach((content) => content.classList.remove('active'));
-
-	        defaultTab.classList.add('active');
-	        const defaultTabId = defaultTab.getAttribute('data-tab');
-	        const defaultContent = targetContent.querySelector(`#${defaultTabId}`);
-	        if (defaultContent) {
-	          defaultContent.classList.add('active');
-	        }
-	        activeTabs[targetCategory] = defaultTabId;
-	      }
+	      // 하위 탭(식단1)을 기본 활성화 상태로 설정
+	      const defaultTab = document
+	        .getElementById(selectedCategory)
+	        .querySelector(".tab-button");
+	      defaultTab.click();
 	    });
 	  });
 
-	  categoryContents.forEach((categoryContent) => {
-	    const tabButtons = categoryContent.querySelectorAll('.tab-button');
-	    tabButtons.forEach((button) => {
-	      button.addEventListener('click', () => {
-	        const parentCategory = button.closest('.category-content');
-	        parentCategory.querySelectorAll('.tab-button').forEach((btn) => btn.classList.remove('active'));
-	        parentCategory.querySelectorAll('.tab-content').forEach((content) => content.classList.remove('active'));
+	  // 하위 탭 버튼 (식단1, 식단2, 식단3)
+	  const tabButtons = document.querySelectorAll(".tab-button");
+	  const tabContents = document.querySelectorAll(".tab-content");
 
-	        button.classList.add('active');
-	        const targetTab = button.getAttribute('data-tab');
-	        const targetContent = parentCategory.querySelector(`#${targetTab}`);
-	        if (targetContent) {
-	          targetContent.classList.add('active');
-	          const parentCategoryId = parentCategory.id;
-	          activeTabs[parentCategoryId] = targetTab;
-	        }
-	      });
+	  // 하위 탭 버튼 클릭 이벤트
+	  tabButtons.forEach((button) => {
+	    button.addEventListener("click", function () {
+	      // 현재 활성화된 카테고리 내에서만 동작
+	      const parentCategory = this.closest(".category-content");
+
+	      // 해당 카테고리의 모든 탭 버튼과 콘텐츠에서 'active' 클래스 제거
+	      parentCategory.querySelectorAll(".tab-button").forEach((btn) =>
+	        btn.classList.remove("active")
+	      );
+	      parentCategory.querySelectorAll(".tab-content").forEach((content) =>
+	        content.classList.remove("active")
+	      );
+
+	      // 클릭한 탭 버튼과 해당 콘텐츠에 'active' 클래스 추가
+	      this.classList.add("active");
+	      const selectedTab = this.getAttribute("data-tab");
+	      document.getElementById(selectedTab).classList.add("active");
 	    });
 	  });
 	});
-	
-	
-
 
 </script>
 
@@ -88,12 +82,12 @@ document.addEventListener("DOMContentLoaded", () => {
   <div class="category-content active" id="high-blood-pressure">
     <!-- 식단 버튼 -->
     <div class="sub-buttons">
-      <button class="tab-button active" data-tab="hb-tab1">식단1</button>
-      <button class="tab-button" data-tab="hb-tab2">식단2</button>
-      <button class="tab-button" data-tab="hb-tab3">식단3</button>
+      <button class="tab-button active" data-tab="hb-tab1">식단 1 🍴</button>
+      <button class="tab-button" data-tab="hb-tab2">식단 2 🍴</button>
+      <button class="tab-button" data-tab="hb-tab3">식단 3 🍴</button>
     </div>
     
-  <!-- 식단 내용 -->
+  <!-- 식단 내용1 -->
   <div class="tab-content active" id="hb-tab1">
   <table class="meal-table">
     <!-- 제목 행 -->
@@ -109,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <tr>
         <td>
           <strong>아침 식단 🌞</strong><br>
+          <br>
           흑미밥<br>재첩 맑은국<br>꽈리고추찜<br>아삭이 고추무침<br>배추김치
         </td>
         <td>
@@ -120,6 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <tr>
         <td>
           <strong>점심 식단 🌤️</strong><br>
+          <br>
           흑미밥<br>된장국<br>나물무침<br>배추김치
         </td>
         <td>
@@ -131,6 +127,111 @@ document.addEventListener("DOMContentLoaded", () => {
       <tr>
         <td>
           <strong>저녁 식단 🌙</strong><br>
+          <br>
+          흑미밥<br>미역국<br>나물비빔밥
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>미역국(미역) 70g<br>나물비빔밥(시금치) 50g
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+  <!-- 식단 내용2 -->
+  <div class="tab-content" id="hb-tab2">
+  <table class="meal-table">
+    <!-- 제목 행 -->
+    <thead>
+      <tr>
+        <th>메뉴</th>
+        <th>영양 정보</th>
+      </tr>
+    </thead>
+    <!-- 내용 행 -->
+    <tbody>
+      <!-- 아침 식단 -->
+      <tr>
+        <td>
+          <strong>아침 식단 🌞</strong><br>
+          <br>
+          흑미밥<br>재첩 맑은국<br>꽈리고추찜<br>아삭이 고추무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>재첩 70g 무 70g<br>꽈리고추 70g 밀가루 10g<br>아삭이고추 70g 양파 35g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 점심 식단 -->
+      <tr>
+        <td>
+          <strong>점심 식단 🌤️</strong><br>
+          <br>
+          흑미밥<br>된장국<br>나물무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>된장국(무) 70g<br>나물무침(고사리) 50g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 저녁 식단 -->
+      <tr>
+        <td>
+          <strong>저녁 식단 🌙</strong><br>
+          <br>
+          흑미밥<br>미역국<br>나물비빔밥
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>미역국(미역) 70g<br>나물비빔밥(시금치) 50g
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+  <!-- 식단 내용3 -->
+  <div class="tab-content" id="hb-tab3">
+  <table class="meal-table">
+    <!-- 제목 행 -->
+    <thead>
+      <tr>
+        <th>메뉴</th>
+        <th>영양 정보</th>
+      </tr>
+    </thead>
+    <!-- 내용 행 -->
+    <tbody>
+      <!-- 아침 식단 -->
+      <tr>
+        <td>
+          <strong>아침 식단 🌞</strong><br>
+          <br>
+          흑미밥<br>재첩 맑은국<br>꽈리고추찜<br>아삭이 고추무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>재첩 70g 무 70g<br>꽈리고추 70g 밀가루 10g<br>아삭이고추 70g 양파 35g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 점심 식단 -->
+      <tr>
+        <td>
+          <strong>점심 식단 🌤️</strong><br>
+          <br>
+          흑미밥<br>된장국<br>나물무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>된장국(무) 70g<br>나물무침(고사리) 50g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 저녁 식단 -->
+      <tr>
+        <td>
+          <strong>저녁 식단 🌙</strong><br>
+          <br>
           흑미밥<br>미역국<br>나물비빔밥
         </td>
         <td>
@@ -142,36 +243,339 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 </div>
 
+
+
   <!-- 당뇨 콘텐츠 -->
   <div class="category-content" id="diabetes">
     <!-- 당뇨 식단 버튼 -->
     <div class="sub-buttons">
-      <button class="tab-button active" data-tab="db-tab1">식단 1️⃣</button>
-      <button class="tab-button" data-tab="db-tab2">식단 2️⃣</button>
-      <button class="tab-button" data-tab="db-tab3">식단 3️⃣</button>
+      <button class="tab-button active" data-tab="db-tab1">식단 1 🍴</button>
+      <button class="tab-button" data-tab="db-tab2">식단 2 🍴</button>
+      <button class="tab-button" data-tab="db-tab3">식단 3 🍴</button>
     </div>
-    <!-- 당뇨 식단 내용 -->
+    
+    <!-- 당뇨 식단 내용1 -->
     <div class="tab-content active" id="db-tab1">
-      <h3>당뇨 - 식단 1️⃣</h3>
-      <p>아침: 귀리밥, 미역국<br>점심: 귀리밥, 닭가슴살 샐러드<br>저녁: 귀리밥, 채소볶음</p>
-    </div>
-    <!-- 나머지 탭 콘텐츠 추가 -->
-  </div>
+  <table class="meal-table">
+    <!-- 제목 행 -->
+    <thead>
+      <tr>
+        <th>메뉴</th>
+        <th>영양 정보</th>
+      </tr>
+    </thead>
+    <!-- 내용 행 -->
+    <tbody>
+      <!-- 아침 식단 -->
+      <tr>
+        <td>
+          <strong>아침 식단 🌞</strong><br>
+          <br>
+          찹쌀밥<br>재첩 맑은국<br>꽈리고추찜<br>아삭이 고추무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>재첩 70g 무 70g<br>꽈리고추 70g 밀가루 10g<br>아삭이고추 70g 양파 35g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 점심 식단 -->
+      <tr>
+        <td>
+          <strong>점심 식단 🌤️</strong><br>
+          <br>
+          박밥<br>된장국<br>나물무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>된장국(무) 70g<br>나물무침(고사리) 50g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 저녁 식단 -->
+      <tr>
+        <td>
+          <strong>저녁 식단 🌙</strong><br>
+          <br>
+          밥밥<br>미역국<br>나물비빔밥
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>미역국(미역) 70g<br>나물비빔밥(시금치) 50g
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+    <!-- 당뇨 식단 내용2 -->
+    <div class="tab-content" id="db-tab2">
+  <table class="meal-table">
+    <!-- 제목 행 -->
+    <thead>
+      <tr>
+        <th>메뉴</th>
+        <th>영양 정보</th>
+      </tr>
+    </thead>
+    <!-- 내용 행 -->
+    <tbody>
+      <!-- 아침 식단 -->
+      <tr>
+        <td>
+          <strong>아침 식단 🌞</strong><br>
+          <br>
+          흑흑밥<br>재첩 맑은국<br>꽈리고추찜<br>아삭이 고추무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>재첩 70g 무 70g<br>꽈리고추 70g 밀가루 10g<br>아삭이고추 70g 양파 35g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 점심 식단 -->
+      <tr>
+        <td>
+          <strong>점심 식단 🌤️</strong><br>
+          <br>
+          흑미밥<br>된장국<br>나물무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>된장국(무) 70g<br>나물무침(고사리) 50g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 저녁 식단 -->
+      <tr>
+        <td>
+          <strong>저녁 식단 🌙</strong><br>
+          <br>
+          흑미밥<br>미역국<br>나물비빔밥
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>미역국(미역) 70g<br>나물비빔밥(시금치) 50g
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+    <!-- 당뇨 식단 내용3 -->
+    <div class="tab-content" id="db-tab3">
+  <table class="meal-table">
+    <!-- 제목 행 -->
+    <thead>
+      <tr>
+        <th>메뉴</th>
+        <th>영양 정보</th>
+      </tr>
+    </thead>
+    <!-- 내용 행 -->
+    <tbody>
+      <!-- 아침 식단 -->
+      <tr>
+        <td>
+          <strong>아침 식단 🌞</strong><br>
+          <br>
+          맛없밥<br>재첩 맑은국<br>꽈리고추찜<br>아삭이 고추무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>재첩 70g 무 70g<br>꽈리고추 70g 밀가루 10g<br>아삭이고추 70g 양파 35g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 점심 식단 -->
+      <tr>
+        <td>
+          <strong>점심 식단 🌤️</strong><br>
+          <br>
+          흑미밥<br>된장국<br>나물무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>된장국(무) 70g<br>나물무침(고사리) 50g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 저녁 식단 -->
+      <tr>
+        <td>
+          <strong>저녁 식단 🌙</strong><br>
+          <br>
+          흑미밥<br>미역국<br>나물비빔밥
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>미역국(미역) 70g<br>나물비빔밥(시금치) 50g
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+
 
   <!-- 비만 콘텐츠 -->
   <div class="category-content" id="obesity">
     <!-- 비만 식단 버튼 -->
     <div class="sub-buttons">
-      <button class="tab-button active" data-tab="ob-tab1">식단 1️⃣</button>
-      <button class="tab-button" data-tab="ob-tab2">식단 2️⃣</button>
-      <button class="tab-button" data-tab="ob-tab3">식단 3️⃣</button>
+      <button class="tab-button active" data-tab="ob-tab1">식단 1 🍴</button>
+      <button class="tab-button" data-tab="ob-tab2">식단 2 🍴</button>
+      <button class="tab-button" data-tab="ob-tab3">식단 3 🍴</button>
     </div>
-    <!-- 비만 식단 내용 -->
-    <!-- 나머지 탭 콘텐츠 추가 -->
-  </div>
+    
+  <!-- 식단 내용1 -->
+  <div class="tab-content active" id="ob-tab1">
+  <table class="meal-table">
+    <!-- 제목 행 -->
+    <thead>
+      <tr>
+        <th>메뉴</th>
+        <th>영양 정보</th>
+      </tr>
+    </thead>
+    <!-- 내용 행 -->
+    <tbody>
+      <!-- 아침 식단 -->
+      <tr>
+        <td>
+          <strong>아침 식단 🌞</strong><br>
+          <br>
+          인아~<br>재첩 맑은국<br>꽈리고추찜<br>아삭이 고추무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>재첩 70g 무 70g<br>꽈리고추 70g 밀가루 10g<br>아삭이고추 70g 양파 35g<br>배추김치 50g
+        </td>
+      </tr>
 
+      <!-- 점심 식단 -->
+      <tr>
+        <td>
+          <strong>점심 식단 🌤️</strong><br>
+          <br>
+          흑미밥<br>된장국<br>나물무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>된장국(무) 70g<br>나물무침(고사리) 50g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 저녁 식단 -->
+      <tr>
+        <td>
+          <strong>저녁 식단 🌙</strong><br>
+          <br>
+          흑미밥<br>미역국<br>나물비빔밥
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>미역국(미역) 70g<br>나물비빔밥(시금치) 50g
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
+
+  <!-- 식단 내용2 -->
+  <div class="tab-content" id="ob-tab2">
+  <table class="meal-table">
+    <!-- 제목 행 -->
+    <thead>
+      <tr>
+        <th>메뉴</th>
+        <th>영양 정보</th>
+      </tr>
+    </thead>
+    <!-- 내용 행 -->
+    <tbody>
+      <!-- 아침 식단 -->
+      <tr>
+        <td>
+          <strong>아침 식단 🌞</strong><br>
+          <br>
+          짜장밥<br>재첩 맑은국<br>꽈리고추찜<br>아삭이 고추무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>재첩 70g 무 70g<br>꽈리고추 70g 밀가루 10g<br>아삭이고추 70g 양파 35g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 점심 식단 -->
+      <tr>
+        <td>
+          <strong>점심 식단 🌤️</strong><br>
+          <br>
+          흑미밥<br>된장국<br>나물무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>된장국(무) 70g<br>나물무침(고사리) 50g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 저녁 식단 -->
+      <tr>
+        <td>
+          <strong>저녁 식단 🌙</strong><br>
+          <br>
+          흑미밥<br>미역국<br>나물비빔밥
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>미역국(미역) 70g<br>나물비빔밥(시금치) 50g
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+  <!-- 식단 내용3 -->
+  <div class="tab-content" id="ob-tab3">
+  <table class="meal-table">
+    <!-- 제목 행 -->
+    <thead>
+      <tr>
+        <th>메뉴</th>
+        <th>영양 정보</th>
+      </tr>
+    </thead>
+    <!-- 내용 행 -->
+    <tbody>
+      <!-- 아침 식단 -->
+      <tr>
+        <td>
+          <strong>아침 식단 🌞</strong><br>
+          <br>
+          잡채밥<br>재첩 맑은국<br>꽈리고추찜<br>아삭이 고추무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>재첩 70g 무 70g<br>꽈리고추 70g 밀가루 10g<br>아삭이고추 70g 양파 35g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 점심 식단 -->
+      <tr>
+        <td>
+          <strong>점심 식단 🌤️</strong><br>
+          <br>
+          흑미밥<br>된장국<br>나물무침<br>배추김치
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>된장국(무) 70g<br>나물무침(고사리) 50g<br>배추김치 50g
+        </td>
+      </tr>
+
+      <!-- 저녁 식단 -->
+      <tr>
+        <td>
+          <strong>저녁 식단 🌙</strong><br>
+          <br>
+          흑미밥<br>미역국<br>나물비빔밥
+        </td>
+        <td>
+          쌀 60g 흑미 20g<br>미역국(미역) 70g<br>나물비빔밥(시금치) 50g
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+  </div> 
 
 
 <!-- footer -->
