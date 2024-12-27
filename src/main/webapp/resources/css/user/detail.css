@@ -1,0 +1,105 @@
+@charset "UTF-8";
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 50px 0; /* 상단과 하단 패딩 추가 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form-container {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+
+}
+
+h2 {
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  border-bottom: solid #ddd thin;
+  outline: none; /* 포커스 시 나타나는 외곽선 제거 */
+  caret-color: black; /* 커서 색상 설정 (원하는 색상으로 변경 가능) */
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.toggle-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #87B9F8;
+  cursor: pointer;
+}
+
+.toggle-btn.selected {
+  background-color: #4169E1;
+  color: white;
+}
+button {
+  width: calc(100% - 10px);
+  padding: 10px;
+  background-color: #87B9F8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* 체크박스 그룹 스타일 */
+.checkbox-group {
+  	display: flex; /* 가로 정렬 */
+  	gap: 20px; /* 체크박스 간 간격 */
+	justify-content: flex-start; 
+}
+
+.checkbox-group ul {
+	display: flex;
+	list-style: none;
+}
+
+.form-title {
+	margin-right: 70px;
+}
+
+
+/* 검색 기록 드롭다운 */
+
+.search-dropdown {
+   position: absolute;
+   top: 100%; /* 검색창 바로 아래 */
+   left: 0;
+   width: 200px; /* 검색창과 동일한 너비 */
+   background: white;
+   border: 1px solid lightgray;
+   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+   z-index: 1000;
+   border-radius: 4px;
+}

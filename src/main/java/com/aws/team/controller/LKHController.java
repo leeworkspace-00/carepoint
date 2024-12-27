@@ -20,4 +20,22 @@ public class LKHController {
 	public String userLogin() {
 		return "WEB-INF/LKH/userLogin";
 	}
+	
+	@RequestMapping(value = "userDetail.aws", method = RequestMethod.GET)
+	public String userDetail() {
+		return "WEB-INF/LKH/userDetail";
+	}
+	@RequestMapping(value = "myPage.aws", method = RequestMethod.GET)
+	public String myPage() {
+		return "WEB-INF/LKH/myPage";
+	}
+	@RequestMapping(value = "mainPage.aws", method = RequestMethod.GET)
+	public String mainPage() {
+		return "WEB-INF/LKH/mainPage";
+	}
+	
+	
+	
+	
+	
 }

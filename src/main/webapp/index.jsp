@@ -16,6 +16,12 @@
    <br>
    <a href="/LKH/userLogin.aws">로그인 페이지</a>
    <br>
+   <a href="/LKH/userDetail.aws">회원 상세정보 입력페이지</a>
+   <br>
+   <a href="/LKH/myPage.aws">회원 마이페이지</a>
+   <br>
+   <a href="/LKH/mainPage.aws">메인페이지</a>
+   <br>
    <a href="/LIA/freeBoardList.aws">자유게시판 페이지</a>
    <br>
    <a href="/LIA/exerciseMain.aws">운동 페이지</a>
@@ -29,8 +35,8 @@
 	<a href="/KES/foodRecom.aws">식단추천</a>
    <br>
    <a href="/KIS/freeBoardContents.aws">게시판 상세내용</a>
-   <br>
 
+   
 
    
    <div style="height:500px;">

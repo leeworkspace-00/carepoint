@@ -79,6 +79,8 @@
     border-radius: 50%; /* 원형 버튼 */
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 효과 */
+    background-color: skyblue;
+    color: white;
 }
 
 .thumb-icon {
