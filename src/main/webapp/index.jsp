@@ -35,6 +35,11 @@
 	<a href="/KES/foodRecom.aws">식단추천</a>
    <br>
    <a href="/KIS/freeBoardContents.aws">게시판 상세내용</a>
+   <a href="/KES/foodDetail.aws">식단기록표 상세내용</a>
+   <br>
+	<a href="/KES/foodMain.aws">식단 메인 페이지</a>
+   <br>
+
 
    
 
