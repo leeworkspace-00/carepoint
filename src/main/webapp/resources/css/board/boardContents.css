@@ -75,7 +75,6 @@
     align-items: center;
     width: 50px; /* 버튼의 가로 크기 */
     height: 50px; /* 버튼의 세로 크기 (원형) */
-    border: 2px solid #4169E1;
     border-radius: 50%; /* 원형 버튼 */
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 효과 */

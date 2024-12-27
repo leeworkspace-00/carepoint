@@ -35,4 +35,12 @@ private static final Logger logger = LoggerFactory.getLogger(KISController.class
 		
 		return "WEB-INF/KIS/qnaBoardContents"; 
 	}
+	
+	@RequestMapping(value="todoList.aws", method=RequestMethod.GET)
+	public String todoList() {
+		
+		//System.out.println("todoList.aws µé¾î¿È");
+		
+		return "WEB-INF/KIS/todoList"; 
+	}
 }
