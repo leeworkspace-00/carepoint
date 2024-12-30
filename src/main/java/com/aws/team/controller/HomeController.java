@@ -30,4 +30,9 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping(value="http://localhost/favicon.ico", method=RequestMethod.GET)
+    public void favicon() {
+        // ∫Û ¿¿¥‰ π›»Ø
+    }
+	
 }

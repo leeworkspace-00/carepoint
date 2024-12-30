@@ -15,6 +15,7 @@
    <a href="/LIA/exerciseMain.aws">운동 페이지</a> 
    <a href="/KES/boardWrite.aws">게시판 글쓰기 페이지</a>
    <a href="/KES/foodRecom.aws">식단추천 페이지</a> 
+   <a href="/LIA/calendar.aws">캘린더 테스트</a> 
 
    <div style="height:500px;">
    </div>  
