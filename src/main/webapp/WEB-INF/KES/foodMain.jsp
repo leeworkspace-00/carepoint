@@ -54,30 +54,146 @@
 
 
 
-  <!-- 숨겨진 박스 -->
-  <div id="hiddenBox">
-    <h2>식단 기록 입력</h2>
-    <p>아침, 점심, 저녁 식단을 기록하세요.</p>
-    <!-- 여기에 두 번째 이미지의 콘텐츠를 추가 -->
-    <div>
-      <p>아침 식단</p>
-      <input type="text" placeholder="음식명 입력">
+  <!-- 기록하기 숨겨진 박스 -->
+<div class="parent-container">  
+  <form name="meal-frm" id="hiddenBox">
+  	<div class="date-container">
+  <input type="date" id="dateInput" class="hidden-date-picker" style="display: none;" />
+	<button type="button" id="dateButton" class="image-button">
+		<img src="/resources/image/클릭.png" alt="달력 버튼" />
+    </button>
     </div>
-    <div>
-      <p>점심 식단</p>
-      <input type="text" placeholder="음식명 입력">
-    </div>
-    <div>
-      <p>저녁 식단</p>
-      <input type="text" placeholder="음식명 입력">
-    </div>
+    
+    
+<!-- 여기에 두 번째 이미지의 콘텐츠를 추가 -->
+<div class="meal-container">
+  <!-- 아침 식단 -->
+  <div class="meal">
+    <img src="/resources/image/아침.png" alt="아침 식단 아이콘" class="meal-icon">
+    <div class="meal-content">
+      <p>아침식단</p>
+      <div class="input-group">
+      <input type="text" placeholder="음식과 명칭 입력" class="meal-input">
+      <input type="text" placeholder="칼로리 입력" class="calorie-input">
+      </div>
+    </div>  	    	
+    <button type="button" class="add-button">
+      <img src="/resources/image/플러스.png" alt="추가 버튼">
+    </button>
+  </div>  
+
+  <!-- 점심 식단 -->
+  <div class="meal">
+    <img src="/resources/image/점심.png" alt="점심 식단 아이콘" class="meal-icon">
+    <div class="meal-content">
+      <p>점심식단</p>
+      <div class="input-group">
+      <input type="text" placeholder="음식과 명칭 입력" class="meal-input">
+      <input type="text" placeholder="칼로리 입력" class="calorie-input">
+      </div>
+    </div>  	    	
+    <button type="button" class="add-button">
+      <img src="/resources/image/플러스.png" alt="추가 버튼">
+    </button>  
   </div>
+
+  <!-- 저녁 식단 -->
+  <div class="meal">
+    <img src="/resources/image/저녁.png" alt="저녁 식단 아이콘" class="meal-icon">
+    <div class="meal-content">
+      <p>저녁식단</p>
+      <div class="input-group">
+      <input type="text" placeholder="음식과 명칭 입력" class="meal-input">
+      <input type="text" placeholder="칼로리 입력" class="calorie-input">
+      </div> 
+    </div>     	
+    <button type="button" class="add-button">
+      <img src="/resources/image/플러스.png" alt="추가 버튼">
+    </button>
+  </div>  
+  
+  <!-- 기록하기 버튼 -->
+    <div class="record-button-container">
+        <button type="submit" class="record-button">기록하기</button>
+    </div>
+
+    </div>
+  </form>
+</div>
+
+<hr>
+
+<!-- 식단 기록표 -->
+<div class="diet-record-table">
+  <h2>식단기록표</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>날짜</th>
+        <th>아침</th>
+        <th>점심</th>
+        <th>저녁</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 예시 데이터 -->
+      <tr>
+        <td>2023-12-05</td>
+        <td><img src="/resources/image/긍정.png"></td>
+        <td><img src="/resources/image/부정.png"></td>
+        <td><img src="/resources/image/부정.png"></td>
+      </tr>
+      <tr>
+        <td>2023-12-04</td>
+        <td><img src="/resources/image/부정.png"></td>
+        <td><img src="/resources/image/긍정.png"></td>
+        <td><img src="/resources/image/부정.png"></td>
+      </tr>
+      <tr>
+        <td>2023-12-03</td>
+        <td><img src="/resources/image/미기록.png"></td>
+        <td><img src="/resources/image/기록.png"></td>
+        <td><img src="/resources/image/미기록.png"></td>
+      </tr>
+      <tr>
+        <td>2023-12-02</td>
+        <td><img src="/resources/image/부정.png"></td>
+        <td><img src="/resources/image/긍정.png"></td>
+        <td><img src="/resources/image/부정.png"></td>
+      </tr>
+      <tr>
+        <td>2023-12-01</td>
+        <td><img src="/resources/image/미기록.png"></td>
+        <td><img src="/resources/image/기록.png"></td>
+        <td><img src="/resources/image/미기록.png"></td>
+      </tr>                  
+    </tbody>
+  </table>
+
+  <!-- 페이지 네비게이션 -->
+  <div class="pagination">
+    <a href="#">&lt;</a>
+    <a href="#">1</a>
+    <a href="#">2</a>
+    <a href="#">3</a>
+    <a href="#">4</a>
+    <a href="#">5</a>
+    <a href="#">6</a>
+    <a href="#">7</a>
+    <a href="#">8</a>
+    <a href="#">9</a>
+    <a href="#">10</a>
+    <a href="#">&gt;</a>
+  </div>
+</div>
+
 
 <!-- footer -->
 <jsp:include page="/WEB-INF/header_footer/footer_format.jsp" />
 
 
 <script>
+
   //검색창 숨겼다가 나타나는 스크립트 코드  
   const searchButton = document.querySelector('.search-container button');
   const resultsDiv = document.querySelector('.results');
@@ -103,6 +219,62 @@
       hiddenBox.style.display = 'none'; // 박스를 숨김
       toggleImage.src = '/resources/image/플러스.png'; // 플러스 이미지를 표시
     }
+  });
+  
+  
+  // 달력숨겼다가 나타내기 스크립트 
+  document.getElementById('dateButton').addEventListener('click', function () {
+	    const dateInput = document.getElementById('dateInput');
+	    
+	    // 달력 입력 필드의 display 상태를 토글
+	    if (dateInput.style.display === 'none') {
+	        dateInput.style.display = 'block'; // 보이게 설정
+	    } else {
+	        dateInput.style.display = 'none'; // 숨기기 설정
+	    }
+	});
+  
+  
+  
+//플러스 버튼 클릭 이벤트 추가
+  document.querySelectorAll('.add-button').forEach((button) => {
+    button.addEventListener('click', function () {
+      // 현재 버튼의 부모 요소에서 meal-content를 찾음
+      const mealContent = this.previousElementSibling;
+
+      // 현재 input-group의 개수를 확인
+      const inputGroups = mealContent.querySelectorAll('.input-group');
+      if (inputGroups.length >= 5) {
+        alert('최대 5개의 항목만 추가할 수 있습니다.');
+        return; // 더 이상 추가하지 않음
+      }
+
+      // 새로운 input-group 생성
+      const newInputGroup = document.createElement('div');
+      newInputGroup.classList.add('input-group'); // 클래스 추가
+
+      // 음식명 입력 필드 생성
+      const newMealInput = document.createElement('input');
+      newMealInput.type = 'text';
+      newMealInput.placeholder = '음식과 명칭 입력';
+      newMealInput.classList.add('meal-input'); // 클래스 추가
+
+      // 칼로리 입력 필드 생성
+      const newCalorieInput = document.createElement('input');
+      newCalorieInput.type = 'text';
+      newCalorieInput.placeholder = '칼로리 입력';
+      newCalorieInput.classList.add('calorie-input'); // 클래스 추가
+
+      // 새로운 input-group에 추가
+      newInputGroup.appendChild(newMealInput);
+      newInputGroup.appendChild(newCalorieInput);
+
+      // meal-content에 새로운 input-group 추가
+      mealContent.appendChild(newInputGroup);
+      
+      // 새롭게 추가된 input-group에도 CSS 적용 확인 (디버깅용)
+      console.log(newInputGroup);
+    });
   });
 
   
