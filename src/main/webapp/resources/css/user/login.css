@@ -56,10 +56,11 @@ main {
   outline: none; /* 포커스 시 나타나는 외곽선 제거 */
   caret-color: black; /* 커서 색상 설정 (원하는 색상으로 변경 가능) */
 }
-}
+
 
 .login-form input::placeholder {
-  color: #aaa;}
+  color: #aaa;
+  }
 
 .login-btn {
   width: calc(100% - 20px);

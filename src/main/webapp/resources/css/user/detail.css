@@ -16,7 +16,7 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
-
+  
 }
 
 h2 {
@@ -73,25 +73,20 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* 체크박스 그룹 스타일 */
 .checkbox-group {
-  	display: flex; /* 가로 정렬 */
-  	gap: 20px; /* 체크박스 간 간격 */
-	justify-content: flex-start; 
+  disply:flex;
+  text-align :center;
+  margin-bottom: 15px;
+  margin-top: 10px;
 }
 
-.checkbox-group ul {
-	display: flex;
-	list-style: none;
-}
-
-.form-title {
-	margin-right: 70px;
+.checkbox-group span {
+	margin-right: 25px;
+	margin-left: 25px;
 }
 
 
 /* 검색 기록 드롭다운 */
-
 .search-dropdown {
    position: absolute;
    top: 100%; /* 검색창 바로 아래 */

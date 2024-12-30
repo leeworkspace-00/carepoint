@@ -63,20 +63,16 @@
           <option value="주 5회 이상">주 5회 이상</option>
         </select>
       </div>
-		<div class="form-group">
-		  <div class="checkbox-group">
-			  <ul>
-			  	<li class="form-title">흡연/음주 여부</li>
-			    <li>
-			      흡연 <input type="checkbox" id="smoking" name="smoking">
-			    </li>
-			    <li>
-			      음주 <input type="checkbox" id="drinking" name="drinking">			      
-			    </li>
-		    </ul>
-		  </div>
-		</div>	
-
+      <div>흡연 음주 여부
+      <div class="checkbox-group">
+      <span>
+      	<input type="checkbox" id="smoking" name="smoking">흡연
+      </span>
+      <span>
+      	<input type="checkbox" id="drinking" name="drinking">음주
+      </span>
+  	  </div>
+      </div>
       <button type="submit">저장하기</button>
     </form>
   </div>
