@@ -14,8 +14,14 @@
         const modalDate = document.getElementById('modal-date'); // 모달 제목
         const modalEvents = document.getElementById('modal-events'); // 모달 이벤트 목록
         const modalBg = document.getElementById('modal-bg'); // 모달 배경
+        const addEventForm = document.getElementById('add-event-form'); // 일정 추가 폼
+        const eventForm = document.getElementById('event-form'); // 폼 요소
+        const eventTitleInput = document.getElementById('event-title'); // 일정 제목 입력 필드
+        const eventDateInput = document.getElementById('event-date'); // 일정 날짜 입력 필드
 
         const calendar = new FullCalendar.Calendar(calendarEl, {
+            dayMaxEventRows: true, // 한 칸에서 최대 이벤트 줄 수 제한
+            eventMaxStack: true, // 일별 최대 스택 이벤트 수
             selectable: true,
             headerToolbar: {
                 left: 'prev addEventButton',
@@ -26,7 +32,8 @@
                 addEventButton: {
                     text: "일정 추가",
                     click: function() {
-                        alert("일정 추가 버튼 클릭!");
+                    	 // 일정 추가 폼 표시
+                        addEventForm.style.display = 'block';
                     }
                 }
             },
@@ -41,6 +48,10 @@
             events: [
                 { title: '운동가기', start: '2024-12-27'},
                 { title: '병원갔다 오기', start: '2024-12-27'},
+                { title: '약먹기', start: '2024-12-27'},
+                { title: '장보기', start: '2024-12-27'},
+                { title: '집안일 하기', start: '2024-12-27'},
+                { title: '과제하기', start: '2024-12-27'},
                 { title: '친구들이랑 약속', start: '2024-12-28'}
             ],
             dateClick: function(info) {
@@ -65,11 +76,40 @@
         });
 
         calendar.render();
+        
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') { // ESC 키 감지
+                closeModal();
+            }
+        });
 
         // 모달 닫기 함수
         window.closeModal = function() {
             modalBg.style.display = 'none';
         };
+        
+        // 일정 추가 폼 제출 이벤트 처리
+        eventForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // 기본 폼 제출 방지
+
+            const title = eventTitleInput.value; // 입력된 일정 제목
+            const date = eventDateInput.value; // 입력된 날짜
+
+            if (title && date) {
+                // FullCalendar에 일정 추가
+                calendar.addEvent({
+                    title: title,
+                    start: date
+                });
+
+                // 입력 필드 초기화
+                eventTitleInput.value = '';
+                eventDateInput.value = '';
+
+                // 일정 추가 폼 숨기기
+                addEventForm.style.display = 'none';
+            }
+        });
     });
 </script>
 </head>
@@ -86,6 +126,17 @@
             <ul id="modal-events"></ul>
         </div>
     </div>
+    
+    <div id="add-event-form" style="display: none; margin-top: 20px;">
+	    <h3>일정 추가</h3>
+	    <form id="event-form">
+	        <label for="event-title">일정 제목:</label>
+	        <input type="text" id="event-title" placeholder="일정 제목 입력" required />
+	        <label for="event-date">날짜:</label>
+	        <input type="date" id="event-date" required />
+	        <button type="submit">추가</button>
+	    </form>
+	</div>
 
     <!-- footer -->
     <jsp:include page="/WEB-INF/header_footer/footer_format.jsp" />
