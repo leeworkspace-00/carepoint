@@ -1,5 +1,10 @@
 package com.aws.team.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -69,5 +74,8 @@ public class LIAController {
         // 결과 페이지 반환
         return "WEB-INF/LIA/bmi";
     }
+
+	
+	 
 
 }
