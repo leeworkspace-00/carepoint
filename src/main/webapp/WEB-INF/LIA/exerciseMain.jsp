@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>운동 페이지</title>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 <link href="/resources/css/exercise/exercise.css" rel="stylesheet">
 </head>
 <script>
@@ -17,32 +18,53 @@ document.addEventListener('DOMContentLoaded', function () {
     var selectedDateInput = document.getElementById('selected-date'); // 선택한 날짜 input
     var hourInput = document.getElementById('hour'); // 운동 시간 input
     var minuteInput = document.getElementById('minute'); // 운동 분 input
-
+    
     // FullCalendar 설정
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
+    	initialView: 'dayGridMonth',
         headerToolbar: {
             left: 'prev',
-            center: 'title', // 제목을 비워둡니다.
+            center: 'title', // 제목 설정
             right: 'next'
         },
         views: {
-        	dayGridMonth: {
-        		titleFormat: {
-        			year: 'numeric',
-        			month: '2-digit'
-        		}
-        	}
+            dayGridMonth: {
+                titleFormat: { year: 'numeric', month: '2-digit' } // 객체 형태로 전달
+            }
         },
-        events: '/getExerciseRecords', // 서버에서 운동 기록 가져오기
-        dateClick: function (info) {
-            // 날짜 클릭 시 운동 시간 입력 폼 표시
-            exerciseForm.style.display = 'block'; // 폼을 보이도록 설정
-            selectedDateInput.value = info.dateStr; // 선택한 날짜를 hidden input에 설정
+        /* events: '/getExerciseRecords', // 서버에서 운동 기록 가져오기 */
+        dateClick: function(info) {
+            // 날짜 클릭 이벤트
+            exerciseForm.style.display = 'block';
+            selectedDateInput.value = info.dateStr;
         },
-        eventClick: function (info) {
-            // 기존 이벤트 클릭 시 동작
-            alert('운동 시간: ' + info.event.title);
+        datesSet: function(info) {
+            setTimeout(() => {
+                var titleEl = document.querySelector('.fc-toolbar-title');
+                if (titleEl) {
+                    var parts = titleEl.innerText.split('/');
+                    var month = parts[0] ? parts[0].trim() : 'Unknown Month';
+                    var year = parts[1] ? parts[1].trim() : 'Unknown Year';
+
+                    // 기존 내용을 지우고 새 요소를 생성해 삽입
+                    titleEl.innerHTML = ''; // 기존 내용 삭제
+
+                    var calendarTitle = document.createElement('div');
+                    calendarTitle.className = 'calendar-title';
+
+                    var calendarYear = document.createElement('div');
+                    calendarYear.className = 'calendar-year';
+                    calendarYear.textContent = year; // 연도 삽입
+
+                    var calendarMonth = document.createElement('div');
+                    calendarMonth.className = 'calendar-month';
+                    calendarMonth.textContent = month; // 월 삽입
+
+                    calendarTitle.appendChild(calendarYear);
+                    calendarTitle.appendChild(calendarMonth);
+                    titleEl.appendChild(calendarTitle);
+                }
+            }, 0);
         }
     });
 
