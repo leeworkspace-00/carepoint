@@ -11,10 +11,22 @@
 	<!-- header -->
    <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
    
-   <a href="/lia/freeBoardList.aws">회원가입 페이지</a>
+    <a href="/lia/freeBoardList.aws">회원가입 페이지</a>
    <br>
-	<a href="/KES/boardWrite.aws">게시판 글쓰기</a>
+	<a href="/KES/boardWrite.aws">자유게시판 글쓰기</a>
    <br>
+   	<a href="/KES/boardModify.aws">자유게시판 글수정</a>
+   <br>
+   <a href="/KES/qnaBoardWrite.aws">QnA 문의하기</a>
+   <br>
+	<a href="/KES/qnaBoardModify.aws">QnA 수정하기</a>
+   <br>
+	<a href="/KES/qnaBoardReply.aws">QnA 답변하기</a>
+   <br>   
+	<a href="/KES/noticeBoardWrite.aws">공지사항 작성하기</a>
+   <br>   
+	<a href="/KES/noticeBoardModify.aws">공지사항 수정하기</a>
+   <br>    
 	<a href="/KES/foodRecom.aws">식단추천</a>
    <br>
    	<a href="/KES/foodDetail.aws">식단기록표 상세내용</a>

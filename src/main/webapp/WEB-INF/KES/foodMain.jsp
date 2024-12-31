@@ -7,6 +7,7 @@
 <title>식단 메인</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href= "<%=request.getContextPath()%>/resources/css/food/foodMain.css" type="text/css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
 
@@ -127,6 +128,12 @@
 <div class="diet-record-table">
   <h2>식단기록표</h2>
   <table>
+    <colgroup>
+      <col width="25%">
+      <col width="25%">
+      <col width="25%">
+      <col width="25%">  <!-- 칸 크기 정하는거 -->
+    </colgroup>
     <thead>
       <tr>
         <th>날짜</th>
@@ -163,7 +170,7 @@
       </tr>
       <tr>
         <td>2023-12-01</td>
-        <td><img src="/resources/image/미기록.png"></td>
+        <td><a href="<%=request.getContextPath()%>/KES/foodDetail.aws" id="modal"><img src="/resources/image/긍정.png"></a></td>
         <td><img src="/resources/image/기록.png"></td>
         <td><img src="/resources/image/미기록.png"></td>
       </tr>                  
@@ -191,39 +198,37 @@
 <!-- footer -->
 <jsp:include page="/WEB-INF/header_footer/footer_format.jsp" />
 
-
 <script>
+//검색창 숨겼다가 나타나는 스크립트 코드  
+const searchButton = document.querySelector('.search-container button');
+const resultsDiv = document.querySelector('.results');
 
-  //검색창 숨겼다가 나타나는 스크립트 코드  
-  const searchButton = document.querySelector('.search-container button');
-  const resultsDiv = document.querySelector('.results');
+searchButton.addEventListener('click', () => {
+  // 검색 버튼 클릭 시 결과 표시
+  resultsDiv.style.display = 'block';
+});
 
-  searchButton.addEventListener('click', () => {
-    // 검색 버튼 클릭 시 결과 표시
-    resultsDiv.style.display = 'block';
-  });
-  
-  
-  
-  //식단 기록하기 스크립트 코드 
-  const toggleButton = document.getElementById('toggleButton');
-  const hiddenBox = document.getElementById('hiddenBox');
-  const toggleImage = toggleButton.querySelector('img'); // 버튼 안의 이미지 요소 가져오기
 
-  // 버튼 클릭 이벤트 추가
-  toggleButton.addEventListener('click', () => {
-    if (hiddenBox.style.display === 'none' || hiddenBox.style.display === '') {
-      hiddenBox.style.display = 'block'; // 박스를 표시
-      toggleImage.src = '/resources/image/마이너스.png'; // 닫기 이미지를 표시
-    } else {
-      hiddenBox.style.display = 'none'; // 박스를 숨김
-      toggleImage.src = '/resources/image/플러스.png'; // 플러스 이미지를 표시
-    }
-  });
-  
-  
-  // 달력숨겼다가 나타내기 스크립트 
-  document.getElementById('dateButton').addEventListener('click', function () {
+
+//식단 기록하기 스크립트 코드 
+const toggleButton = document.getElementById('toggleButton');
+const hiddenBox = document.getElementById('hiddenBox');
+const toggleImage = toggleButton.querySelector('img'); // 버튼 안의 이미지 요소 가져오기
+
+// 버튼 클릭 이벤트 추가
+toggleButton.addEventListener('click', () => {
+  if (hiddenBox.style.display === 'none' || hiddenBox.style.display === '') {
+    hiddenBox.style.display = 'block'; // 박스를 표시
+    toggleImage.src = '/resources/image/마이너스.png'; // 닫기 이미지를 표시
+  } else {
+    hiddenBox.style.display = 'none'; // 박스를 숨김
+    toggleImage.src = '/resources/image/플러스.png'; // 플러스 이미지를 표시
+  }
+});
+
+
+// 달력숨겼다가 나타내기 스크립트 
+document.getElementById('dateButton').addEventListener('click', function () {
 	    const dateInput = document.getElementById('dateInput');
 	    
 	    // 달력 입력 필드의 display 상태를 토글
@@ -233,51 +238,69 @@
 	        dateInput.style.display = 'none'; // 숨기기 설정
 	    }
 	});
-  
-  
-  
+
+
+
 //플러스 버튼 클릭 이벤트 추가
-  document.querySelectorAll('.add-button').forEach((button) => {
-    button.addEventListener('click', function () {
-      // 현재 버튼의 부모 요소에서 meal-content를 찾음
-      const mealContent = this.previousElementSibling;
+document.querySelectorAll('.add-button').forEach((button) => {
+  button.addEventListener('click', function () {
+    // 현재 버튼의 부모 요소에서 meal-content를 찾음
+    const mealContent = this.previousElementSibling;
 
-      // 현재 input-group의 개수를 확인
-      const inputGroups = mealContent.querySelectorAll('.input-group');
-      if (inputGroups.length >= 5) {
-        alert('최대 5개의 항목만 추가할 수 있습니다.');
-        return; // 더 이상 추가하지 않음
-      }
+    // 현재 input-group의 개수를 확인
+    const inputGroups = mealContent.querySelectorAll('.input-group');
+    if (inputGroups.length >= 5) {
+      alert('최대 5개의 항목만 추가할 수 있습니다.');
+      return; // 더 이상 추가하지 않음
+    }
 
-      // 새로운 input-group 생성
-      const newInputGroup = document.createElement('div');
-      newInputGroup.classList.add('input-group'); // 클래스 추가
+    // 새로운 input-group 생성
+    const newInputGroup = document.createElement('div');
+    newInputGroup.classList.add('input-group'); // 클래스 추가
 
-      // 음식명 입력 필드 생성
-      const newMealInput = document.createElement('input');
-      newMealInput.type = 'text';
-      newMealInput.placeholder = '음식과 명칭 입력';
-      newMealInput.classList.add('meal-input'); // 클래스 추가
+    // 음식명 입력 필드 생성
+    const newMealInput = document.createElement('input');
+    newMealInput.type = 'text';
+    newMealInput.placeholder = '음식과 명칭 입력';
+    newMealInput.classList.add('meal-input'); // 클래스 추가
 
-      // 칼로리 입력 필드 생성
-      const newCalorieInput = document.createElement('input');
-      newCalorieInput.type = 'text';
-      newCalorieInput.placeholder = '칼로리 입력';
-      newCalorieInput.classList.add('calorie-input'); // 클래스 추가
+    // 칼로리 입력 필드 생성
+    const newCalorieInput = document.createElement('input');
+    newCalorieInput.type = 'text';
+    newCalorieInput.placeholder = '칼로리 입력';
+    newCalorieInput.classList.add('calorie-input'); // 클래스 추가
 
-      // 새로운 input-group에 추가
-      newInputGroup.appendChild(newMealInput);
-      newInputGroup.appendChild(newCalorieInput);
+    // 새로운 input-group에 추가
+    newInputGroup.appendChild(newMealInput);
+    newInputGroup.appendChild(newCalorieInput);
 
-      // meal-content에 새로운 input-group 추가
-      mealContent.appendChild(newInputGroup);
-      
-      // 새롭게 추가된 input-group에도 CSS 적용 확인 (디버깅용)
-      console.log(newInputGroup);
-    });
+    // meal-content에 새로운 input-group 추가
+    mealContent.appendChild(newInputGroup);
+    
+    // 새롭게 추가된 input-group에도 CSS 적용 확인 (디버깅용)
+    console.log(newInputGroup);
+  });
+});
+
+</script>
+
+<!-- 부트스트랩 모달 코드 -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+
+  document.getElementById('modal').addEventListener('click', function() {
+      fetch('/KES/foodDetail.aws')
+          .then(response => response.text())
+          .then(data => {
+              document.querySelector('#dietModal .modal-content').innerHTML = data;
+              var loginModal = new bootstrap.Modal(document.getElementById('modal'), {
+                  backdrop: 'static',
+                  keyboard: false
+              });
+              loginModal.show();
+          })
+          .catch(error => console.error(error));
   });
 
-  
 </script>
 
 </body>

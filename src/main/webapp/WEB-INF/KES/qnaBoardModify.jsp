@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>자유게시판 글쓰기</title>
+<title>QnA 수정하기</title>
 <link href= "<%=request.getContextPath()%>/resources/css/board/boardWrite.css" type="text/css" rel="stylesheet">
 </head>
 <body>
@@ -12,18 +12,18 @@
 <!-- header -->
 <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
 
-<h2>글쓰기</h2>
+<h2>수정하기</h2>
 <div class="edit-container">
   <form name="frm">
   
     <div class="form-group">
       <label for="title">제목</label>
-      <input type="text" id="subject" name="subject" placeholder="제목을 입력해주세요" >
+      <input type="text" id="subject" name="subject">
     </div>
     
     <div class="form-group">
       <label for="content">내용</label>
-      <textarea id="content" name="content" placeholder="내용을 입력해주세요"></textarea>
+      <textarea id="content" name="content"></textarea>
     </div>
     
     <div class="form-group">
