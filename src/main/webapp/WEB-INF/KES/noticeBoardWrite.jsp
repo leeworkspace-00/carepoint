@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>자유게시판 글쓰기</title>
+<title></title>
 <link href= "<%=request.getContextPath()%>/resources/css/board/boardWrite.css" type="text/css" rel="stylesheet">
 </head>
 <body>
@@ -12,7 +12,7 @@
 <!-- header -->
 <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
 
-<h2>글쓰기</h2>
+<h2>공지사항 작성</h2>
 <div class="edit-container">
   <form name="frm">
   
