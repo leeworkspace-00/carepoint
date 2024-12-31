@@ -6,28 +6,25 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-
-}
-
+/* main 태그 스타일 설정 */
 main {
-  width: 100%;
-  max-width: 500px;
+	width : 100%;
+	max-width: 500px;
+	position: relative;
+	left : 37%;
+	margin-top:100px;
+	margin-bottom: 100px;
 }
+
+
 
 .registration-form {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex; /* 플렉스 박스 활성화 */
-  flex-direction: column; /* 세로 정렬 */
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+	display: flex; /* 플렉스 박스 활성화 */
+	flex-direction: column; /* 세로 정렬 */
 }
 
 .registration-form h1 {
@@ -46,15 +43,13 @@ main {
 }
 
 .form-group {
-  margin-bottom: 15px;
-  
+  margin-bottom: 15px; 
 }
 
 .form-group label {
   display: block;
   font-size: 14px;
   color: #555;
-
 }
 
 .form-group input {
@@ -65,10 +60,16 @@ main {
   border-bottom: solid #ddd thin;
   outline: none; /* 포커스 시 나타나는 외곽선 제거 */
   caret-color: black; /* 커서 색상 설정 (원하는 색상으로 변경 가능) */
-
+  position: relative; /* 버튼 위치 조정을 위해 부모를 기준으로 설정 */
 }
+
+#id, #nickname {
+	width: 440px;
+}
+
 .form-group input::placeholder {
-  color: #aaa;}
+  color: #aaa;
+}
 
 button {
     background-color:#4169E1 ;
@@ -94,7 +95,7 @@ button {
 .input-wrapper .check-btn {
   position: absolute; /* 부모 요소 기준 위치 고정 */
   top: 50%; /* 세로 중앙 정렬 */
-  right: 10px; /* 오른쪽 여백 */
+  right: 20px; /* 오른쪽 여백 */
   transform: translateY(-50%); /* 정확한 중앙 정렬을 위해 이동 */
   background-color: #4169E1;
   color: white;

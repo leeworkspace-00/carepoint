@@ -7,10 +7,12 @@
 <title>회원가입페이지</title>
 <link href= "<%=request.getContextPath()%>/resources/css/user/join.css" type="text/css" rel="stylesheet">
 </head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <body>
 	<!-- header -->
    <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
+
    <main>
     <section class="registration-form">
       <h1>회원가입</h1>
@@ -61,6 +63,7 @@
     </section>
   </main>
    <!-- footer -->
+
    <jsp:include page="/WEB-INF/header_footer/footer_format.jsp" />
 
 

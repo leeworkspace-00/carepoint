@@ -43,26 +43,26 @@
 
   <div class="main-container">
     <!-- 상단 섹션 -->
-<div class="top-section">
-  <ul class="profile-card">
-    <li class="profile-photo">
-      <img src="/resources/image/profile.png" alt="프로필 사진">
-    </li>
-    
-    <li class="profile-contents">
-      <p><strong>닉네임: </strong>hong</p>
-      <p><strong>운동레벨:</strong> 1kg</p>
-      <p><strong>질병:</strong> 비만</p>
-      <p><strong>생년월일:</strong> 1990-01-01</p>
-      <p><strong>가입일:</strong> 2022-01-01</p>
-    </li>
-  </ul>
-
-      <!-- 그래프 섹션 -->
-      <div class="graph-section">
-        <canvas id="progressChart"></canvas>
-      </div>
- </div>   
+	<div class="top-section">
+	  <ul class="profile-card">
+	    <li class="profile-photo">
+	      <img src="/resources/image/도경수.jpg" alt="프로필 사진">
+	    </li>
+	    
+	    <li class="profile-contents">
+	      <p><strong>닉네임: </strong>D.O</p>
+	      <p><strong>운동레벨:</strong> 100kg</p>
+	      <p><strong>질병:</strong> 건강함 ㅎㅎ</p>
+	      <p><strong>생년월일:</strong> 1993-01-12</p>
+	      <p><strong>가입일:</strong> 2022-01-01</p>
+	    </li>
+	  </ul>
+	
+	      <!-- 그래프 섹션 -->
+	      <div class="graph-section">
+	        <canvas id="progressChart"></canvas>
+	      </div>
+	 </div>   
 
     <!-- 추가 정보 섹션 -->
     <div class="additional-info">

@@ -1,27 +1,13 @@
 @charset "UTF-8";
-/* 기본 스타일 초기화 */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #ffffff;
-  height: 100vh; /* 뷰포트 높이를 100%로 설정 */
-  margin: 0;
-  display: flex; /* Flexbox 활성화 */
-  justify-content: center; /* 수평 중앙 정렬 */
-  align-items: center; /* 수직 중앙 정렬 */
-  
-}
 
 main {
   display: flex;
   justify-content: center;
   align-items: center;
   height: calc(100vh - 100px); /* 헤더와 푸터 높이 제외 */
+  margin-top:100px;
+  margin-bottom: 100px;
 }
 
 .login-container {
@@ -91,6 +77,11 @@ main {
 }
 .options a:hover {
   text-decoration: underline; /* 호버 시 밑줄 표시 */
+}
+
+.find-id{
+	border-right:1px solid lightgray;
+	padding-right: 15px;
 }
 /* 검색 기록 드롭다운 */
 

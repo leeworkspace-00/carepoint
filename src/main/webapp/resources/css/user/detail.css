@@ -1,13 +1,14 @@
 @charset "UTF-8";
 /* styles.css */
-body {
+main {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 50px 0; /* 상단과 하단 패딩 추가 */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  margin-bottom: 100px;
+  margin-top: 100px;
 }
 
 .form-container {
@@ -16,31 +17,43 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
-  
+}
+
+form {
+	width: 400px;
 }
 
 h2 {
   text-align: center;
 }
 
+
 .form-group {
   margin-bottom: 15px;
+  width: 400px;
 }
 
 .form-group label {
   display: block;
   margin-bottom: 5px;
+  font-size: 14px;
 }
 
 .form-group input,
 .form-group select {
-  width: calc(100% - 20px);
+  width: 400px;
   padding: 10px;
   font-size: 14px;
   border: none;
   border-bottom: solid #ddd thin;
   outline: none; /* 포커스 시 나타나는 외곽선 제거 */
   caret-color: black; /* 커서 색상 설정 (원하는 색상으로 변경 가능) */
+  color: #aaa;
+  
+}
+
+.form-group input::placeholder {
+  color: #aaa;
 }
 
 .button-group {
@@ -61,9 +74,9 @@ h2 {
   color: white;
 }
 button {
-  width: calc(100% - 10px);
+  width: 400px;
   padding: 10px;
-  background-color: #87B9F8;
+  background-color: #4169E1;
   color: white;
   border: none;
   border-radius: 4px;
@@ -85,6 +98,10 @@ button:hover {
 	margin-left: 25px;
 }
 
+.checkbox-main {
+	font-size: 14px;
+}
+
 
 /* 검색 기록 드롭다운 */
 .search-dropdown {
@@ -97,4 +114,12 @@ button:hover {
    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
    z-index: 1000;
    border-radius: 4px;
+}
+
+#birthdate, #weight, #height {
+	width:380px;
+}
+
+.select {
+	color: lightgray;
 }

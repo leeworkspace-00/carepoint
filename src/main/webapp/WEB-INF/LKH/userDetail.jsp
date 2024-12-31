@@ -23,6 +23,7 @@
 <body>
 <!-- header -->
    <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
+   <main>
   <div class="form-container">
     <h2>상세 정보 입력 페이지</h2>
     <form>
@@ -46,7 +47,7 @@
       <div class="form-group">
         <label for="disease">질병</label>
         <select id="disease" name="disease">
-          <option value="">선택하세요</option>
+          <option value="" class="select">선택하세요</option>
           <option value="당뇨">당뇨</option>
           <option value="고혈압">고혈압</option>
           <option value="비만">비만</option>
@@ -56,14 +57,14 @@
       <div class="form-group">
         <label for="exercise">운동 빈도</label>
         <select id="exercise" name="exercise">
-          <option value="">선택하세요</option>
+          <option value="" class="select" selected>선택하세요</option>
           <option value="운동 안 함">운동 안 함</option>
           <option value="주 1~2회">주 1~2회</option>
           <option value="주 3~4회">주 3~4회</option>
           <option value="주 5회 이상">주 5회 이상</option>
         </select>
       </div>
-      <div>흡연 음주 여부
+      <div class="checkbox-main">흡연 음주 여부
       <div class="checkbox-group">
       <span>
       	<input type="checkbox" id="smoking" name="smoking">흡연
@@ -76,7 +77,7 @@
       <button type="submit">저장하기</button>
     </form>
   </div>
-  
+</main>  
      <!-- footer -->
    <jsp:include page="/WEB-INF/header_footer/footer_format.jsp" />
 </body>
