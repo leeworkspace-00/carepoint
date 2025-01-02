@@ -3,7 +3,7 @@
 #calendar {
     max-width: 90%;    /* 화면 너비의 90% */
     min-width: 1200px;  /* 최소 너비 설정 */
-    margin: 15px auto;   /* 가운데 정렬 */
+    margin: 30px auto;   /* 가운데 정렬 */
 }
 
 .fc-col-header-cell-cushion, .fc-daygrid-day-number {
@@ -28,6 +28,54 @@
 .fc-day-sat a {
     color : blue;
 }
+
+.fc-prev-button, .fc-next-button {
+	width: 50px !important; /* 버튼 너비 */
+    height: 50px !important; /* 버튼 높이 */
+    background-color: white !important; /* 버튼 배경색 */
+    color: #2c3e50 !important; /* 버튼 텍스트 색상 */
+    border: 2px solid #ddd !important; /* 기본 테두리 */
+    border-radius: 5px !important; /* 버튼 모서리 둥글게 */
+    
+    
+}
+.fc-today-button, .fc-addEventButton-button {
+    height: 50px !important; /* 버튼 높이 */
+    background-color: white !important; /* 버튼 배경색 */
+    color: #2c3e50 !important; /* 버튼 텍스트 색상 */
+    border: 2px solid #ddd !important; /* 기본 테두리 */
+    border-radius: 5px !important; /* 버튼 모서리 둥글게 */
+    
+    
+}
+
+.fc-prev-button:hover, .fc-next-button:hover, .fc-today-button:hover, .fc-addEventButton-button:hover {
+    background-color: #5882FA !important; /* 버튼 호버 배경색 */
+    color: white !important; /* 버튼 호버 텍스트 색상 */
+}
+
+.fc-prev-button:focus, .fc-next-button:focus, .fc-today-button:focus, .fc-addEventButton-button:focus {
+    outline: none !important; /* 포커스 outline 제거 */
+    box-shadow: none !important; /* 그림자 제거 */
+}
+
+.calendar-title {
+    display: flex;
+    flex-direction: column; /* 위아래로 배치 */
+    align-items: center;    /* 가운데 정렬 */
+}
+
+.calendar-year {
+    font-size: 18px;        /* 연도 글자 크기 */
+    color: #000;            /* 연도 색상 */
+}
+
+.calendar-month {
+   font-weight: bold;      /* 연도 굵게 */
+    font-size: 45px;        /* 월 글자 크기 */
+    color: #000;            /* 월 색상 */
+}
+
 
 /* 캘린더 스타일은 FullCalendar 기본 스타일 사용 */
 
@@ -74,7 +122,7 @@
 
 .modal ul li {
     position: relative;
-    padding-left: 20px;
+    padding-left: 5px;
     margin-bottom: 8px;
     font-size: 1.1em;
     color: #333;
@@ -88,7 +136,6 @@
 
 .modal button {
     position: absolute;
-    top: 10px;
     right: 10px;
     background: none;
     border: none;
@@ -106,41 +153,54 @@
 
 /* 일정추가 */
 #add-event-form {
-	margin: 15px auto;   /* 가운데 정렬 */
+    margin: 15px auto; /* 가운데 정렬 */
     padding: 20px;
     border-radius: 8px;
     background-color: #f9f9f9;
-    max-width: 400px;
+    max-width: 800px; /* 넓이를 더 크게 설정 */
 }
 
 #add-event-form h3 {
     margin: 0 0 10px;
 }
 
+#add-event-form .form-inline {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 20px; /* 요소 간의 간격 추가 */
+    flex-wrap: nowrap; /* 줄바꿈 방지 */
+    justify-content: space-between; /* 전체 공간 활용 */
+}
+
 #add-event-form label {
-    display: block;
-    margin: 10px 0 5px;
+    margin: 5px; /* 레이블 간격 제거 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
 
 #add-event-form input {
-    width: 100%;
     padding: 8px;
-    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    flex: 1; /* 입력 필드가 남은 공간 차지 */
+    min-width: 150px; /* 최소 너비 설정 */
 }
 
 #add-event-form button {
     padding: 10px 15px;
+    margin: 10px;
     background-color: #4169E1;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    white-space: nowrap; /* 버튼 텍스트 줄바꿈 방지 */
 }
 
 #add-event-form button:hover {
     background-color: #6495ED;
 }
+
+
+
 
 
