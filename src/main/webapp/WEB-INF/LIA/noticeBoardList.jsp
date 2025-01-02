@@ -126,6 +126,11 @@
 				<td class="writer">22na</td>
 				<td class="writeday">2024-12-24</td>
 			</tr>
+			
+			<tr class="write-tr">
+				<td class="write-td" colspan="4"><button onclick="location.href='/KES/noticeBoardWrite.aws';">글 작성</button></td>
+			</tr>
+			
 		</table>
 	</div>
 	
