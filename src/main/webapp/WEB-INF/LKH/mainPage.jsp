@@ -54,7 +54,7 @@ $(document).ready(function() {
 		  // 인터뷰 슬라이드
 		  $('.interviews-slides').slick({
 		    autoplay: true,
-		    autoplaySpeed: 2000,
+		    autoplaySpeed: 8000,
 		    dots: true,
 		    arrows: false,
 		    infinite: true,
@@ -62,6 +62,8 @@ $(document).ready(function() {
 		    slidesToScroll: 1
 		  });
 });
+
+
 
 </script>
 
@@ -96,17 +98,20 @@ $(document).ready(function() {
 				<div class="articles-link">
 					<div class="articles-slides">					
 							<div>
+							<strong style="font-size:20px;"><p>당뇨 관련 기사</p></strong>
 								<p><a href="https://www.whosaeng.com/140683">“20~30대 MZ세대 ‘고혈압’ 증가 추세”1</a></p>
 								<p><a href="https://www.whosaeng.com/140683">“20~30대 MZ세대 ‘고혈압’ 증가 추세”1</a></p>
 								<p><a href="https://www.whosaeng.com/140683">“20~30대 MZ세대 ‘고혈압’ 증가 추세”1</a></p>
 								<br style="height: 73px;">
 							</div>
 							<div>
+							<strong style="font-size:20px;"><p>비만 관련 기사</p></strong>
 								<p><a href="https://www.whosaeng.com/140683">“20~30대 MZ세대 ‘고혈압’ 증가 추세”2</a></p>
 								<p><a href="https://www.whosaeng.com/140683">“20~30대 MZ세대 ‘고혈압’ 증가 추세”2</a></p>
 								<p><a href="https://www.whosaeng.com/140683">“20~30대 MZ세대 ‘고혈압’ 증가 추세”2</a></p>
 							</div>
 							<div>
+							<strong style="font-size:20px;"><p>고혈압 관련 기사</p></strong>
 								<p><a href="https://www.whosaeng.com/140683">“20~30대 MZ세대 ‘고혈압’ 증가 추세”3</a></p>
 								<p><a href="https://www.whosaeng.com/140683">“20~30대 MZ세대 ‘고혈압’ 증가 추세”3</a></p>
 								<p><a href="https://www.whosaeng.com/140683">“20~30대 MZ세대 ‘고혈압’ 증가 추세”3</a></p>
@@ -117,16 +122,19 @@ $(document).ready(function() {
 				<div class="interviews-link">
 					<div class="interviews-slides">
 							<div>
+							<strong style="font-size:20px;"><p style="font-size:20px;">당뇨 관련 유튜브 링크 및 인터뷰</p></strong>
 								<p><a href="https://www.youtube.com/watch?v=hAcvQOkLznU">고혈압 관리가 중요한 이유1</a></p>
 								<p><a href="https://www.youtube.com/watch?v=hAcvQOkLznU">고혈압 관리가 중요한 이유1</a></p>
 								<p><a href="https://www.youtube.com/watch?v=hAcvQOkLznU">고혈압 관리가 중요한 이유1</a></p>
 							</div>
 							<div>
+							<strong style="font-size:20px;"><p style="font-size:20px;">비만 관련 유튜브 링크 및 인터뷰</p></strong>
 								<p><a href="https://www.youtube.com/watch?v=hAcvQOkLznU">고혈압 관리가 중요한 이유2</a></p>
 								<p><a href="https://www.youtube.com/watch?v=hAcvQOkLznU">고혈압 관리가 중요한 이유2</a></p>
 								<p><a href="https://www.youtube.com/watch?v=hAcvQOkLznU">고혈압 관리가 중요한 이유2</a></p>
 							</div>
 							<div>
+							<strong style="font-size:20px;"><p style="font-size:20px;">고혈압 관련 유튜브 링크 및 인터뷰</p></strong>
 								<p><a href="https://www.youtube.com/watch?v=hAcvQOkLznU">고혈압 관리가 중요한 이유3</a></p>
 								<p><a href="https://www.youtube.com/watch?v=hAcvQOkLznU">고혈압 관리가 중요한 이유3</a></p>
 								<p><a href="https://www.youtube.com/watch?v=hAcvQOkLznU">고혈압 관리가 중요한 이유3</a></p>
