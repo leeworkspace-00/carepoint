@@ -11,7 +11,10 @@
 	<!-- header -->
    <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
    
-   <a href="/lia/freeBoardList.aws">회원가입 페이지</a>
+   <a href="/KIS/freeBoardContents.aws">자유게시판 상세보기</a>
+   <a href="/KIS/noticeBoardContents.aws">공지사항 상세보기</a>
+   <a href="/KIS/qnaBoardContents.aws">Q&A상세보기</a>
+   <a href="/KIS/todoList.aws">오늘의 할일</a>
    <div style="height:500px;">
    </div>  
    
