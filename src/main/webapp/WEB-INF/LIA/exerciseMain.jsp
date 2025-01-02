@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var selectedDateInput = document.getElementById('selected-date'); // 선택한 날짜 input
     var hourInput = document.getElementById('hour'); // 운동 시간 input
     var minuteInput = document.getElementById('minute'); // 운동 분 input
-    
+
     // FullCalendar 설정
     var calendar = new FullCalendar.Calendar(calendarEl, {
-    	initialView: 'dayGridMonth',
+        initialView: 'dayGridMonth',
         headerToolbar: {
             left: 'prev',
             center: 'title', // 제목 설정
@@ -37,17 +37,25 @@ document.addEventListener('DOMContentLoaded', function () {
             // 날짜 클릭 이벤트
             exerciseForm.style.display = 'block';
             selectedDateInput.value = info.dateStr;
+            
+         	// 강제로 포커스 설정
+            hourInput.blur(); // 포커스 해제
+            setTimeout(() => {
+                hourInput.focus(); // 강제로 다시 포커스 설정
+            }, 0);
         },
         datesSet: function(info) {
             setTimeout(() => {
                 var titleEl = document.querySelector('.fc-toolbar-title');
                 if (titleEl) {
+                    var existingTitle = titleEl.querySelectozr('.calendar-title');
+                    if (existingTitle) {
+                        existingTitle.remove(); // 기존 요소 제거
+                    }
+
                     var parts = titleEl.innerText.split('/');
                     var month = parts[0] ? parts[0].trim() : 'Unknown Month';
                     var year = parts[1] ? parts[1].trim() : 'Unknown Year';
-
-                    // 기존 내용을 지우고 새 요소를 생성해 삽입
-                    titleEl.innerHTML = ''; // 기존 내용 삭제
 
                     var calendarTitle = document.createElement('div');
                     calendarTitle.className = 'calendar-title';
@@ -62,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     calendarTitle.appendChild(calendarYear);
                     calendarTitle.appendChild(calendarMonth);
+                    titleEl.innerHTML = ''; // 기존 텍스트 삭제
                     titleEl.appendChild(calendarTitle);
                 }
             }, 0);
@@ -111,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
+
 
 
 </script>
