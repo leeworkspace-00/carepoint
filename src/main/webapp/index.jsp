@@ -11,12 +11,11 @@
    <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
 
 
-   <br>인아[자유 목록, qna목록, 공지 목록, bmi계산기]
+   <br>인아[qna목록, 공지 목록, bmi계산기]
     <a href="/LIA/freeBoardList.aws">자유게시판 페이지(인아)</a>
    <br>
     <a href="/LIA/exerciseMain.aws">운동 페이지(인아)</a> 
 
-    
    <br>경현
     <a href="/LKH/userJoin.aws">회원가입 페이지(경현)</a>
    <br>
