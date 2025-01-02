@@ -67,25 +67,28 @@
 .recommend-button {
     text-align: center; /* 가운데 정렬 */
     margin: 20px 0; /* 위아래 간격 */
+    
 }
 
 .thumb-btn {
-    display: inline-flex;
+    display: inline-flex; /*버튼 중앙 배열*/
     justify-content: center;
     align-items: center;
-    width: 50px; /* 버튼의 가로 크기 */
-    height: 50px; /* 버튼의 세로 크기 (원형) */
-    border-radius: 50%; /* 원형 버튼 */
+    width: 80px; /* 버튼의 가로 크기 */
+    height: 80px; /* 버튼의 세로 크기 (원형) */
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 효과 */
-    background-color: skyblue;
     color: white;
+    border-radius: 50%;
+    border :none;
+    background-color:#ffffff; 
+    
 }
 
 .thumb-icon {
-    width: 30px; /* 이미지 크기 */
-    height: 30px;
+    width: 80px; /* 이미지 크기 */
+    height: 80px;
     object-fit: contain; /* 이미지 비율 유지 */
+    padding : 0px;
 }
 
 .btn {

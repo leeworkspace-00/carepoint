@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>자유게시판 수정하기</title>
-<link href= "<%=request.getContextPath()%>/resources/css/board/boardModify.css" type="text/css" rel="stylesheet">
+<link href= "<%=request.getContextPath()%>/resources/css/board/boardWrite.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 

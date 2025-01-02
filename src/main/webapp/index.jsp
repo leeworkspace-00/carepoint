@@ -11,7 +11,7 @@
    <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
 
 
-   <br>인아
+   <br>인아[자유 목록, qna목록, 공지 목록, bmi계산기]
     <a href="/LIA/freeBoardList.aws">자유게시판 페이지(인아)</a>
    <br>
     <a href="/LIA/exerciseMain.aws">운동 페이지(인아)</a> 
@@ -57,12 +57,12 @@
    <br>인서
     <a href="/KIS/freeBoardContents.aws">자유게시판 상세내용(인서)</a>
    <br>
-	<a href="/KIS/todoList.aws">todo 페이지(인서)</a>
+    <a href="/KIS/noticeBoardContents.aws">공지사항 상세보기</a>
    <br>
+    <a href="/KIS/qnaBoardContents.aws">Q&A상세보기</a>
+   <br>
+    <a href="/KIS/todoList.aws">오늘의 할일</a>
 
-   
-
-   
    <div style="height:500px;">
    </div>  
    
