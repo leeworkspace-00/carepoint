@@ -25,120 +25,127 @@
 		</div>
 	</form>
 	
-	<div class="listDiv">
-		<table class="listTable">
-			<tr>
-				<th>No</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일</th>
-			</tr>
-			
-			<tr>
-				<td class="No">15</td>
-				<td class="subject"><a>자유게시판 15</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">14</td>
-				<td class="subject"><a>자유게시판 14</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">13</td>
-				<td class="subject"><a>자유게시판 13</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">12</td>
-				<td class="subject"><a>자유게시판 12</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">11</td>
-				<td class="subject"><a>자유게시판 11</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">10</td>
-				<td class="subject"><a>자유게시판 10</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-	
-			<tr>
-				<td class="No">9</td>
-				<td class="subject"><a>자유게시판 9</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">8</td>
-				<td class="subject"><a>자유게시판 8</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">7</td>
-				<td class="subject"><a>자유게시판 7</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">6</td>
-				<td class="subject"><a>자유게시판 6</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">5</td>
-				<td class="subject"><a>자유게시판 5</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">4</td>
-				<td class="subject"><a>자유게시판 4</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">3</td>
-				<td class="subject"><a>자유게시판 3</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">2</td>
-				<td class="subject"><a>자유게시판 2</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">1</td>
-				<td class="subject"><a>자유게시판 1</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-		</table>
+	<div class="total-div">
+		<div class="listDiv">
+			<table class="listTable">
+				<tr>
+					<th>No</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+				</tr>
+				
+				<tr>
+					<td class="No">15</td>
+					<td class="subject"><a>자유게시판 15</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr>
+					<td class="No">14</td>
+					<td class="subject"><a>자유게시판 14</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr>
+					<td class="No">13</td>
+					<td class="subject"><a>자유게시판 13</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr>
+					<td class="No">12</td>
+					<td class="subject"><a>자유게시판 12</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr>
+					<td class="No">11</td>
+					<td class="subject"><a>자유게시판 11</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr>
+					<td class="No">10</td>
+					<td class="subject"><a>자유게시판 10</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+		
+				<tr>
+					<td class="No">9</td>
+					<td class="subject"><a>자유게시판 9</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr>
+					<td class="No">8</td>
+					<td class="subject"><a>자유게시판 8</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr>
+					<td class="No">7</td>
+					<td class="subject"><a>자유게시판 7</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr>
+					<td class="No">6</td>
+					<td class="subject"><a>자유게시판 6</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr>
+					<td class="No">5</td>
+					<td class="subject"><a>자유게시판 5</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr>
+					<td class="No">4</td>
+					<td class="subject"><a>자유게시판 4</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr>
+					<td class="No">3</td>
+					<td class="subject"><a>자유게시판 3</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr>
+					<td class="No">2</td>
+					<td class="subject"><a>자유게시판 2</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr>
+					<td class="No">1</td>
+					<td class="subject"><a>자유게시판 1</a></td>
+					<td class="writer">22na</td>
+					<td class="writeday">2024-12-24</td>
+				</tr>
+				
+				<tr class="write-tr">
+					<td class="write-td" colspan="4"><button onclick="location.href='/KES/freeBoardWrite.aws';">글 작성</button></td>
+				</tr>
+				
+			</table>
+		</div>		
 	</div>
 	
 	<div class="page">

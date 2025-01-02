@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
             setTimeout(() => {
                 var titleEl = document.querySelector('.fc-toolbar-title');
                 if (titleEl) {
-                    var existingTitle = titleEl.querySelectozr('.calendar-title');
+                    var existingTitle = titleEl.querySelector('.calendar-title');
                     if (existingTitle) {
                         existingTitle.remove(); // 기존 요소 제거
                     }
@@ -120,8 +120,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
-
-
 
 </script>
 
