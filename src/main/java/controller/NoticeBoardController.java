@@ -8,32 +8,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value="/noticeBoard/")
 public class NoticeBoardController {
 	
-	// �������� �ۼ� ������
+	
 	@RequestMapping(value= "noticeBoardWrite.aws", method=RequestMethod.GET)
 	public String noticeBoardWrite() {
 		
-		return "WEB-INF/KES/noticeBoardWrite";
+		return "WEB-INF/noticeBoard/noticeBoardWrite";
 	}
 	
-	// �������� ���� ������
+	
 	@RequestMapping(value= "noticeBoardModify.aws", method=RequestMethod.GET)
 	public String noticeBoardModify() {
 		
-		return "WEB-INF/KES/noticeBoardModify";
+		return "WEB-INF/noticeBoard/noticeBoardModify";
 	}
 
 	@RequestMapping(value="noticeBoardContents.aws", method=RequestMethod.GET)
 	public String noticeBoardContents() {
 		
-		//System.out.println("noticeBoardContents.aws ����");
 		
-		return "WEB-INF/KIS/noticeBoardContents"; 
+		
+		return "WEB-INF/noticeBoard/noticeBoardContents"; 
 	}
 	
 	@RequestMapping(value="noticeBoardList.aws", method=RequestMethod.GET)
 	public String noticeBoardList() {
 		
-		return "WEB-INF/LIA/noticeBoardList"; 
+		return "WEB-INF/noticeBoard/noticeBoardList"; 
 	}
 
 }

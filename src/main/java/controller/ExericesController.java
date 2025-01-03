@@ -14,39 +14,39 @@ public class ExericesController {
 	@RequestMapping(value="exerciseMain.aws", method=RequestMethod.GET)
 	public String exerciseMain() {
 		
-		return "WEB-INF/LIA/exerciseMain"; 
+		return "WEB-INF/exercise/exerciseMain"; 
 	}
 	
 	@RequestMapping(value="bmi.aws", method=RequestMethod.GET)
 	public String bmi() {
 		
-		return "WEB-INF/LIA/bmi"; 
+		return "WEB-INF/exercise/bmi"; 
 	}
 	
 	@RequestMapping(value="calculateBMI.aws", method=RequestMethod.POST)
     public String calculateBMI(@RequestParam double height, @RequestParam double weight, Model model) {
-        // Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
-		double heightInMeters = height / 100.0; // Å°(cm) -> m ï¿½ï¿½È¯
+        
+		double heightInMeters = height / 100.0; 
         double bmi = weight / (heightInMeters * heightInMeters);
         double standardWeight = (height - 100) * 0.9;
 
         String bmiCategory;
         if (bmi < 18.5) {
-            bmiCategory = "ì €ì²´ì¤‘";
+            bmiCategory = "ÀúÃ¼Áß";
         } else if (bmi < 23) {
-            bmiCategory = "ì •ìƒ";
+            bmiCategory = "Á¤»ó";
         } else if (bmi < 25) {
-            bmiCategory = "ê³¼ì²´ì¤‘";
+            bmiCategory = "°úÃ¼Áß";
         } else {
-            bmiCategory = "ë¹„ë§Œ";
+            bmiCategory = "ºñ¸¸";
         }
 
         model.addAttribute("bmi", String.format("%.2f", bmi));
         model.addAttribute("standardWeight", String.format("%.2f", standardWeight));
         model.addAttribute("bmiCategory", bmiCategory);
 
-        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
-        return "WEB-INF/LIA/bmi";
+        
+        return "WEB-INF/exercise/bmi";
     }
 
 

@@ -7,32 +7,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value="/freeBoard/")
 public class FreeBoardController {
-	//�����Խ��� �۾��� ������
+	
 	@RequestMapping(value= "freeBoardWrite.aws", method=RequestMethod.GET)
 	public String boardWrite() {
 		
-		return "WEB-INF/KES/boardWrite";
+		return "WEB-INF/freeBoard/freeBoardWrite";
 	}
 	
-	// �����Խ��� �����ϱ� ������
+	
 	@RequestMapping(value= "freeBoardModify.aws", method=RequestMethod.GET)
 	public String boardModify() {
 		
-		return "WEB-INF/KES/boardModify";
+		return "WEB-INF/freeBoard/freeBoardModify";
 	}
 	
 	@RequestMapping(value="freeBoardContents.aws", method=RequestMethod.GET)
 	public String freeBoardContents() {
 		
-		//System.out.println("contents.aws ����");
 		
-		return "WEB-INF/KIS/freeBoardContents"; 
+		
+		return "WEB-INF/freeBoard/freeBoardContents"; 
 	}
 	
 	@RequestMapping(value="freeBoardList.aws", method=RequestMethod.GET)
 	public String freeBoardList() {
 		
-		return "WEB-INF/LIA/freeBoardList"; 
+		return "WEB-INF/freeBoard/freeBoardList"; 
 	}
 
 }
