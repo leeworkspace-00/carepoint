@@ -8,7 +8,7 @@
 
 <body>
 	<!-- header -->
-   <jsp:include page="/WEB-INF/header_footer/header_format.jsp" />
+   <jsp:include page="/WEB-INF/include/header_format.jsp" />
 
    <br>인아[qna목록, 공지 목록, bmi계산기]
     <a href="/LIA/freeBoardList.aws">자유게시판 페이지(인아)</a>
@@ -25,7 +25,6 @@
     <a href="/LKH/myPage.aws">회원 마이페이지(경현)</a>
    <br>
     <a href="/LKH/mainPage.aws">메인페이지(경현)</a>
-    
     
    <br>이슬
     <a href="/KES/boardWrite.aws">게시판 글쓰기 페이지(이슬)</a>
@@ -62,10 +61,9 @@
     <a href="/KIS/todoList.aws">오늘의 할일</a>
 
    <div style="height:500px;"></div>  
-
    
    <!-- footer -->
-   <jsp:include page="/WEB-INF/header_footer/footer_format.jsp" />
+   <jsp:include page="/WEB-INF/include/footer_format.jsp" />
 
 </body>
 </html>
