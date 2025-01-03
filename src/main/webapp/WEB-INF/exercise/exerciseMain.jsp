@@ -11,8 +11,7 @@
 <link href="/resources/css/exercise/exercise.css" rel="stylesheet">
 </head>
 <script>
-	
-document.addEventListener('DOMContentLoaded', function () {
+	document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     var exerciseForm = document.querySelector('.exercise-entry'); // 운동 시간 입력 폼
     var selectedDateInput = document.getElementById('selected-date'); // 선택한 날짜 input
@@ -22,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // FullCalendar 설정
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
+        events: [], // 초기에는 빈 이벤트 배열,
         headerToolbar: {
             left: 'prev',
             center: 'title', // 제목 설정
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         views: {
             dayGridMonth: {
                 titleFormat: { year: 'numeric', month: '2-digit' } // 객체 형태로 전달
-            }
+            }                 
         },
         /* events: '/getExerciseRecords', // 서버에서 운동 기록 가져오기 */
         dateClick: function(info) {
@@ -38,11 +38,19 @@ document.addEventListener('DOMContentLoaded', function () {
             exerciseForm.style.display = 'block';
             selectedDateInput.value = info.dateStr;
             
-         	// 강제로 포커스 설정
+          	// 강제로 포커스 설정
             hourInput.blur(); // 포커스 해제
             setTimeout(() => {
                 hourInput.focus(); // 강제로 다시 포커스 설정
             }, 0);
+        },
+        eventContent: function (arg) {
+            // 이벤트에 이미지를 추가하기 위한 커스텀 렌더링
+            let imgTag = '';
+            if (arg.event.extendedProps.imageUrl) {
+                imgTag = `<img src="/resources/image/success.png" style="width:20px; height:20px;"/>`;
+            }
+            return { html: `${imgTag} ${arg.event.title}` };
         },
         datesSet: function(info) {
             setTimeout(() => {
@@ -79,6 +87,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 캘린더 렌더링
     calendar.render();
+    
+ 	// success 버튼 클릭 이벤트
+    document.getElementById('success-button').addEventListener('click', function () {
+        const today = new Date().toISOString().split('T')[0]; // 오늘 날짜
+        alert("success 클릭 이벤트 들어옴");
+
+        fetch('/exercise/saveSuccess.aws', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ date: today }),
+        })
+            .then((response) => {
+                console.log('HTTP 상태 코드:', response.status);
+                if (!response.ok) {
+                    throw new Error('서버 응답이 올바르지 않습니다.');
+                }
+                return response.json(); // JSON 파싱
+            })
+            .then((data) => {
+                if (data.success) {
+                    console.log('서버 응답 데이터:', data);
+                } else {
+                    console.error('서버에서 실패 응답:', data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('오류 발생:', error);
+                alert('요청 처리 중 오류가 발생했습니다.');
+            });
+    });
 
     // 운동 시간 폼 제출 이벤트
     exerciseForm.addEventListener('submit', function (event) {
@@ -118,17 +158,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Error:', error);
                 alert('운동 기록 저장 중 오류 발생!');
             });
-    });
-});
-
+	    });
+	});
+	
 </script>
-
-
 <body>
-
 	<!-- header -->
 	<jsp:include page="/WEB-INF/include/header_format.jsp" />
-	
 	<div class="top-service">
 		<div class="left-service">
 			<ul>
@@ -141,11 +177,12 @@ document.addEventListener('DOMContentLoaded', function () {
 			    </li>
 		    </ul>
 		</div>
-		
 		<div class="right-service">
 			<div class="mission">
 				<h3>오늘의 미션!</h3>
-				<p>산책 1시간 하기<button>success</button></p>
+				<form name="success-frm">
+				<p>산책 1시간 하기<button id="success-button" onclick="successCheck();">success</button></p>
+				</form>
 			</div>
 			<div class="graph">
 				<h3>오늘의 수치 기록하기</h3>
@@ -159,7 +196,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			</div>
 		</div>
 	</div>
-	
 	<div class="exercise-entry" style="display: none; margin-top: 20px;">
 	    <form>
 	        <input type="hidden" id="selected-date" name="selected-date">
@@ -181,16 +217,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	        <button type="submit">저장</button>
 	    </form>
 	</div>
-	
 	<div class="calendar" id="calendar"></div>
-	
-	
-	
 	<!-- 여백 -->
 	<div style="height: 400px;"></div>
-	
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/include/footer_format.jsp" />
-
 </body>
 </html>

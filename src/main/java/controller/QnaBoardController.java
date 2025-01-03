@@ -7,39 +7,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value="/qnaBoard/")
 public class QnaBoardController {
 	
-	// QnA �����ϱ� ������
 	@RequestMapping(value= "qnaBoardWrite.aws", method=RequestMethod.GET)
 	public String qnaBoardWrite() {
 		
-		return "WEB-INF/KES/qnaBoardWrite";
+		return "WEB-INF/qnaBoard/qnaBoardWrite";
 	}
 	
-	// QnA �����ϱ� ������
 	@RequestMapping(value= "qnaBoardModify.aws", method=RequestMethod.GET)
 	public String qnaBoardModify() {
 		
-		return "WEB-INF/KES/qnaBoardModify";
+		return "WEB-INF/qnaBoard/qnaBoardModify";
 	}
 	
-	// QnA �亯�ϱ� ������
 	@RequestMapping(value= "qnaBoardReply.aws", method=RequestMethod.GET)
 	public String qnaBoardReply() {
 		
-		return "WEB-INF/KES/qnaBoardReply";
+		return "WEB-INF/qnaBoard/qnaBoardReply";
 	}
 	
 	@RequestMapping(value="qnaBoardContents.aws", method=RequestMethod.GET)
 	public String qnaBoardContents() {
 		
-		//System.out.println("qnaBoardContents.aws ����");
-		
-		return "WEB-INF/KIS/qnaBoardContents"; 
+		return "WEB-INF/qnaBoard/qnaBoardContents"; 
 	}
 	
 	@RequestMapping(value="qnaBoardList.aws", method=RequestMethod.GET)
 	public String qnaBoardList() {
 		
-		return "WEB-INF/LIA/qnaBoardList"; 
+		return "WEB-INF/qnaBoard/qnaBoardList"; 
 	}
 
 }
