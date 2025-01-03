@@ -7,14 +7,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value="/freeBoard/")
 public class FreeBoardController {
-	//�����Խ��� �۾��� ������
+
 	@RequestMapping(value= "freeBoardWrite.aws", method=RequestMethod.GET)
 	public String boardWrite() {
 		
 		return "WEB-INF/KES/boardWrite";
 	}
 	
-	// �����Խ��� �����ϱ� ������
 	@RequestMapping(value= "freeBoardModify.aws", method=RequestMethod.GET)
 	public String boardModify() {
 		
@@ -23,8 +22,6 @@ public class FreeBoardController {
 	
 	@RequestMapping(value="freeBoardContents.aws", method=RequestMethod.GET)
 	public String freeBoardContents() {
-		
-		//System.out.println("contents.aws ����");
 		
 		return "WEB-INF/KIS/freeBoardContents"; 
 	}

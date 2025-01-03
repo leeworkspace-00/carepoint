@@ -58,13 +58,13 @@
     <div><h3>CHAPTER</h3></div>
 
     <ul>
-        <li><a href="/LIA/exerciseMain.aws">운동</a></li>
+        <li><a href="/exercise/exerciseMain.aws">운동</a></li>
         <li><a href="#">식단</a></li>
         <li><a href="#">TodoList</a></li>
-        <li><a href="/LIA/bmi.aws">BMI계산기</a></li>
-        <li><a href="/LIA/freeBoardList.aws">자유게시판</a></li>
-        <li><a href="/LIA/qnaBoardList.aws">Q&A</a></li>
-        <li><a href="/LIA/noticeBoardList.aws">공지사항</a></li>
+        <li><a href="/exercise/bmi.aws">BMI계산기</a></li>
+        <li><a href="/freeBoard/freeBoardList.aws">자유게시판</a></li>
+        <li><a href="/qnaBoard/qnaBoardList.aws">Q&A</a></li>
+        <li><a href="/noticeBoard/noticeBoardList.aws">공지사항</a></li>
     </ul>
     <!-- Bottom Links for Login/Signup or My Page/Logout -->
     <div class="bottom-links">

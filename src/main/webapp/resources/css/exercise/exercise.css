@@ -501,6 +501,12 @@ h3 {
     color: #000;            /* 월 색상 */
 }
 
+.fc-event img {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
 
 button {
     background-color: #4169E1;

@@ -1,8 +1,8 @@
-@charset "EUC-KR";
+@charset "UTF-8";
 
 #calendar {
-    max-width: 90%;    /* 화면 너비의 90% */
-    min-width: 1200px;  /* 최소 너비 설정 */
+    max-width: 90%;    /* 캘린더 최대 넓이 */
+    min-width: 1200px;  /* 최소 넓이 설정 */
     margin: 30px auto;   /* 가운데 정렬 */
 }
 
@@ -30,23 +30,20 @@
 }
 
 .fc-prev-button, .fc-next-button {
-	width: 50px !important; /* 버튼 너비 */
+   width: 50px !important; /* 버튼 넓이 */
     height: 50px !important; /* 버튼 높이 */
     background-color: white !important; /* 버튼 배경색 */
     color: #2c3e50 !important; /* 버튼 텍스트 색상 */
     border: 2px solid #ddd !important; /* 기본 테두리 */
     border-radius: 5px !important; /* 버튼 모서리 둥글게 */
-    
-    
 }
+
 .fc-today-button, .fc-addEventButton-button {
     height: 50px !important; /* 버튼 높이 */
     background-color: white !important; /* 버튼 배경색 */
     color: #2c3e50 !important; /* 버튼 텍스트 색상 */
     border: 2px solid #ddd !important; /* 기본 테두리 */
     border-radius: 5px !important; /* 버튼 모서리 둥글게 */
-    
-    
 }
 
 .fc-prev-button:hover, .fc-next-button:hover, .fc-today-button:hover, .fc-addEventButton-button:hover {
@@ -61,7 +58,7 @@
 
 .calendar-title {
     display: flex;
-    flex-direction: column; /* 위아래로 배치 */
+    flex-direction: column; /* 세로로 배치 */
     align-items: center;    /* 가운데 정렬 */
 }
 
@@ -71,13 +68,10 @@
 }
 
 .calendar-month {
-   font-weight: bold;      /* 연도 굵게 */
+    font-weight: bold;      /* 글씨 굵게 */
     font-size: 45px;        /* 월 글자 크기 */
     color: #000;            /* 월 색상 */
 }
-
-
-/* 캘린더 스타일은 FullCalendar 기본 스타일 사용 */
 
 /* 모달 배경 */
 .modal-bg {
@@ -91,7 +85,7 @@
     z-index: 1000;
 }
 
-/* 모달 팝업 */
+/* 모달 창 */
 .modal {
     position: absolute;
     top: 50%;
@@ -103,8 +97,8 @@
     padding: 20px;
     width: 320px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    font-family: 'Patrick Hand', 'Noto Sans KR', 'Comic Sans MS', cursive, sans-serif; /* 한글과 영어 조화 */
-    position: relative; /* 닫기 버튼 배치를 위한 상대 위치 */
+    font-family: 'Patrick Hand', 'Noto Sans KR', 'Comic Sans MS', cursive, sans-serif; /* 폰트 설정 */
+    position: relative;
 }
 
 .modal h3 {
@@ -148,16 +142,16 @@
 }
 
 .close-button:focus {
-    outline: none; /* 포커스 시 테두리 제거 */
+    outline: none;
 }
 
-/* 일정추가 */
+/* 이벤트 추가 폼 */
 #add-event-form {
     margin: 15px auto; /* 가운데 정렬 */
     padding: 20px;
     border-radius: 8px;
     background-color: #f9f9f9;
-    max-width: 800px; /* 넓이를 더 크게 설정 */
+    max-width: 800px; /* 폼 최대 넓이 */
 }
 
 #add-event-form h3 {
@@ -166,23 +160,23 @@
 
 #add-event-form .form-inline {
     display: flex;
-    align-items: center; /* 세로 중앙 정렬 */
-    gap: 20px; /* 요소 간의 간격 추가 */
-    flex-wrap: nowrap; /* 줄바꿈 방지 */
-    justify-content: space-between; /* 전체 공간 활용 */
+    align-items: center; /* 세로 정렬 */
+    gap: 20px; /* 요소 간 간격 */
+    flex-wrap: nowrap;
+    justify-content: space-between;
 }
 
 #add-event-form label {
-    margin: 5px; /* 레이블 간격 제거 */
-    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    margin: 5px;
+    white-space: nowrap;
 }
 
 #add-event-form input {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    flex: 1; /* 입력 필드가 남은 공간 차지 */
-    min-width: 150px; /* 최소 너비 설정 */
+    flex: 1;
+    min-width: 150px;
 }
 
 #add-event-form button {
@@ -193,14 +187,9 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    white-space: nowrap; /* 버튼 텍스트 줄바꿈 방지 */
+    white-space: nowrap;
 }
 
 #add-event-form button:hover {
     background-color: #6495ED;
 }
-
-
-
-
-

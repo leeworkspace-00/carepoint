@@ -8,14 +8,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value="/noticeBoard/")
 public class NoticeBoardController {
 	
-	// �������� �ۼ� ������
 	@RequestMapping(value= "noticeBoardWrite.aws", method=RequestMethod.GET)
 	public String noticeBoardWrite() {
 		
 		return "WEB-INF/KES/noticeBoardWrite";
 	}
 	
-	// �������� ���� ������
 	@RequestMapping(value= "noticeBoardModify.aws", method=RequestMethod.GET)
 	public String noticeBoardModify() {
 		
@@ -24,8 +22,6 @@ public class NoticeBoardController {
 
 	@RequestMapping(value="noticeBoardContents.aws", method=RequestMethod.GET)
 	public String noticeBoardContents() {
-		
-		//System.out.println("noticeBoardContents.aws ����");
 		
 		return "WEB-INF/KIS/noticeBoardContents"; 
 	}
