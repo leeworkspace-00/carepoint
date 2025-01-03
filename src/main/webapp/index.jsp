@@ -16,15 +16,12 @@
     <a href="/LIA/exerciseMain.aws">운동 페이지(인아)</a> 
 
    <br>경현
-    <a href="/LKH/userJoin.aws">회원가입 페이지(경현)</a>
    <br>
-    <a href="/LKH/userLogin.aws">로그인 페이지(경현)</a>
+    <a href="/user/userDetail.aws">회원 상세정보 입력페이지(경현)</a>
    <br>
-    <a href="/LKH/userDetail.aws">회원 상세정보 입력페이지(경현)</a>
+    <a href="/user/myPage.aws">회원 마이페이지(경현)</a>
    <br>
-    <a href="/LKH/myPage.aws">회원 마이페이지(경현)</a>
-   <br>
-    <a href="/LKH/mainPage.aws">메인페이지(경현)</a>
+    <a href="/user/mainPage.aws">메인페이지(경현)</a>
     
    <br>이슬
     <a href="/KES/boardWrite.aws">게시판 글쓰기 페이지(이슬)</a>

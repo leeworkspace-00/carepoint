@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* 메인 컨텐츠 스타일 */
 .main-content {
   display: flex; /* Flexbox로 좌우 배치 */

@@ -46,8 +46,8 @@
       </a>
     </div>
     <ul class="menu">
-        <li><a>회원가입</a></li>
-        <li><a>로그인</a></li>
+        <li><a href = "/user/userJoin.aws">회원가입</a></li>
+        <li><a href = "/user/userLogin.aws">로그인</a></li>
          <li>         
          <button class="category-btn" onclick="toggleChapters()">≡</button>
          </li>
@@ -68,9 +68,9 @@
     </ul>
     <!-- Bottom Links for Login/Signup or My Page/Logout -->
     <div class="bottom-links">
-        <a href="#">로그인</a>
+        <a href="/user/userLogin.aws">로그인</a>
         <span>/</span>
-        <a href="#">회원가입</a>  
+        <a href="/user/userLogin.aws">회원가입</a>  
     </div>
 </div>
 
