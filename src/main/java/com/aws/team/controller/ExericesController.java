@@ -1,4 +1,4 @@
-package controller;
+package com.aws.team.controller;
 
 import java.io.IOException;
 
@@ -32,6 +32,7 @@ public class ExericesController {
 	
 	@RequestMapping(value="calculateBMI.aws", method=RequestMethod.POST)
     public String calculateBMI(@RequestParam double height, @RequestParam double weight, Model model) {
+
 
 		double heightInMeters = height / 100.0;
         double bmi = weight / (heightInMeters * heightInMeters);

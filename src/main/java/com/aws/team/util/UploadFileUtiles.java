@@ -1,4 +1,4 @@
-package utill;
+package com.aws.team.util;
 
 public class UploadFileUtiles {
 

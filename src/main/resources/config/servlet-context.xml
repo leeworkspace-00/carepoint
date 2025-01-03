@@ -51,7 +51,7 @@
 		</interceptor>	
 	</interceptors> -->
 	
-	<context:component-scan base-package="controller" />
+	<context:component-scan base-package="com.aws.team.controller" />
 	
 	
 	
