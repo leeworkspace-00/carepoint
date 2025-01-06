@@ -35,7 +35,6 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		HashMap<String, Object> hm = new HashMap<String, Object>(); // 알아보기
 		hm.put("startPageNum", (scri.getPage()-1) * scri.getPerPageNum());
 		hm.put("perPageNum", scri.getPerPageNum());
-		hm.put("searchType", scri.getSearchType());
 		hm.put("keyword", scri.getKeyword());
 		
 		ArrayList<BoardVo> blist = fbm.freeBoardSelectAll(hm);

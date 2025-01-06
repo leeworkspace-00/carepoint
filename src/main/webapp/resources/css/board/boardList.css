@@ -11,14 +11,18 @@ a {
 .listDiv {
 	display: flex;
     justify-content: center; /* 수평 중앙 정렬 */
-    height: 900px;          /* 높이 설정 */
+    height: 100%;          /* 높이 설정 */
+    flex-direction: column;  /* 검색창과 테이블을 세로로 배치 */
+    align-items: center;     /* 중앙 정렬 */
+    width: 55%;
+    margin: 0 auto;
 }
 
 .listTable {
-	width: 60%;
-	height: 700px;
+	width: 100%;
 	border-spacing: 0; /* 셀 간 여백 제거 */
     border-collapse: collapse; /* 테두리 겹치게 설정 */
+    text-align: center;
 }
 
 .listTable th {
@@ -32,6 +36,7 @@ a {
 .listTable td {
 	color: #424242;
 	height: 50px;
+    overflow: hidden;
 }
 
 .listTable th, .listTable td { 
@@ -53,7 +58,6 @@ a {
 
 .listTable .No {
 	position: relative;
-  	left: -10px; /* 원하는 만큼 왼쪽으로 이동 */
   	text-align: center; /* 여전히 텍스트를 중앙 정렬 */
   	width: 10%;
 }
@@ -67,9 +71,15 @@ a {
 
 /* 검색창 */
 
+.searchContainer {
+    display: flex;
+    justify-content: flex-end; /* 검색창을 오른쪽 정렬 */
+    width: 100%;               /* 부모 컨테이너의 전체 너비 사용 */
+    margin-bottom: 10px;       /* 검색창과 테이블 간격 */
+}
+
 .searchDiv {
 	display: flex;
-	padding: 15px 380px;
 	justify-content: right; /* 수평 중앙 정렬 */
 	align-items: right;    /* 수직 중앙 정렬 */
 	margin-top: 10px;
@@ -194,6 +204,8 @@ a {
     justify-content: center; /* 수평 중앙 정렬 */
     align-items: center;     /* 수직 정렬 */
     height: 1000px;          /* 높이 설정 */
+    width: 55%;
+    margin: 0 auto;
 }
 
 
@@ -205,6 +217,8 @@ a {
     justify-content: center; /* 수평 중앙 정렬 */
     align-items: center;     /* 수직 정렬 */
     height: 1000px;          /* 높이 설정 */
+    width: 55%;
+    margin: 0 auto;
 }
 
 .noticeNo {

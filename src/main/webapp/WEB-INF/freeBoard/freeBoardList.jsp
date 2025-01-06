@@ -13,35 +13,44 @@
 	<!-- header -->
 	<jsp:include page="/WEB-INF/include/header_format.jsp" />
 	
-	<form class="search" name="frm" action="/LIA/freeBoardList.aws" method="get">
-		<div class="searchDiv">
-			<input type="text" name="keyword" onkeyup="showDropdown(this.value)" autocomplete="off">
-			<div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
-			<button type="submit" class="btn">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-	  				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-				</svg>
-			</button>
-		</div>
-	</form>
 	
 	<div class="total-div">
 		<div class="listDiv">
+			<div class="searchContainer">
+				<form class="search" name="frm" action="/freeBoard/freeBoardList.aws" method="get">
+					<div class="searchDiv">
+						<input type="text" name="keyword" onkeyup="showDropdown(this.value)" autocomplete="off">
+						<div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
+						<button type="submit" class="btn">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+				  				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+							</svg>
+						</button>
+					</div>
+				</form>
+			</div>
 			<table class="listTable">
-				<tr>
-					<th>No</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
-				</tr>
-				<c:forEach items = "${blist}" var = "bv" varStatus="status"> 
-				<tr>
-					<td class="No">${pm.totalCount - (status.index + (pm.scri.page-1) * pm.scri.perPageNum) }</td>
-					<td class="subject"><a>${bv.subject }</a></td>
-					<td class="writer">${bv.usernick }</td>
-					<td class="writeday">${bv.writedate }</td>
-				</tr>
-				</c:forEach>
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>작성일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items = "${blist}" var = "bv" varStatus="status"> 
+						<tr>
+							<td class="No">${pm.totalCount - (status.index + (pm.scri.page-1) * pm.scri.perPageNum) }</td>
+							<td class="subject"><a>${bv.subject }</a></td>
+							<td class="writer">${bv.usernick }</td>
+							<td class="writeday">${bv.writedate.substring(0,10) }</td>
+						</tr>
+					</c:forEach>
+					<tr class="write-tr">
+						<td class="write-td" colspan="4"><button onclick="location.href='/freeBoard/freeBoardWrite.aws';">글 작성</button></td>
+					</tr>
+				</tbody>
 			</table>
 		</div>		
 	</div>

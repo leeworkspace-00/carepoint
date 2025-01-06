@@ -41,18 +41,24 @@ public class FreeBoardController {
 	@RequestMapping(value="freeBoardList.aws", method=RequestMethod.GET)
 	public String freeBoardList(SearchCriteria scri, Model model) {
 		
+		System.out.println("freeBoardList들어옴");
+		
 		int cnt = freeBoardService.freeBoardTatalCount(scri);
 		  
 		pm.setScri(scri);		
 		pm.setTotalCount(cnt);
 		  
 		ArrayList<BoardVo> blist = freeBoardService.freeBoardSelectAll(scri);
+		
+		System.out.println("freeBoardList들어옴" + pm);
+		System.out.println("freeBoardList들어옴" + blist);
 		  
 		model.addAttribute("blist", blist);
 		model.addAttribute("pm", pm);
 		
 		return "WEB-INF/freeBoard/freeBoardList"; 
 	}
+	
 	@RequestMapping(value= "freeBoardWrite.aws", method=RequestMethod.GET)
 	public String boardWrite() {
 		
