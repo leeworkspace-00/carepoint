@@ -119,10 +119,6 @@ public class FreeBoardController {
 
 	}
 	
-	@RequestMapping(value="freeBoardList.aws", method=RequestMethod.GET)
-	public String freeBoardList() {
-		
-		return "WEB-INF/freeBoard/freeBoardList"; 
-	}
+
 
 }
