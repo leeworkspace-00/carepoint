@@ -1,17 +1,22 @@
 package com.aws.team.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value="/exercise/")
@@ -56,33 +61,27 @@ public class ExericesController {
         return "WEB-INF/exercise/bmi";
     }
 
-	@RequestMapping(value = "saveSuccess.aws", method = RequestMethod.POST)
-    public void saveSuccess(@RequestBody RequestData data, HttpServletResponse response) throws IOException {
-	 	
-	 	System.out.println("saveSuccess.aws 들어옴(controller)");
-        System.out.println("요청된 날짜: " + data.getDate());
-
-        String imageUrl = "/resources/image/success.png";
-        String jsonResponse = "{\"success\": true, \"imageUrl\": \"" + imageUrl + "\"}";
-
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("application/json; charset=UTF-8");
-        response.getWriter().write(jsonResponse);
-       
-    }
-
-    public static class RequestData {
-        private String date;
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-    }
+	@ResponseBody
+	@RequestMapping(value = "SampleCalendarList")
+	public Map<String,Object> sampleCalanderList(final @RequestParam Map<String, Object> param
+	        , final HttpServletRequest request
+	        , final HttpServletResponse response
+	        , final ModelMap model
+	        ) throws Exception {
+	        System.out.println("캘린더 통신 성공");
+	        System.out.println(param);
+	        param.put("start", "2021-12-25");
+	        param.put("end", "2021-12-26");
+	        param.put("title", "2021-12-25");
+	        System.out.println(param);
+	    return param;
+	}
 	
+	@RequestMapping(value="calendarTest.aws", method=RequestMethod.GET)
+	public String calendarTest() {
+		
+		return "WEB-INF/exercise/calendarTest"; 
+	}
 	
 	
 	

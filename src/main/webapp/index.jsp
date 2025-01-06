@@ -14,6 +14,8 @@
     <a href="/freeBoard/freeBoardList.aws">자유게시판 페이지(인아)</a>
    <br>
     <a href="/exercise/exerciseMain.aws">운동 페이지(인아)</a> 
+    <br>
+    <a href="/exercise/calendarTest.aws">캘린더 테스트 페이지(인아)</a> 
 
    <br>경현
    <br>
