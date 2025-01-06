@@ -92,7 +92,7 @@ button {
   padding-right: 80px; /* 버튼 공간 확보 */
 }
 
-.input-wrapper .check-btn {
+.input-wrapper .nickcheck-btn .idcheck-btn {
   position: absolute; /* 부모 요소 기준 위치 고정 */
   top: 50%; /* 세로 중앙 정렬 */
   right: 20px; /* 오른쪽 여백 */
@@ -104,10 +104,10 @@ button {
   border: none;
 }
 
-.check-btn:hover {
-  background-color: #27408B; /* 배경색 변경 */
-}
-  button:hover {
+
+
+
+button:hover {
    background-color: #27408B; /* 배경색 변경 */
 }
 /* 검색 기록 드롭다운 */
