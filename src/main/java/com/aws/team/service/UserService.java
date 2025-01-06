@@ -1,7 +1,7 @@
 package com.aws.team.service;
 
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
 import com.aws.team.domain.UserVo;
 
 @Service

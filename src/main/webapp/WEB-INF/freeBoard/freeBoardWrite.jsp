@@ -1,11 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>자유게시판 글쓰기</title>
-<link href= "<%=request.getContextPath()%>/resources/css/board/boardWrite.css" type="text/css" rel="stylesheet">
+<link href= "${pageContext.request.contextPath}/resources/css/board/boardWrite.css" type="text/css" rel="stylesheet">
+<script>
+
+function check() {
+    const fm = document.frm;
+	
+    if (fm.subject.value === "") {
+        alert("제목을 입력해주세요.");
+        fm.subject.focus();
+        return;
+    }
+    if (fm.content.value === "") {
+        alert("내용을 입력해주세요.");
+        fm.content.focus();
+        return;
+    }
+
+
+    const ans = confirm("글을 등록하겠습니까?");
+    if (ans) {
+        fm.action = "${pageContext.request.contextPath}/freeBoard/freeBoardWriteAction.aws";
+        fm.method = "post";
+        fm.enctype = "multipart/form-data";
+        fm.submit();
+    }
+}
+
+</script>
 </head>
 <body>
 
@@ -15,6 +43,7 @@
 <h2>글쓰기</h2>
 <div class="edit-container">
   <form name="frm">
+  <input type="hidden" name = "board_type" value = "F">
   
     <div class="form-group">
       <label for="title">제목</label>

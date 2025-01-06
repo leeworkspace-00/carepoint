@@ -12,6 +12,7 @@ public class UserVo {
 	private String joindate; 
 	private String modifydate;
 	private String delyn; 
+	private String ip;
 	
 	public int getUser_pk() {
 		return user_pk;
@@ -85,5 +86,7 @@ public class UserVo {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	private String ip;
+
+
+
 }

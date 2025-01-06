@@ -4,6 +4,7 @@ import com.aws.team.domain.UserVo;
 
 public interface UserMapper {
 	public int userInsert(UserVo uv);
+	
 	// 아이디 중복체크
 	public int userIdCheck(String userid);
 	

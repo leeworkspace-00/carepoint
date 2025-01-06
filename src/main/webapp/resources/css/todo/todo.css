@@ -30,7 +30,8 @@
 }
 
 .fc-prev-button, .fc-next-button {
-   width: 50px !important; /* 버튼 넓이 */
+    width: 50px !important; /* 버튼 넓이 */
+	width: 50px !important; /* 버튼 넓이 */
     height: 50px !important; /* 버튼 높이 */
     background-color: white !important; /* 버튼 배경색 */
     color: #2c3e50 !important; /* 버튼 텍스트 색상 */

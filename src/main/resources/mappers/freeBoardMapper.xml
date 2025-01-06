@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aws.team.persistance.FreeBoardMapper">
+
+<sql id="search">
+	<if test="keyword != null and keyword != ''">
+		AND subject LIKE CONCAT('%', #{keyword}, '%')
+	</if>
+</sql>
+
+<select id="freeBoardTatalCount" parameterType="scri" resultType="int">
+	SELECT COUNT(*) AS cnt FROM board 
+	WHERE delyn = 'N' AND board_type = 'F'
+	<include refid="search"/>
+</select>
+
+<select id="freeBoardSelectAll" parameterType="HashMap" resultType="bv">
+	SELECT b.board_pk AS board_pk, b.subject AS subject, b.writedate AS writedate, u.usernick AS usernick FROM board b
+    JOIN user u ON b.user_pk = u.user_pk
+	WHERE b.delyn = 'N' AND board_type = 'F'
+	<include refid="search"/>
+	ORDER BY board_pk DESC LIMIT #{startPageNum}, #{perPageNum}
+</select>
+
+<insert id="freeBoarInsert" parameterType="bv">
+   	INSERT INTO board(board_type, subject, content, filename, ip, user_pk) 
+   	VALUES(#{board_type}, #{subject}, #{content}, #{uploadedFileName}, #{ip}, 2)
+</insert>
+
+</mapper>

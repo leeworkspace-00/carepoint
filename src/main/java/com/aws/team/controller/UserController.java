@@ -1,5 +1,6 @@
 package com.aws.team.controller;
 
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +16,15 @@ import org.json.simple.JSONObject;
 import com.aws.team.domain.UserVo;
 import com.aws.team.service.UserService;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 @Controller
 @RequestMapping(value = "/user/")
 public class UserController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
@@ -30,12 +35,13 @@ public class UserController {
 
 	@Autowired
 	SqlSession sqlSession;
-	
-	// 회원가입 페이지 보여주기
+
+
 	@RequestMapping(value = "userJoin.aws", method = RequestMethod.GET)
 	public String userJoin() {
 		return "WEB-INF/user/userJoin";
 	}
+
 	// 회원가입 동작구현
 	@RequestMapping(value = "userJoinAction.aws", method = RequestMethod.POST)
 	public String userJoinAction(UserVo uv) {
@@ -93,3 +99,4 @@ public class UserController {
 	}
 
 }
+

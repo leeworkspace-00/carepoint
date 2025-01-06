@@ -11,7 +11,13 @@ public class TodoController {
 	@RequestMapping(value="todoList.aws", method=RequestMethod.GET)
 	public String todoList() {
 
+
 		return "WEB-INF/todo/todoList"; 
+
+		
+		//System.out.println("todoList.aws");
+		
+
 	}
 
 }

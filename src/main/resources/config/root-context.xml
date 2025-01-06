@@ -26,33 +26,27 @@
 	<context:property-placeholder location="classpath:properties/db.properties"/>
 	
 	<bean id="db" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="${db.driver}" />
-		<property name="url" value="${db.url}" />
-		<property name="username" value="${db.username}" />
-		<property name="password" value="${db.password}" />
-	</bean>	
+	    <property name="driverClassName" value="${db.driver}" />
+	    <property name="url" value="${db.url}" />
+	    <property name="username" value="${db.username}" />
+	    <property name="password" value="${db.password}" />
+	</bean>
 		
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="db" />
 		<property name="mapperLocations" value="classpath:mappers/*.xml" />
 		<property name="configLocation" value="classpath:config/mybatis_config.xml" />
 	</bean>
-	
-	<!-- 쿼리를 보내는 대리점 같은 곳 / 위 쿼리와 연동 / 쿼리를 실질적으로 사용 / sqlSessionFactory와 연동되어 잇음-->
-	
-    <!-- sqlSessionFactory 사용하고 싶을 때는 sqlSession 사용-->
-    
-    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-       <!-- 생성자 -->
+
+   	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
     </bean>
     
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<constructor-arg ref="db" />
 	</bean>
-	
-	<!-- <tx:annotation-driven/> -->
+
+	<tx:annotation-driven/>
     
     <!-- <aop:aspectj-autoproxy></aop:aspectj-autoproxy> -->
     

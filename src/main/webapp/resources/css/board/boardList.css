@@ -19,8 +19,11 @@ a {
 }
 
 .listTable {
-   width: 100%;
-   border-spacing: 0; /* 셀 간 여백 제거 */
+
+    width: 100%;
+    border-spacing: 0; /* 셀 간 여백 제거 */
+	width: 100%;
+	border-spacing: 0; /* 셀 간 여백 제거 */
     border-collapse: collapse; /* 테두리 겹치게 설정 */
     text-align: center;
 }
@@ -34,8 +37,10 @@ a {
 }
 
 .listTable td {
-   color: #424242;
-   height: 50px;
+    color: #424242;
+    height: 50px;
+	color: #424242;
+	height: 50px;
     overflow: hidden;
 }
 
@@ -60,6 +65,9 @@ a {
    position: relative;
      text-align: center; /* 여전히 텍스트를 중앙 정렬 */
      width: 10%;
+	position: relative;
+  	text-align: center; /* 여전히 텍스트를 중앙 정렬 */
+  	width: 10%;
 }
 
 .listTable .writer, .listTable .writeday {
@@ -79,11 +87,16 @@ a {
 }
 
 .searchDiv {
-   display: flex;
-   justify-content: right; /* 수평 중앙 정렬 */
-   align-items: right;    /* 수직 중앙 정렬 */
-   margin-top: 10px;
-   margin-bottom: 10px;
+    display: flex;
+    justify-content: right; /* 수평 중앙 정렬 */
+    align-items: right;    /* 수직 중앙 정렬 */
+    margin-top: 10px;
+    margin-bottom: 10px;
+	display: flex;
+	justify-content: right; /* 수평 중앙 정렬 */
+	align-items: right;    /* 수직 중앙 정렬 */
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
       
 .searchDiv input {
