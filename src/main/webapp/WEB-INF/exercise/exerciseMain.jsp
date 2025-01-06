@@ -6,166 +6,202 @@
 <head>
 <meta charset="UTF-8">
 <title>운동 페이지</title>
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 <link href="/resources/css/exercise/exercise.css" rel="stylesheet">
-</head>
 <script>
-	document.addEventListener('DOMContentLoaded', function () {
-    var calendarEl = document.getElementById('calendar');
-    var exerciseForm = document.querySelector('.exercise-entry'); // 운동 시간 입력 폼
+
+document.addEventListener('DOMContentLoaded', function() {
+	var calendarEl = document.getElementById('calendar');
+	var today = new Date().toISOString().split('T')[0]; // 오늘 날짜
+	var exerciseForm = document.querySelector('.exercise-entry'); // 운동 시간 입력 폼
     var selectedDateInput = document.getElementById('selected-date'); // 선택한 날짜 input
     var hourInput = document.getElementById('hour'); // 운동 시간 input
     var minuteInput = document.getElementById('minute'); // 운동 분 input
+	
+	// 저장된 이벤트를 로컬스토리지에서 불러오기
+	var storedEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+	
+	// 마지막 클릭 날짜 로드
+	var lastClickDate = localStorage.getItem('lastClickDate');
+	
+	// 오늘 날짜와 마지막 클릭 날짜가 동일하면 버튼 비활성화
+	if (lastClickDate === today) {
+	  document.getElementById('success-btn').disabled = true; // 버튼 비활성화
+	}
+	
+	var calendar = new FullCalendar.Calendar(calendarEl, {
+	  initialView: 'dayGridMonth',
+	  /* events: [], // 초기 이벤트는 빈 배열로 시작 */
+	  dayMaxEvents: true,
+	  resources: [
+	    {
+	      id: 'a',
+	      title: 'Room A'
+	    }
+	  ],
+	  headerToolbar: {
+          left: 'prev',
+          center: 'title', // 제목 설정
+          right: 'next'
+      },
+      views: {
+          dayGridMonth: {
+              titleFormat: { year: 'numeric', month: '2-digit' } // 객체 형태로 전달
+          }                 
+      },
+      dateClick: function(info) {
+          // 날짜 클릭 이벤트
+          exerciseForm.style.display = 'block';
+          selectedDateInput.value = info.dateStr;
+          
+          // 강제로 포커스 설정
+          hourInput.blur(); // 포커스 해제
+          setTimeout(() => {
+              hourInput.focus(); // 강제로 다시 포커스 설정
+          }, 0);
+      },
+	  events: storedEvents, // 로컬 저장소에서 가져온 이벤트 사용
+	  eventContent: {
+	    html: `<div><img src="/resources/image/success.png" class="event-icon" /></div>`,
+	  },
+	  datesSet: function(info) {
+		    setTimeout(() => {
+		        var titleEl = document.querySelector('.fc-toolbar-title');
+		        if (titleEl) {
+		            var existingTitle = titleEl.querySelector('.calendar-title');
+		            if (existingTitle) {
+		                existingTitle.remove(); // 기존 요소 제거
+		            }
 
-    // FullCalendar 설정
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        events: [], // 초기에는 빈 이벤트 배열,
-        headerToolbar: {
-            left: 'prev',
-            center: 'title', // 제목 설정
-            right: 'next'
-        },
-        views: {
-            dayGridMonth: {
-                titleFormat: { year: 'numeric', month: '2-digit' } // 객체 형태로 전달
-            }                 
-        },
-        /* events: '/getExerciseRecords', // 서버에서 운동 기록 가져오기 */
-        dateClick: function(info) {
-            // 날짜 클릭 이벤트
-            exerciseForm.style.display = 'block';
-            selectedDateInput.value = info.dateStr;
-            
-          	// 강제로 포커스 설정
-            hourInput.blur(); // 포커스 해제
-            setTimeout(() => {
-                hourInput.focus(); // 강제로 다시 포커스 설정
-            }, 0);
-        },
-        eventContent: function (arg) {
-            // 이벤트에 이미지를 추가하기 위한 커스텀 렌더링
-            let imgTag = '';
-            if (arg.event.extendedProps.imageUrl) {
-                imgTag = `<img src="/resources/image/success.png" style="width:20px; height:20px;"/>`;
-            }
-            return { html: `${imgTag} ${arg.event.title}` };
-        },
-        datesSet: function(info) {
-            setTimeout(() => {
-                var titleEl = document.querySelector('.fc-toolbar-title');
-                if (titleEl) {
-                    var existingTitle = titleEl.querySelector('.calendar-title');
-                    if (existingTitle) {
-                        existingTitle.remove(); // 기존 요소 제거
-                    }
+		            var parts = titleEl.innerText.split('/');
+	                var month = parts[0] ? parts[0].trim() : 'Unknown Month';
+	                var year = parts[1] ? parts[1].trim() : 'Unknown Year';
 
-                    var parts = titleEl.innerText.split('/');
-                    var month = parts[0] ? parts[0].trim() : 'Unknown Month';
-                    var year = parts[1] ? parts[1].trim() : 'Unknown Year';
+		            // 새로운 제목 요소 생성
+		            var calendarTitle = document.createElement('div');
+		            calendarTitle.className = 'calendar-title';
 
-                    var calendarTitle = document.createElement('div');
-                    calendarTitle.className = 'calendar-title';
+		            var calendarYear = document.createElement('div');
+		            calendarYear.className = 'calendar-year';
+		            calendarYear.textContent = year; // 연도 삽입
 
-                    var calendarYear = document.createElement('div');
-                    calendarYear.className = 'calendar-year';
-                    calendarYear.textContent = year; // 연도 삽입
+		            var calendarMonth = document.createElement('div');
+		            calendarMonth.className = 'calendar-month';
+		            calendarMonth.textContent = month; // 월 삽입
 
-                    var calendarMonth = document.createElement('div');
-                    calendarMonth.className = 'calendar-month';
-                    calendarMonth.textContent = month; // 월 삽입
+		            calendarTitle.appendChild(calendarYear);
+		            calendarTitle.appendChild(calendarMonth);
 
-                    calendarTitle.appendChild(calendarYear);
-                    calendarTitle.appendChild(calendarMonth);
-                    titleEl.innerHTML = ''; // 기존 텍스트 삭제
-                    titleEl.appendChild(calendarTitle);
-                }
-            }, 0);
-        }
-    });
-
-    // 캘린더 렌더링
-    calendar.render();
-    
- 	// success 버튼 클릭 이벤트
-    document.getElementById('success-button').addEventListener('click', function () {
-        const today = new Date().toISOString().split('T')[0]; // 오늘 날짜
-        alert("success 클릭 이벤트 들어옴");
-
-        fetch('/exercise/saveSuccess.aws', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ date: today }),
-        })
-            .then((response) => {
-                console.log('HTTP 상태 코드:', response.status);
-                if (!response.ok) {
-                    throw new Error('서버 응답이 올바르지 않습니다.');
-                }
-                return response.json(); // JSON 파싱
-            })
-            .then((data) => {
-                if (data.success) {
-                    console.log('서버 응답 데이터:', data);
-                } else {
-                    console.error('서버에서 실패 응답:', data.message);
-                }
-            })
-            .catch((error) => {
-                console.error('오류 발생:', error);
-                alert('요청 처리 중 오류가 발생했습니다.');
-            });
-    });
-
-    // 운동 시간 폼 제출 이벤트
-    exerciseForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // 기본 폼 제출 방지
-
-        // 입력된 값 가져오기
-        var selectedDate = selectedDateInput.value;
-        var hour = hourInput.value;
-        var minute = minuteInput.value;
-
-        // 서버로 운동 기록 저장 요청
-        fetch('/saveExercise', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                date: selectedDate,
-                hour: hour,
-                minute: minute,
-            }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    // 저장된 운동 시간을 캘린더에 표시
-                    calendar.addEvent({
-                        title: `${hour}시간 ${minute}분 운동`,
-                        start: selectedDate,
-                    });
-                    exerciseForm.style.display = 'none'; // 폼 숨기기
-                } else {
-                    alert('운동 기록 저장 실패!');
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('운동 기록 저장 중 오류 발생!');
-            });
-	    });
+		            // 기존 제목 삭제 및 새 제목 삽입
+		            titleEl.innerHTML = ''; // 기존 텍스트 삭제
+		            titleEl.appendChild(calendarTitle);
+		        }
+		    }, 0);
+		}
 	});
 	
+	// 캘린더 렌더링
+	calendar.render();
+	
+	// 성공 버튼 클릭 시 동적으로 이벤트 추가
+	document.getElementById('success-btn').addEventListener('click', function() {
+	  // 현재 날짜에 이벤트 추가
+	  var currentDate = new Date().toISOString().split('T')[0]; // 오늘 날짜
+	  var newEvent = {
+	    id: new Date().getTime().toString(), // 새로운 이벤트 ID (타임스탬프 사용)
+	    resourceId: 'a', // 리소스 ID (Room A)
+	    title: '미션완료', // 이벤트 제목
+	    start: currentDate, // 오늘 날짜
+	    eventContent: {
+	      html: `<div><img src="/resources/image/success.png" class="event-icon" /></div>`,
+	    }
+	  };
+	
+	  // 캘린더에 이벤트 추가
+	  calendar.addEvent(newEvent);
+	  
+	// 이벤트 DOM 요소를 찾고 포커스 설정
+	    setTimeout(() => {
+	        var eventElements = document.querySelectorAll(`[data-date="${currentDate}"] .fc-event`);
+	        if (eventElements && eventElements.length > 0) {
+	            var lastAddedEvent = eventElements[eventElements.length - 1]; // 마지막 이벤트 가져오기
+	            lastAddedEvent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+	            lastAddedEvent.focus(); // 포커스 설정 (선택사항)
+	        }
+	    }, 300);
+	
+	  // 로컬 저장소에 이벤트 추가
+	  storedEvents.push(newEvent);
+	  localStorage.setItem('calendarEvents', JSON.stringify(storedEvents)); // 로컬 저장소에 저장
+	
+	  // 마지막 클릭 날짜를 저장
+	  localStorage.setItem('lastClickDate', currentDate);
+	
+	  // 버튼 비활성화
+	  document.getElementById('success-btn').disabled = true;
+	});
+	
+	//운동 시간 폼 제출 이벤트
+	exerciseForm.addEventListener('submit', function (event) {
+	    event.preventDefault(); // 기본 폼 제출 방지
+	
+	    // 입력된 값 가져오기
+	    var selectedDate = selectedDateInput.value;
+	    var hour = hourInput.value;
+	    var minute = minuteInput.value;
+	
+	    // 서버로 운동 기록 저장 요청
+	    fetch('/saveExercise', {
+	        method: 'POST',
+	        headers: {
+	            'Content-Type': 'application/json',
+	        },
+	        body: JSON.stringify({
+	            date: selectedDate,
+	            hour: hour,
+	            minute: minute,
+	        }),
+	    })
+	        .then((response) => response.json())
+	        .then((data) => {
+	            if (data.success) {
+	                // 저장된 운동 시간을 캘린더에 표시
+	                calendar.addEvent({
+	                    title: `${hour}시간 ${minute}분 운동`,
+	                    start: selectedDate,
+	                });
+	                exerciseForm.style.display = 'none'; // 폼 숨기기
+	            } else {
+	                alert('운동 기록 저장 실패!');
+	            }
+	        })
+	        .catch((error) => {
+	            console.error('Error:', error);
+	            alert('운동 기록 저장 중 오류 발생!');
+	        });
+	});
+});
+
 </script>
+
+</head>
 <body>
-	<!-- header -->
-	<jsp:include page="/WEB-INF/include/header_format.jsp" />
-	<div class="top-service">
+  <!-- header -->
+  <jsp:include page="/WEB-INF/include/header_format.jsp" />
+  
+  <button id="clear-btn" class="clear-btn">Clear Data</button>
+  <script>
+    document.getElementById('clear-btn').addEventListener('click', function() {
+      // 로컬 저장소에서 이벤트와 마지막 클릭 날짜 삭제
+      localStorage.removeItem('calendarEvents');
+      localStorage.removeItem('lastClickDate');
+    
+      // 캘린더 새로고침
+      location.reload(); // 페이지 새로고침으로 데이터 초기화
+    });
+  </script>
+  
+  <div class="top-service">
 		<div class="left-service">
 			<ul>
 				<li class="profile-li-1">
@@ -181,7 +217,7 @@
 			<div class="mission">
 				<h3>오늘의 미션!</h3>
 				<form name="success-frm">
-				<p>산책 1시간 하기<button id="success-button" onclick="successCheck();">success</button></p>
+				<p>산책 1시간 하기<button id="success-btn" class="success-btn">success</button></p>
 				</form>
 			</div>
 			<div class="graph">
@@ -217,10 +253,12 @@
 	        <button type="submit">저장</button>
 	    </form>
 	</div>
-	<div class="calendar" id="calendar"></div>
-	<!-- 여백 -->
-	<div style="height: 400px;"></div>
-	<!-- footer -->
-	<jsp:include page="/WEB-INF/include/footer_format.jsp" />
+
+  <div class="calendar" id="calendar"></div>
+  
+  <!-- 여백 -->
+  <div style="height: 400px;"></div>
+  <!-- footer -->
+  <jsp:include page="/WEB-INF/include/footer_format.jsp" />
 </body>
 </html>
