@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>자유 게시판 목록 페이지</title>
-<link href="/resources/css/board/boardList.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/board/boardList.css" rel="stylesheet">
 </head>
 <body>
 	
@@ -42,7 +42,7 @@
 					<c:forEach items = "${blist}" var = "bv" varStatus="status"> 
 						<tr>
 							<td class="No">${pm.totalCount - (status.index + (pm.scri.page-1) * pm.scri.perPageNum) }</td>
-							<td class="subject"><a>${bv.subject }</a></td>
+							<td class="subject"><a href="${pageContext.request.contextPath}/freeBoard/freeBoardContents.aws?board_pk=${bv.board_pk}">${bv.subject }</a></td>
 							<td class="writer">${bv.usernick }</td>
 							<td class="writeday">${bv.writedate.substring(0,10) }</td>
 						</tr>

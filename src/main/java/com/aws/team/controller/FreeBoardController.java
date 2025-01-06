@@ -1,8 +1,10 @@
 package com.aws.team.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +13,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aws.team.domain.BoardVo;
 import com.aws.team.domain.PageMaker;
 import com.aws.team.domain.SearchCriteria;
 import com.aws.team.service.FreeBoardService;
+import com.aws.team.util.UploadFileUtiles;
 import com.aws.team.util.UserIp;
 
 @Controller
@@ -41,17 +47,12 @@ public class FreeBoardController {
 	@RequestMapping(value="freeBoardList.aws", method=RequestMethod.GET)
 	public String freeBoardList(SearchCriteria scri, Model model) {
 		
-		System.out.println("freeBoardList들어옴");
-		
 		int cnt = freeBoardService.freeBoardTatalCount(scri);
 		  
 		pm.setScri(scri);		
 		pm.setTotalCount(cnt);
 		  
 		ArrayList<BoardVo> blist = freeBoardService.freeBoardSelectAll(scri);
-		
-		System.out.println("freeBoardList들어옴" + pm);
-		System.out.println("freeBoardList들어옴" + blist);
 		  
 		model.addAttribute("blist", blist);
 		model.addAttribute("pm", pm);
@@ -60,9 +61,44 @@ public class FreeBoardController {
 	}
 	
 	@RequestMapping(value= "freeBoardWrite.aws", method=RequestMethod.GET)
-	public String boardWrite() {
+	public String boardWrite() { 
 		
 		return "WEB-INF/freeBoard/freeBoardWrite";
+	}
+	
+	@RequestMapping(value = "freeBoardWriteAction.aws", method = RequestMethod.POST)
+	public String noticeWriteAction(
+			BoardVo bv,
+			@RequestParam("attachfile") MultipartFile attachfile,
+			RedirectAttributes rttr,
+			HttpServletRequest request
+			) throws IOException, Exception { 
+		
+		MultipartFile file = attachfile;
+		String uploadedFileName = "";
+		
+		if (! file.getOriginalFilename().equals("")) {	// 파일업로드
+			uploadedFileName = UploadFileUtiles.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());			
+		}
+		
+		int user_pk = Integer.parseInt(request.getSession().getAttribute("user_pk").toString());
+		String ip = userIp.getUserIp(request);
+		
+		bv.setUploadedFileName(uploadedFileName);
+		bv.setUser_pk(user_pk);
+		bv.setIp(ip);
+		
+		int value = freeBoardService.freeBoarInsert(bv);
+		
+		if (value == 1) {
+			rttr.addFlashAttribute("msg", "글이 등록되었습니다.");
+			path = "redirect:/freeBoard/freeBoardList.aws";			
+		} else {			
+			rttr.addFlashAttribute("msg", "입력이 잘못되었습니다.");
+			path = "redirect:/freeBoard/freeBoardWrite.aws";
+		}
+		
+		return path;
 	}
 	
 	@RequestMapping(value= "freeBoardModify.aws", method=RequestMethod.GET)

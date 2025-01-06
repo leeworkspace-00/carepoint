@@ -11,5 +11,7 @@ public interface FreeBoardMapper {
 	public int freeBoardTatalCount(SearchCriteria scri);
 
 	public ArrayList<BoardVo> freeBoardSelectAll(HashMap<String, Object> hm);
+	
+	public int freeBoarInsert(BoardVo bv);
 
 }

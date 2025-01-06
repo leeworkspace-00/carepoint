@@ -11,4 +11,6 @@ public interface FreeBoardService {
 
 	public ArrayList<BoardVo> freeBoardSelectAll(SearchCriteria scri);
 
+	public int freeBoarInsert(BoardVo bv);
+
 }

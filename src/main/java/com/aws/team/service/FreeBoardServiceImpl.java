@@ -42,4 +42,12 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		return blist;
 	}
 
+	@Override
+	public int freeBoarInsert(BoardVo bv) {
+		
+		int value = fbm.freeBoarInsert(bv);
+		
+		return value;
+	}
+
 }

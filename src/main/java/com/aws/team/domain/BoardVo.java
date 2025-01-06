@@ -17,6 +17,7 @@ public class BoardVo {
 	private int level_;
 	private String usernick;
 	private int user_pk;
+	private String uploadedFileName;
 	
 	public int getBoard_pk() {
 		return board_pk;
@@ -107,5 +108,11 @@ public class BoardVo {
 	}
 	public void setUser_pk(int user_pk) {
 		this.user_pk = user_pk;
+	}
+	public String getUploadedFileName() {
+		return uploadedFileName;
+	}
+	public void setUploadedFileName(String uploadedFileName) {
+		this.uploadedFileName = uploadedFileName;
 	}
 }
