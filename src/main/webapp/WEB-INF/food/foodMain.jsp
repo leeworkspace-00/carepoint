@@ -15,11 +15,11 @@
 <jsp:include page="/WEB-INF/include/header_format.jsp" />
 
 
-<form class="search" name="frm" action="/LIA/freeBoardList.aws" method="get">
+<form class="search" name="frm" action="/food/foodMain.aws" method="get">
       <div class="search-container">
-         <input type="text" name="keyword" onkeyup="showDropdown(this.value)" autocomplete="off" placeholder="칼로리가 궁금한 음식을 입력해보세요">
+         <input type="text" name="menu" onkeyup="showDropdown(this.value)" autocomplete="off" placeholder="칼로리가 궁금한 음식을 입력해보세요">
          <div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
-         <button type="button" class="btn">
+         <button type="submit" class="btn">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
             </svg>
@@ -37,11 +37,22 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>쌀밥 100g</td>
-        <td>143kcal</td>
-        <td>지방: 0.48g | 탄수화물: 31.02g | 단백질: 2.72g</td>
-      </tr>
+            <!-- 검색 결과 반복 출력 -->
+            <c:forEach var="food" items="${foodSearchResults}">
+                <tr>
+                    <td>${food.descKor}</td>
+                    <td>${food.nutrCont1} kcal</td>
+                    <td>지방: ${food.nutrCont3} g | 탄수화물: ${food.nutrCont2} g | 단백질: ${food.nutrCont3} g</td>
+                </tr>
+            </c:forEach>
+
+            <!-- 검색 결과가 없을 때 -->
+            <c:if test="${empty foodSearchResults}">
+                <tr>
+                    <td colspan="3">검색 결과가 없습니다.</td>
+                </tr>
+            </c:if>
+
     </tbody>
   </table>
 </div>
