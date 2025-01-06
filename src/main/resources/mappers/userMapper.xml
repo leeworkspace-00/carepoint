@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.aws.team.persistance.UserMapper">
+<mapper namespace="com.aws.team.UserMapper">
     <!-- SQL 매핑 내용 -->
     <!-- 회원가입 인서트 쿼리문 -->
     <insert id="userInsert" parameterType="com.aws.team.domain.UserVo">
