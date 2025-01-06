@@ -62,7 +62,7 @@
         <li><a href="#">식단</a></li>
         <li><a href="#">TodoList</a></li>
         <li><a href="/LIA/bmi.aws">BMI계산기</a></li>
-        <li><a href="/LIA/freeBoardList.aws">자유게시판</a></li>
+        <li><a href="/freeBoard/freeBoardList.aws">자유게시판</a></li>
         <li><a href="/LIA/qnaBoardList.aws">Q&A</a></li>
         <li><a href="/LIA/noticeBoardList.aws">공지사항</a></li>
     </ul>

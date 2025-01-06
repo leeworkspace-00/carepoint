@@ -11,7 +11,7 @@
    <jsp:include page="/WEB-INF/include/header_format.jsp" />
 
    <br>인아[qna목록, 공지 목록, bmi계산기]
-    <a href="/LIA/freeBoardList.aws">자유게시판 페이지(인아)</a>
+    <a href="/freeBoard/freeBoardList.aws">자유게시판 페이지(인아)</a>
    <br>
     <a href="/LIA/exerciseMain.aws">운동 페이지(인아)</a> 
 
@@ -31,9 +31,9 @@
    <br>
     <a href="/KES/foodRecom.aws">식단추천 페이지(이슬)</a> 
    <br>
-	<a href="/KES/boardWrite.aws">자유게시판 글쓰기(이슬)</a>
+	<a href="/freeBoard/freeBoardWrite.aws">자유게시판 글쓰기(이슬)</a>
    <br>
-   	<a href="/KES/boardModify.aws">자유게시판 글수정(이슬)</a>
+   	<a href="/freeBoard/freeBoardModify.aws">자유게시판 글수정(이슬)</a>
    <br>
    <a href="/KES/qnaBoardWrite.aws">QnA 문의하기(이슬)</a>
    <br>
@@ -52,13 +52,13 @@
 	<a href="/KES/foodMain.aws">식단 메인 페이지(이슬)</a>
 
    <br>인서
-    <a href="/KIS/freeBoardContents.aws">자유게시판 상세내용(인서)</a>
+    <a href="/freeBoard/freeBoardContents.aws">자유게시판 상세내용(인서)</a>
    <br>
     <a href="/KIS/noticeBoardContents.aws">공지사항 상세보기</a>
    <br>
     <a href="/KIS/qnaBoardContents.aws">Q&A상세보기</a>
    <br>
-    <a href="/KIS/todoList.aws">오늘의 할일</a>
+    <a href="/todo/todoList.aws">오늘의 할일</a>
 
    <div style="height:500px;"></div>  
    

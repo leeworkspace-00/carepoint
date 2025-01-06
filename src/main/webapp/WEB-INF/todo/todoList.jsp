@@ -80,8 +80,7 @@
                         titleEl.appendChild(calendarTitle);
                     }
                 }, 0);
-            }
-,
+            },
             events: [
                 { id: '1', title: '운동가기', start: '2024-12-27' },
                 { id: '2', title: '병원갔다 오기', start: '2024-12-27' },

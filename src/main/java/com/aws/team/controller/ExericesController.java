@@ -1,4 +1,4 @@
-package controller;
+package com.aws.team.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +25,7 @@ public class ExericesController {
 	
 	@RequestMapping(value="calculateBMI.aws", method=RequestMethod.POST)
     public String calculateBMI(@RequestParam double height, @RequestParam double weight, Model model) {
-        // Ű�� ���� ������ ��ȯ
-		double heightInMeters = height / 100.0; // Ű(cm) -> m ��ȯ
+		double heightInMeters = height / 100.0;
         double bmi = weight / (heightInMeters * heightInMeters);
         double standardWeight = (height - 100) * 0.9;
 
@@ -45,7 +44,6 @@ public class ExericesController {
         model.addAttribute("standardWeight", String.format("%.2f", standardWeight));
         model.addAttribute("bmiCategory", bmiCategory);
 
-        // ��� ������ ��ȯ
         return "WEB-INF/LIA/bmi";
     }
 
