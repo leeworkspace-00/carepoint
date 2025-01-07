@@ -20,5 +20,5 @@ public interface FreeBoardMapper {
 	
 	public int freeBoardUpdateViewcnt(int board_pk);
 	
-	public int freeBoardUpdateRecom(int board_pk);
+	public int freeBoardUpdateRecom(BoardVo bv);
 }

@@ -77,7 +77,12 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	@Override
 	public int freeBoardUpdateRecom(int board_pk) {
 		
-		int recom = fbm.freeBoardUpdateRecom(board_pk);
+		BoardVo bv = new BoardVo();
+		
+		bv.setBoard_pk(board_pk);
+		fbm.freeBoardUpdateRecom(bv);
+		
+		int recom = bv.getRecom();
 		
 		return recom;
 	}
