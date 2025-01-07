@@ -12,40 +12,57 @@ public class FoodVo {
 	private int kcal;
 	
 	
-	// api 호출용 
-    private String descKor; // 음식 이름
-    private String nutrCont1; // 칼로리
-    private String nutrCont2; // 탄수화물
-    private String nutrCont3; // 단백질
+	
+    private String menuName;  // 메뉴 이름
+    private double calorie;  // 칼로리
+    private double protein;  // 단백질
+    private double fat;      // 지방
+    private double carb;     // 탄수화물
     
+    
+    @Override // 객체의 데이터를 문자열로 출력
+    public String toString() {
+        return "FoodVo{" +
+               "menuName='" + menuName + '\'' +
+               ", calorie=" + calorie +
+               ", protein=" + protein +
+               ", fat=" + fat +
+               ", carb=" + carb +
+               '}';
+    }
+	
+	
 
-	public String getDescKor() {
-		return descKor;
+	public String getMenuName() {
+		return menuName;
 	}
-	public void setDescKor(String descKor) {
-		this.descKor = descKor;
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
 	}
-	public String getNutrCont1() {
-		return nutrCont1;
+	public double getCalorie() {
+		return calorie;
 	}
-	public void setNutrCont1(String nutrCont1) {
-		this.nutrCont1 = nutrCont1;
+	public void setCalorie(double calorie) {
+		this.calorie = calorie;
 	}
-	public String getNutrCont2() {
-		return nutrCont2;
+	public double getProtein() {
+		return protein;
 	}
-	public void setNutrCont2(String nutrCont2) {
-		this.nutrCont2 = nutrCont2;
+	public void setProtein(double protein) {
+		this.protein = protein;
 	}
-	public String getNutrCont3() {
-		return nutrCont3;
+	public double getFat() {
+		return fat;
 	}
-	public void setNutrCont3(String nutrCont3) {
-		this.nutrCont3 = nutrCont3;
+	public void setFat(double fat) {
+		this.fat = fat;
 	}
-	
-	
-	
+	public double getCarb() {
+		return carb;
+	}
+	public void setCarb(double carb) {
+		this.carb = carb;
+	}
 	
 	
 	
