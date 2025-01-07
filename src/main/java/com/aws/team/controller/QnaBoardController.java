@@ -39,7 +39,7 @@ public class QnaBoardController {
 	@RequestMapping(value="qnaBoardList.aws", method=RequestMethod.GET)
 	public String qnaBoardList() {
 		
-		return "WEB-INF/LIA/qnaBoardList"; 
+		return "WEB-INF/qnaBoard/qnaBoardList"; 
 	}
 
 }

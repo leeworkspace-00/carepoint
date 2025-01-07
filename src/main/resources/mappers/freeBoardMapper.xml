@@ -23,9 +23,9 @@
 	ORDER BY board_pk DESC LIMIT #{startPageNum}, #{perPageNum}
 </select>
 
-<insert id="freeBoarInsert" parameterType="bv">
+<insert id="freeBoardInsert" parameterType="bv">
    	INSERT INTO board(board_type, subject, content, filename, ip, user_pk) 
-   	VALUES(#{board_type}, #{subject}, #{content}, #{uploadedFileName}, #{ip}, 2)
+   	VALUES(#{board_type}, #{subject}, #{content}, #{uploadedFileName}, #{ip}, 1)
 </insert>
 
 </mapper>

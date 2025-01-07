@@ -67,7 +67,7 @@ public class FreeBoardController {
 	}
 	
 	@RequestMapping(value = "freeBoardWriteAction.aws", method = RequestMethod.POST)
-	public String noticeWriteAction(
+	public String freeBoardWriteAction(
 			BoardVo bv,
 			@RequestParam("attachfile") MultipartFile attachfile,
 			RedirectAttributes rttr,
@@ -81,14 +81,14 @@ public class FreeBoardController {
 			uploadedFileName = UploadFileUtiles.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());			
 		}
 		
-		int user_pk = Integer.parseInt(request.getSession().getAttribute("user_pk").toString());
+		//int user_pk = Integer.parseInt(request.getSession().getAttribute("user_pk").toString());
 		String ip = userIp.getUserIp(request);
 		
 		bv.setUploadedFileName(uploadedFileName);
-		bv.setUser_pk(user_pk);
+		//bv.setUser_pk(user_pk);
 		bv.setIp(ip);
 		
-		int value = freeBoardService.freeBoarInsert(bv);
+		int value = freeBoardService.freeBoardInsert(bv);
 		
 		if (value == 1) {
 			rttr.addFlashAttribute("msg", "글이 등록되었습니다.");

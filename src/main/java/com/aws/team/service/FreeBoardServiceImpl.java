@@ -43,9 +43,9 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	}
 
 	@Override
-	public int freeBoarInsert(BoardVo bv) {
+	public int freeBoardInsert(BoardVo bv) {
 		
-		int value = fbm.freeBoarInsert(bv);
+		int value = fbm.freeBoardInsert(bv);
 		
 		return value;
 	}

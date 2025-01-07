@@ -12,6 +12,6 @@ public interface FreeBoardMapper {
 
 	public ArrayList<BoardVo> freeBoardSelectAll(HashMap<String, Object> hm);
 	
-	public int freeBoarInsert(BoardVo bv);
+	public int freeBoardInsert(BoardVo bv);
 
 }
