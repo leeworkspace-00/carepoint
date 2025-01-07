@@ -13,7 +13,9 @@ public class UserVo {
 	private String modifydate;
 	private String delyn; 
 	private String ip;
+	private boolean detail_yn;
 	
+
 	public int getUser_pk() {
 		return user_pk;
 	}
@@ -85,6 +87,12 @@ public class UserVo {
 	}
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+	public boolean isDetail_yn() {
+		return detail_yn;
+	}
+	public void setDetail_yn(boolean detail_yn) {
+		this.detail_yn = detail_yn;
 	}
 
 

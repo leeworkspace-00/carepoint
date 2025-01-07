@@ -10,5 +10,8 @@ public interface UserMapper {
 	
 	// 닉네임 중복체크
 	public int userNickCheck(String usernick);
+	
+	// 회원 로그인 시 확인하는 메서드
+	public UserVo userLoginCheck(String userid);
 
 }

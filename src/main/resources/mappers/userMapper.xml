@@ -15,5 +15,11 @@
 	<select id="userNickCheck" parameterType="String" resultType="int">
 		SELECT COUNT(*) as cnt from user where usernick=#{usernick}
 	</select>
+	
+	<!-- 로그인시 아이디로 확인해서 전체 데이터값 가져오는 쿼리문 -->
+	<select id = "userLoginCheck" parameterType = "String" resultType = "com.aws.team.domain.UserVo">
+		SELECT * FROM user WHERE userid=#{userid}
+	</select>
+	
 
 </mapper>

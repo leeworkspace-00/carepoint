@@ -4,6 +4,7 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="uv" type="com.aws.team.domain.UserVo"/>
+        <typeAlias alias="u_dv" type="com.aws.team.domain.UserDetailVo"/>
         <typeAlias alias="bv" type="com.aws.team.domain.BoardVo"/>
  		<typeAlias alias="scri" type="com.aws.team.domain.SearchCriteria"/>
         

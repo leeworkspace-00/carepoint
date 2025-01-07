@@ -1,4 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+boolean isLoggedIn = false;
+
+if (session.getAttribute("user_pk") == null) { 
+    isLoggedIn = false;
+} else {
+    isLoggedIn = true;
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,11 +55,18 @@
       </a>
     </div>
     <ul class="menu">
-        <li><a href = "/user/userJoin.aws">회원가입</a></li>
-        <li><a href = "/user/userLogin.aws">로그인</a></li>
-         <li>         
+    <% if (session.getAttribute("user_pk") == null) {%>
+    	<!-- 로그인 안한 경우 -->
+    	<li><a href="/user/userJoin.aws">회원가입</a></li>
+        <li><a href="/user/userLogin.aws">로그인</a></li>
+    <% } else { %>
+		<!-- 로그인한 경우 -->
+        <li><a href = "/user/myPage.aws">마이페이지</a></li>
+        <li><a href = "/user/userLogout.aws">로그아웃</a></li>
+    <% } %>
+        <li>         
          <button class="category-btn" onclick="toggleChapters()">≡</button>
-         </li>
+        </li>
     </ul>
   </header>
   
@@ -68,9 +84,15 @@
     </ul>
     <!-- Bottom Links for Login/Signup or My Page/Logout -->
     <div class="bottom-links">
+    <% if (session.getAttribute("user_pk") == null){ %>	<!-- 로그인 안된경우 -->
         <a href="/user/userLogin.aws">로그인</a>
         <span>/</span>
-        <a href="/user/userLogin.aws">회원가입</a>  
+        <a href="/user/userJoin.aws">회원가입</a>  
+        <%} else { %>
+        <a href="/user/myPage.aws">마이페이지</a> <!-- 로그인 된 경우 -->
+        <span>/</span>
+        <a href="/user/userLogout.aws">로그아웃</a>  
+        <%} %>
     </div>
 </div>
 

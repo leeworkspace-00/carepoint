@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,7 +59,7 @@ function check(){
 	var ans = confirm("저장하시겠습니까?");
 	
 	if (ans == true){						
-		fm.action="<%=request.getContextPath()%>/user/userJoinAction.aws"; 
+		fm.action="${pageContext.request.contextPath}/user/userJoinAction.aws"; 
 		fm.method="post"; 
 		fm.submit();
 	}
@@ -76,16 +76,18 @@ function check(){
 
     $.ajax({
         type: "post",
-        url: "<%=request.getContextPath()%>/user/userIdCheck.aws",
+        url: "${pageContext.request.contextPath}/user/userIdCheck.aws",
         dataType: "json",
         data: {"userid": userid},
         success: function(result) {
             if (result.cnt == 0) {
                 alert("사용할 수 있는 아이디입니다.");
                 $("#idcheck-btn").val("Y");
+                
             } else {
                 alert("사용할 수 없는 아이디입니다.");
                 $("#userid").val(""); // 입력한 아이디 지우기
+                
             }
         },
         error: function() {
@@ -104,16 +106,18 @@ function check(){
 
     $.ajax({
         type: "post",
-        url: "<%=request.getContextPath()%>/user/userNickCheck.aws",
+        url: "${pageContext.request.contextPath}/user/userNickCheck.aws",
         dataType: "json",
         data: {"usernick": usernick},
         success: function(result) {
             if (result.cnt == 0) {
                 alert("사용할 수 있는 닉네임입니다.");
                 $("#nickcheck-btn").val("Y");
+                
             } else {
                 alert("사용할 수 없는 닉네임입니다.");
                 $("#usernick").val(""); // 입력한 아이디 지우기
+                
             }
         },
         error: function() {
@@ -134,22 +138,22 @@ function check(){
    <main>
     <section class="registration-form">
       <h1>회원가입</h1>
-      <form name="frm" action="<%=request.getContextPath()%>/user/userJoinAction.aws" method="post" onsubmit="return validateForm();">
+      <form name="frm" action="${pageContext.request.contextPath}/user/userJoinAction.aws" method="post">
        <input type="hidden" id="grade" name="grade" value="U">
+
         <div class="form-group">
           <label for="name">이름</label>
           <input type="text" id="username" name="username" placeholder="이름을 입력하세요" required>
-          <div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
         </div>
+        
         <div class="form-group">
           <label for="nickname">닉네임</label>
           <div class="input-wrapper">
           <input type="text" id="usernick" name="usernick" placeholder="닉네임을 입력하세요" required>
-          <div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
           	<button type="button" id="nickcheck-btn" class="nickcheck-btn" onclick="checkNickname()">중복확인</button>
-          	
         </div>
         </div>
+        
         <div class="form-group">
           <label for="id">아이디</label>
            <div class="input-wrapper">
@@ -158,26 +162,27 @@ function check(){
           	<button type="button" id="idcheck-btn" class="idcheck-btn" onclick="checkUserId()">중복확인</button>
         </div>
         </div>
+        
         <div class="form-group">
           <label for="password">비밀번호</label>
           <input type="password" id="userpwd" name="userpwd" placeholder="비밀번호를 입력하세요" required>
-          <div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
         </div>
+        
         <div class="form-group">
           <label for="confirm-password">비밀번호 확인</label>
-          <input type="password" id="userpwd2" name="userpwd2" placeholder="비밀번호를 확인해주세요" required>
-          <div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
+          <input type="password" id="userpwd2" name="userpwd2" placeholder="비밀번호를 확인해주세요" required>          
         </div>
+        
         <div class="form-group">
           <label for="phone">전화번호</label>
           <input type="tel" id="userphone" name="userphone" placeholder="전화번호를 입력하세요" required>
-          <div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
         </div>
+        
         <div class="form-group">
           <label for="email">이메일</label>
           <input type="email" id="useremail" name="useremail" placeholder="이메일을 입력하세요" required>
-          <div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
         </div>
+        
         <button type="button" onclick = "check();">회원가입하기</button>
       </form>
     </section>

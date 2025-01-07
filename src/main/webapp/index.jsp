@@ -14,12 +14,8 @@
     <a href="/freeBoard/freeBoardList.aws">자유게시판 페이지(인아)</a>
    <br>
     <a href="/exercise/exerciseMain.aws">운동 페이지(인아)</a> 
-    <br>
-    <a href="/exercise/calendarTest.aws">캘린더 테스트 페이지(인아)</a> 
 
    <br>경현
-   <br>
-    <a href="/user/userDetail.aws">회원 상세정보 입력페이지(경현)</a>
    <br>
     <a href="/user/myPage.aws">회원 마이페이지(경현)</a>
    <br>
@@ -27,9 +23,7 @@
    <br>
     <a href="/user/userLogin.aws">로그인 페이지(경현)</a>
    <br>
-    <a href="/user/userDetail.aws">회원 상세정보 입력페이지(경현)</a>
-   <br>
-    <a href="/user/myPage.aws">회원 마이페이지(경현)</a>
+    <a href="/user/detail/userDetail.aws">회원 상세정보 입력페이지(경현)</a>
    <br>
     <a href="/user/mainPage.aws">메인페이지(경현)</a>
     
@@ -67,8 +61,6 @@
    <br>
     <a href="/todo/todoList.aws">오늘의 할일</a>
 
-   <div style="height:500px;"></div>  
-   
    <!-- footer -->
    <jsp:include page="/WEB-INF/include/footer_format.jsp" />
 

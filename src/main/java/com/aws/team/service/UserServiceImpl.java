@@ -37,5 +37,13 @@ public class UserServiceImpl implements UserService {
 		return value;
 	}
 
+	@Override
+	public UserVo userLoginCheck(String userid) {
+		UserVo uv = um.userLoginCheck(userid);
+		return uv;
+	}
+
+
+
 
 }

@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>회원 상세정보 입력</title>
-  <link href= "<%=request.getContextPath()%>/resources/css/user/detail.css" type="text/css" rel="stylesheet">
+  <link href= "${pageContext.request.contextPath}/resources/css/user/detail.css" type="text/css" rel="stylesheet">
   <script>
   document.addEventListener("DOMContentLoaded", () => {
     const buttons = document.querySelectorAll(".toggle-btn");
@@ -18,6 +18,18 @@
       });
     });
   });
+  // 상세정보 제출
+  function save() {
+	var fm = document.frm;
+	fm.action = "${pageContext.request.contextPath}/user/detail/userDetailAction.aws"; 
+	fm.method = "post";
+	fm.submit();
+	return;
+  }
+  
+  
+  
+  
 </script>
 </head>
 <body>
@@ -26,27 +38,25 @@
    <main>
   <div class="form-container">
     <h2>상세 정보 입력 페이지</h2>
-    <form>
+    <form name = "frm">
       <div class="form-group">
         <label for="birthdate">생년월일</label>
-        <input type="date" id="birthdate" name="birthdate">
+        <input type="date" id="userbirth" name="userbirth">
       </div>
 
       <div class="form-group">
         <label for="weight">체중</label>
         <input type="text" id="weight" name="weight" placeholder="kg 단위로 입력">
-        <div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
       </div>
 
       <div class="form-group">
         <label for="height">키</label>
         <input type="text" id="height" name="height" placeholder="cm 단위로 입력">
-        <div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
       </div>
 
       <div class="form-group">
         <label for="disease">질병</label>
-        <select id="disease" name="disease">
+        <select id="sicktype" name="sicktype">
           <option value="" class="select">선택하세요</option>
           <option value="당뇨">당뇨</option>
           <option value="고혈압">고혈압</option>
@@ -56,7 +66,7 @@
 
       <div class="form-group">
         <label for="exercise">운동 빈도</label>
-        <select id="exercise" name="exercise">
+        <select id="exercise_cnt" name="exercise_cnt">
           <option value="" class="select" selected>선택하세요</option>
           <option value="운동 안 함">운동 안 함</option>
           <option value="주 1~2회">주 1~2회</option>
@@ -67,14 +77,14 @@
       <div class="checkbox-main">흡연 음주 여부
       <div class="checkbox-group">
       <span>
-      	<input type="checkbox" id="smoking" name="smoking">흡연
+      	<input type="checkbox" id="smoke" name="smoke" value = "Y">흡연
       </span>
       <span>
-      	<input type="checkbox" id="drinking" name="drinking">음주
+      	<input type="checkbox" id="drink" name="drink" value = "Y">음주
       </span>
   	  </div>
       </div>
-      <button type="submit">저장하기</button>
+      <button type="submit" onclick = "save();">저장하기</button>
     </form>
   </div>
 </main>  

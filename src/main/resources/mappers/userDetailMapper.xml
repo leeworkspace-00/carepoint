@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aws.team.persistance.UserDetailMapper">
+    <!-- SQL 매핑 내용 -->
+    <!-- 상세정보 입력 insert쿼리문 -->
+   <insert id="userDetailInsert" parameterType="u_dv">
+		insert into user_detail(userbirth,weight,height,sicktype,exercise_cnt,smoke,drink,e_level,user_pk) 
+		values(#{userbirth},#{weight},#{height},#{sicktype},#{exercise_cnt},#{smoke},#{drink},#{e_level},#{user_pk})		
+	</insert> 
+	
+
+</mapper>
