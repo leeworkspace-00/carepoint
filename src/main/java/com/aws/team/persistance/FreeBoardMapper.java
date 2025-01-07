@@ -17,4 +17,8 @@ public interface FreeBoardMapper {
 	public BoardVo freeBoardSelectOne(int board_pk);
 	
 	public int freeBoardUpdate(BoardVo bv);
+	
+	public int freeBoardUpdateViewcnt(int board_pk);
+	
+	public int freeBoardUpdateRecom(int board_pk);
 }

@@ -5,40 +5,59 @@
 <meta charset="EUC-KR">
 <title>자유게시판 상세보기</title>
 <link href="/resources/css/board/boardContents.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(document).ready(function() {
+
+	$("#recommend-btn").click(function() {
+        $.ajax({
+            type: "get",
+            url: "${pageContext.request.contextPath}/freeBoard/freeBoardRecom.aws?board_pk=${bv.board_pk}", // 요청 URL
+            dataType: "json", // JSON 응답 기대
+            success: function(result) {
+                // 추천 수 업데이트
+                const str = "추천수: " + result.recom;
+                $("#recommend-count").text(str); // 추천 수 영역 업데이트
+            },
+            error: function() {
+                alert("추천 실패");
+            }
+        });
+    });
+	
+});
+</script>
 </head>
 <body>
 	<!-- header -->
 	<jsp:include page="/WEB-INF/include/header_format.jsp" />
 
 	<div class="container">
-	    <div class="title">다들 건강 관리 잘 하고 계신가요?</div>
+	    <div class="title">${bv.subject }</div>
 	    <div class="info-bar">
 	        <div class="info-left">
-	            <span>22na |</span>
-	            <span>2024-12-26 18:10:48</span>
+	            <span>${bv.usernick } |</span>
+	            <span>${bv.writedate }</span>
 	        </div>
 	        <div class="info-right">
-	            <span>추천수: 15</span>
-	            <span>조회수: 123</span>
+	            <span id="recommend-count">추천수: ${bv.recom }</span>
+	            <span>조회수: ${bv.viewcnt }</span>
 	        </div>
 	    </div>
 	    <div class="content">
-	        저는 23살인데 벌써부터 당뇨가 와서 케어 포인트 페이지에서 관리 중이에요 ㅠ.ㅠ 
-			어떻게 관리 해야하나 막막했는데 이 페이지를 알게되고 나서 관리 하기 편해서 넘넘 좋아용 ㅎㅎ 
-			운동 레벨도 벌써 3렙 찍었습니다!!!!
-			다들 열심히 관리 해보아용 ㅎㅎ
+	        ${bv.content }
 	    </div>
 	    <div class="recommend-button">
-		    <button class="thumb-btn">
+		    <button class="thumb-btn" id="recommend-btn">
 		        <img style = "color:white; " src="/resources/image/thumb.png" alt="추천" class="thumb-icon">
 		    </button>
 		</div>
 	    <div class="actions">
 	   		<!-- 목록으로 버튼 -->
-		    <a href="#" class="btn btn-left">목록</a>
+		    <a href="${pageContext.request.contextPath}/freeBoard/freeBoardList.aws" class="btn btn-left">목록</a>
 		    <!-- 수정 및 삭제 버튼 -->
 		    <div class="btn-group">
-		        <a href="#" class="btn">수정</a>
+		        <a href="${pageContext.request.contextPath}/freeBoard/freeBoardModify.aws?board_pk=${board_pk}" class="btn">수정</a>
 		        <a href="#" class="btn">삭제</a>
 		    </div>
 	    </div>

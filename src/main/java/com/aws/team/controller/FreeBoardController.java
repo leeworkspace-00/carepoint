@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -151,9 +153,32 @@ public class FreeBoardController {
 	}
 	
 	@RequestMapping(value="freeBoardContents.aws", method=RequestMethod.GET)
-	public String freeBoardContents() {
+	public String freeBoardContents(
+			@RequestParam("board_pk") int board_pk,
+			Model model
+			) {
+
+		int value = freeBoardService.freeBoardUpdateViewcnt(board_pk);
+		BoardVo bv = freeBoardService.freeBoardSelectOne(board_pk);
+		
+		model.addAttribute("board_pk", board_pk);
+		model.addAttribute("bv", bv);
 		
 		return "WEB-INF/freeBoard/freeBoardContents"; 
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="freeBoardRecom.aws", method=RequestMethod.GET)
+	public JSONObject freeBoardRecom(
+			@RequestParam("board_pk") int board_pk
+			) {
+
+		int value = freeBoardService.freeBoardUpdateRecom(board_pk);
+		
+		JSONObject js = new JSONObject();
+		js.put("recom", value);
+		
+		return js; 
 	}
 
 } 

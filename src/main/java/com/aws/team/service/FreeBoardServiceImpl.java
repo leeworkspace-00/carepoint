@@ -66,4 +66,20 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		return value;
 	}
 
+	@Override
+	public int freeBoardUpdateViewcnt(int board_pk) {
+
+		int value = fbm.freeBoardUpdateViewcnt(board_pk);
+		
+		return value;
+	}
+
+	@Override
+	public int freeBoardUpdateRecom(int board_pk) {
+		
+		int recom = fbm.freeBoardUpdateRecom(board_pk);
+		
+		return recom;
+	}
+
 }
