@@ -1,5 +1,5 @@
 package com.aws.team.persistance;
 
-public class UserMapper {
+public interface UserMapper {
 
 }

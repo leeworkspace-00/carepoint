@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aws.team.persistance.QnaBoardMapper">
+
+<!-- List -->
+<select id="qnaSelectAll" parameterType="HashMap" resultType="bv">
+	SELECT b.*, u.usernick
+    FROM board b
+    JOIN user u
+    ON b.user_pk = u.user_pk
+    WHERE b.board_type = 'Q'
+    AND b.delyn = 'N' 
+    ORDER BY b.origin_num DESC, b.level_ ASC 
+    LIMIT #{startPageNum}, #{perPageNum}
+</select>
+
+<!-- List -->
+<select id="qnaTotalCount" parameterType="scri" resultType="int">
+	SELECT COUNT(*) AS cnt
+	FROM board
+	WHERE board_type = 'Q' 
+	AND delyn = 'N'
+</select>
+
+<!-- Content -->
+<select id="qnaSelectOne" parameterType="int" resultType="bv"> <!-- parameterType : 받아오는 값, resultType : 넘기는 값 -->
+	SELECT b.*, u.usernick
+	FROM board b
+	JOIN user u
+    ON b.user_key = u.user_key
+	WHERE b.board_type = 'Q'
+	AND b.delyn = 'N'
+	AND b.board_pk = #{board_pk}
+</select>
+
+<!-- Content -->
+<select id="getUserOriginNums" parameterType="int" resultType="int">
+	SELECT origin_num
+	FROM board
+	WHERE user_pk = #{user_pk}
+	AND board_type = 'Q'
+</select>
+
+
+    
+</mapper>

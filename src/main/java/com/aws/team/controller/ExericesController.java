@@ -61,27 +61,6 @@ public class ExericesController {
         return "WEB-INF/exercise/bmi";
     }
 
-	@ResponseBody
-	@RequestMapping(value = "SampleCalendarList")
-	public Map<String,Object> sampleCalanderList(final @RequestParam Map<String, Object> param
-	        , final HttpServletRequest request
-	        , final HttpServletResponse response
-	        , final ModelMap model
-	        ) throws Exception {
-	        System.out.println("캘린더 통신 성공");
-	        System.out.println(param);
-	        param.put("start", "2021-12-25");
-	        param.put("end", "2021-12-26");
-	        param.put("title", "2021-12-25");
-	        System.out.println(param);
-	    return param;
-	}
-	
-	@RequestMapping(value="calendarTest.aws", method=RequestMethod.GET)
-	public String calendarTest() {
-		
-		return "WEB-INF/exercise/calendarTest"; 
-	}
 	
 	
 	

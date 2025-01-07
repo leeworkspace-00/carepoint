@@ -63,7 +63,7 @@
         <li><a href="#">TodoList</a></li>
         <li><a href="/exercise/bmi.aws">BMI계산기</a></li>
         <li><a href="/freeBoard/freeBoardList.aws">자유게시판</a></li>
-        <li><a href="/qnaBoard/qnaBoardList.aws">Q&A</a></li>
+        <li><a href="<%=request.getContextPath()%>/qnaBoard/qnaBoardList.aws">Q&A</a></li>
         <li><a href="/noticeBoard/noticeBoardList.aws">공지사항</a></li>
     </ul>
     <!-- Bottom Links for Login/Signup or My Page/Logout -->
