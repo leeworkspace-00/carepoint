@@ -1,5 +1,6 @@
 package com.aws.team.persistance;
 
+
 import com.aws.team.domain.UserVo;
 
 public interface UserMapper {
@@ -13,5 +14,4 @@ public interface UserMapper {
 	
 	// 회원 로그인 시 확인하는 메서드
 	public UserVo userLoginCheck(String userid);
-
 }

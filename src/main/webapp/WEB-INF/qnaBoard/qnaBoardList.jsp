@@ -22,131 +22,52 @@
 				<th>작성일</th>
 			</tr>
 			
-			<tr>
-				<td class="No">15</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">14</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">13</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">12</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">11</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">10</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-	
-			<tr>
-				<td class="No">9</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">8</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">7</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">6</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">5</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">4</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">3</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">2</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="No">1</td>
-				<td class="subject"><a>Q. 질문입니다.</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
+			<c:forEach items="${blist}" var="bv" varStatus="status">
+				<tr>
+					<td class="No">${pm.totalCount-(status.index+(pm.scri.page-1)*pm.scri.perPageNum)}</td>
+					<td class="subject">
+						<c:forEach var="i" begin="1" end="${bv.level_}" step="1">
+							&nbsp;&nbsp;
+							<c:if test="${i==bv.level_}">
+								ㄴ <a href="${pageContext.request.contextPath}/qnaBoard/qnaContent.aws?board_pk=${bv.board_pk}">A. 답변입니다.</a>
+							</c:if>
+						</c:forEach>
+						<c:if test="${0==bv.level_}">
+							<a href="${pageContext.request.contextPath}/qnaBoard/qnaContent.aws?board_pk=${bv.board_pk}">Q. 질문입니다.</a>
+						</c:if>
+					</td>
+					<td class="writer">${bv.usernick}</td>
+					<td class="writeday">${bv.writedate.substring(0, 10)}</td>
+				</tr>
+			</c:forEach>
 			
 			<tr class="write-tr">
-				<td class="write-td" colspan="4"><button onclick="location.href='/KES/qnaBoardWrite.aws';">글 작성</button></td>
+				<td class="write-td" colspan="4"><button onclick="location.href='/qnaBoard/qnaBoardWrite.aws';">글 작성</button></td>
 			</tr>
 		</table>
 	</div>
 	
+	
 	<div class="page">
 		<ul>
-			<li><a href="#" class="prev">◀</a></li>
-	        <li><a href="#">1</a></li>
-	        <li><a href="#">2</a></li>
-	        <li><a href="#">3</a></li>
-	        <li><a href="#">4</a></li>
-	        <li><a href="#">5</a></li>
-	        <li><a href="#">6</a></li>
-	        <li><a href="#">7</a></li>
-	        <li><a href="#">8</a></li>
-	        <li><a href="#">9</a></li>
-	        <li><a href="#">10</a></li>
-	        <li><a href="#" class="next">▶</a></li>
+			<c:set var="queryParam" value="keyword=${pm.scri.keyword}&searchType=${pm.scri.searchType}"></c:set>
+			<c:if test="${pm.prev==true}">
+				<li>
+					<a class="prev" href="${pageContext.request.contextPath}/qnaBoard/qnaBoardList.aws?page=${pm.startPage-1}&${queryParam}">◀</a>
+				</li>
+			</c:if>
+			
+			<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+				<li <c:if test="${i == pm.scri.page}">class='on'</c:if> >
+					<a href="${pageContext.request.contextPath}/qnaBoard/qnaBoardList.aws?page=${i}&${queryParam}">${i}</a>
+				</li>
+			</c:forEach>
+			
+			<c:if test="${pm.next&&pm.endPage>0}">
+				<li>
+					<a class="next" href="${pageContext.request.contextPath}/qnaBoard/qnaBoardList.aws?page=${pm.endPage+1}&${queryParam}">▶</a>
+				</li>
+			</c:if>
 		</ul>	
 	</div>
 	
@@ -155,6 +76,18 @@
 	
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/include/footer_format.jsp" />
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 </body>
 </html>

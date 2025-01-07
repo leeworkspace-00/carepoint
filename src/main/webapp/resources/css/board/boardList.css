@@ -199,15 +199,27 @@ a {
     line-height: 1;          /* 텍스트의 세로 정렬 */
 }
 
+.page a:hover {
+	background-color: #87B9F8;
+	color: white;
+}
+
 .prev, .next {
-    color: white;            /* 텍스트 색상 */
-    background-color: #87B9F8; /* 배경 색상 */
+    color: #87B9F8;  /* 텍스트 색상 */
 }
 
 .prev:hover, .next:hover {
     background-color: #569ADE; /* 호버 시 색상 변경 */
 }
 
+.page .on {
+	background-color: #87B9F8;
+	border-radius: 2px; 
+}
+
+.page .on a { 
+	color: white;
+}
 
 
 /* Q&A 게시판 List */

@@ -4,6 +4,7 @@ public class Criteria {
 	
 	private int page = 1;
 	private int perPageNum = 15;
+
 	
 	public int getPage() {
 		return page;
@@ -17,4 +18,5 @@ public class Criteria {
 	public void setPerPageNum(int perPageNum) {
 		this.perPageNum = perPageNum;
 	}		
+
 }

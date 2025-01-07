@@ -4,15 +4,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PageMaker {
-	
+
 	private int displayPageNum = 10;	
 	private int startPage;	
 	private int endPage;	
 	private int totalCount;
-	
 	private boolean prev;	
 	private boolean next;	
-	
 	private SearchCriteria scri;
 
 	public int getDisplayPageNum() {
