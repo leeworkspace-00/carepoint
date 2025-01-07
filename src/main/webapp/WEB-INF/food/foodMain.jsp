@@ -15,11 +15,11 @@
 <jsp:include page="/WEB-INF/include/header_format.jsp" />
 
 
-<form class="search" name="frm" action="/food/foodMain.aws" method="get">
+<form class="search" id="searchForm" >
       <div class="search-container">
-         <input type="text" name="menu" onkeyup="showDropdown(this.value)" autocomplete="off" placeholder="칼로리가 궁금한 음식을 입력해보세요">
+         <input type="text" name="foodName" id="foodNameInput" autocomplete="off" placeholder="칼로리가 궁금한 음식을 입력해보세요">
          <div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
-         <button type="submit" class="btn">
+         <button type="button" id="searchButton" class="btn">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
             </svg>
@@ -27,34 +27,19 @@
       </div>
    </form>
 
-<div class="results">
-  <table>
-    <thead>
-      <tr>
-        <th>음식명</th>
-        <th>칼로리</th>
-        <th>영양정보</th>
-      </tr>
-    </thead>
-    <tbody>
-            <!-- 검색 결과 반복 출력 -->
-            <c:forEach var="food" items="${foodSearchResults}">
-                <tr>
-                    <td>${food.descKor}</td>
-                    <td>${food.nutrCont1} kcal</td>
-                    <td>지방: ${food.nutrCont3} g | 탄수화물: ${food.nutrCont2} g | 단백질: ${food.nutrCont3} g</td>
-                </tr>
-            </c:forEach>
+<div class="results mt-4">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>음식명</th>
+                <th>칼로리</th>
+                <th>영양정보</th>
+            </tr>
+        </thead>
+        <tbody id="resultsTableBody">
 
-            <!-- 검색 결과가 없을 때 -->
-            <c:if test="${empty foodSearchResults}">
-                <tr>
-                    <td colspan="3">검색 결과가 없습니다.</td>
-                </tr>
-            </c:if>
-
-    </tbody>
-  </table>
+        </tbody>
+    </table>
 </div>
 
 <div class="diet-record">
@@ -210,6 +195,57 @@
 <jsp:include page="/WEB-INF/include/footer_format.jsp" />
 
 <script>
+
+
+//JavaScript 코드
+document.getElementById('searchButton').addEventListener('click', function () {
+    const foodName = document.getElementById('foodNameInput').value.trim();
+
+    if (!foodName) {
+        alert("음식 이름을 입력하세요!");
+        return;
+    }
+
+    // JavaScript에서 encodeURIComponent 사용
+    const encodedFoodName = encodeURIComponent(foodName);
+    fetch(`/food/foodMainAction.aws?foodName=${encodedFoodName}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("네트워크 응답에 문제가 있습니다.");
+            }
+            return response.json(); // JSON 데이터 반환
+        })
+        .then(data => {
+            const resultsTableBody = document.getElementById('resultsTableBody');
+            resultsTableBody.innerHTML = ""; // 기존 결과 초기화
+
+            if (data && data.menuName) {
+                // 검색 결과 표시
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${data.menuName}</td>
+                    <td>${data.calorie} kcal</td>
+                    <td>단백질: ${data.protein}g, 지방: ${data.fat}g, 탄수화물: ${data.carb}g</td>
+                `;
+                resultsTableBody.appendChild(row);
+            } else {
+                // 검색 결과 없음 표시
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="3">검색 결과가 없습니다.</td>
+                `;
+                resultsTableBody.appendChild(row);
+            }
+        })
+        .catch(error => {
+            console.error("오류 발생:", error);
+            alert("오류가 발생했습니다. 다시 시도해주세요.");
+        });
+});
+
+
+
+
 //검색창 숨겼다가 나타나는 스크립트 코드  
 const searchButton = document.querySelector('.search-container button');
 const resultsDiv = document.querySelector('.results');
@@ -217,7 +253,8 @@ const resultsDiv = document.querySelector('.results');
 searchButton.addEventListener('click', () => {
   // 검색 버튼 클릭 시 결과 표시
   resultsDiv.style.display = 'block';
-});
+  
+}); 
 
 
 
@@ -299,7 +336,7 @@ document.querySelectorAll('.add-button').forEach((button) => {
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
 
   document.getElementById('modal').addEventListener('click', function() {
-      fetch('/KES/foodDetail.aws')
+      fetch('/food/foodDetail.aws')
           .then(response => response.text())
           .then(data => {
               document.querySelector('#dietModal .modal-content').innerHTML = data;
@@ -313,6 +350,10 @@ document.querySelectorAll('.add-button').forEach((button) => {
   });
 
 </script>
+
+
+
+
 
 </body>
 </html>
