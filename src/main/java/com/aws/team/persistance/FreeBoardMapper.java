@@ -13,5 +13,8 @@ public interface FreeBoardMapper {
 	public ArrayList<BoardVo> freeBoardSelectAll(HashMap<String, Object> hm);
 	
 	public int freeBoardInsert(BoardVo bv);
-
+	
+	public BoardVo freeBoardSelectOne(int board_pk);
+	
+	public int freeBoardUpdate(BoardVo bv);
 }

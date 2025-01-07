@@ -50,4 +50,20 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		return value;
 	}
 
+	@Override
+	public BoardVo freeBoardSelectOne(int board_pk) {
+	
+		BoardVo bv = fbm.freeBoardSelectOne(board_pk);
+		
+		return bv;
+	}
+
+	@Override
+	public int freeBoardUpdate(BoardVo bv) {
+
+		int value = fbm.freeBoardUpdate(bv);
+		
+		return value;
+	}
+
 }

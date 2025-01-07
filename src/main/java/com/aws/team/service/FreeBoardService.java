@@ -13,4 +13,8 @@ public interface FreeBoardService {
 
 	public int freeBoardInsert(BoardVo bv);
 
+	public BoardVo freeBoardSelectOne(int board_pk);
+
+	public int freeBoardUpdate(BoardVo bv);
+
 }

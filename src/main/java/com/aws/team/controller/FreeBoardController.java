@@ -102,9 +102,52 @@ public class FreeBoardController {
 	}
 	
 	@RequestMapping(value= "freeBoardModify.aws", method=RequestMethod.GET)
-	public String boardModify() {
+	public String freeBoardModify(
+			@RequestParam("board_pk") int board_pk,
+			Model model
+			) {
+		
+		BoardVo bv = freeBoardService.freeBoardSelectOne(board_pk);
+		
+		model.addAttribute("board_pk", board_pk);
+		model.addAttribute("bv", bv);
 		
 		return "WEB-INF/freeBoard/freeBoardModify";
+	}
+	
+	@RequestMapping(value = "freeBoardModifyAction.aws", method = RequestMethod.POST)
+	public String freeBoardModifyAction(
+			BoardVo bv,
+			@RequestParam("attachfile") MultipartFile attachfile,
+			RedirectAttributes rttr,
+			HttpServletRequest request
+			) throws IOException, Exception { 
+		
+		MultipartFile file = attachfile;
+		String uploadedFileName = "";
+		
+		if (! file.getOriginalFilename().equals("")) {	// 파일업로드
+			uploadedFileName = UploadFileUtiles.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());			
+		}
+		
+		//int user_pk = Integer.parseInt(request.getSession().getAttribute("user_pk").toString());
+		String ip = userIp.getUserIp(request);
+		
+		bv.setUploadedFileName(uploadedFileName);
+		//bv.setUser_pk(user_pk);
+		bv.setIp(ip);
+		
+		int value = freeBoardService.freeBoardUpdate(bv);
+		
+		if (value == 1) {
+			rttr.addFlashAttribute("msg", "글이 등록되었습니다.");
+			path = "redirect:/freeBoard/freeBoardList.aws";			
+		} else {			
+			rttr.addFlashAttribute("msg", "입력이 잘못되었습니다.");
+			path = "redirect:/freeBoard/freeBoardModify.aws";
+		}
+		
+		return path;
 	}
 	
 	@RequestMapping(value="freeBoardContents.aws", method=RequestMethod.GET)
