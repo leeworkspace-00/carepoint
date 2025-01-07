@@ -43,11 +43,43 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	}
 
 	@Override
-	public int freeBoarInsert(BoardVo bv) {
+	public int freeBoardInsert(BoardVo bv) {
 		
-		int value = fbm.freeBoarInsert(bv);
+		int value = fbm.freeBoardInsert(bv);
 		
 		return value;
+	}
+
+	@Override
+	public BoardVo freeBoardSelectOne(int board_pk) {
+	
+		BoardVo bv = fbm.freeBoardSelectOne(board_pk);
+		
+		return bv;
+	}
+
+	@Override
+	public int freeBoardUpdate(BoardVo bv) {
+
+		int value = fbm.freeBoardUpdate(bv);
+		
+		return value;
+	}
+
+	@Override
+	public int freeBoardUpdateViewcnt(int board_pk) {
+
+		int value = fbm.freeBoardUpdateViewcnt(board_pk);
+		
+		return value;
+	}
+
+	@Override
+	public int freeBoardUpdateRecom(int board_pk) {
+		
+		int recom = fbm.freeBoardUpdateRecom(board_pk);
+		
+		return recom;
 	}
 
 }

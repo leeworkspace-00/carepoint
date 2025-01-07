@@ -42,7 +42,7 @@ public class UploadFileUtiles {
 		FileCopyUtils.copy(fileData,target);
 		
 		String formatName = originalName.substring(originalName.lastIndexOf(".")+1);
-		System.out.println("formatName:"+formatName);
+		//System.out.println("formatName:"+formatName);
 		String uploadedFileName = null;
 		
 		if(MediaUtils.getMediaType(formatName) != null){
@@ -79,7 +79,7 @@ public class UploadFileUtiles {
 			
 		makeDir(uploadPath, yearPath, monthPath, datePath);
 		
-		logger.info(datePath);
+		//logger.info(datePath);
 		
 		return datePath;
 	}
@@ -125,7 +125,7 @@ public class UploadFileUtiles {
 	
 	//	System.out.println("destImg"+destImg);
 		boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-		System.out.println("복사여부 flag"+flag);
+		//System.out.println("복사여부 flag"+flag);
 		return thumbnailName.substring(uploadPath.length()).replace(File.separatorChar, '/');
 	}	
 }

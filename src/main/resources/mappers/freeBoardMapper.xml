@@ -23,9 +23,33 @@
 	ORDER BY board_pk DESC LIMIT #{startPageNum}, #{perPageNum}
 </select>
 
-<insert id="freeBoarInsert" parameterType="bv">
+<insert id="freeBoardInsert" parameterType="bv">
    	INSERT INTO board(board_type, subject, content, filename, ip, user_pk) 
-   	VALUES(#{board_type}, #{subject}, #{content}, #{uploadedFileName}, #{ip}, 2)
+   	VALUES(#{board_type}, #{subject}, #{content}, #{uploadedFileName}, #{ip}, 1)
 </insert>
+
+<select id="freeBoardSelectOne" parameterType="int" resultType="bv">
+	SELECT b.board_pk AS board_pk, b.subject AS subject, b.content AS content, b.writedate AS writedate, b.recom AS recom, b.viewcnt AS viewcnt, u.usernick AS usernick FROM board b
+	JOIN user u ON b.user_pk = u.user_pk
+	WHERE b.board_pk = #{board_pk} AND b.delyn = 'N'
+</select>
+
+<update id="freeBoardUpdate" parameterType="bv">
+	UPDATE board
+	SET subject = #{subject}, content = #{content}, filename = #{filename}
+	WHERE board_pk = #{board_pk} AND delyn = 'N'
+</update>
+
+<update id="freeBoardUpdateViewcnt" parameterType="int">
+	UPDATE board
+	SET viewcnt = viewcnt + 1
+	WHERE board_pk = #{board_pk} AND delyn = 'N'
+</update>
+
+<update id="freeBoardUpdateRecom" parameterType="int">
+	UPDATE board
+	SET recom = recom + 1
+	WHERE board_pk = #{board_pk} AND delyn = 'N'
+</update>
 
 </mapper>

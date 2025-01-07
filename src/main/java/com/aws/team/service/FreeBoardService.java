@@ -11,6 +11,14 @@ public interface FreeBoardService {
 
 	public ArrayList<BoardVo> freeBoardSelectAll(SearchCriteria scri);
 
-	public int freeBoarInsert(BoardVo bv);
+	public int freeBoardInsert(BoardVo bv);
+
+	public BoardVo freeBoardSelectOne(int board_pk);
+
+	public int freeBoardUpdate(BoardVo bv);
+
+	public int freeBoardUpdateViewcnt(int board_pk);
+
+	public int freeBoardUpdateRecom(int board_pk);
 
 }
