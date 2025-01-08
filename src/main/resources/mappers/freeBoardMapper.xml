@@ -46,10 +46,25 @@
 	WHERE board_pk = #{board_pk} AND delyn = 'N'
 </update>
 
-<update id="freeBoardUpdateRecom" parameterType="int">
+<update id="freeBoardUpdateRecom" parameterType="bv">
+	<selectKey keyProperty="recom" resultType="int" order = "AFTER">
+		SELECT recom FROM board WHERE board_pk = #{board_pk}
+	</selectKey>
 	UPDATE board
 	SET recom = recom + 1
 	WHERE board_pk = #{board_pk} AND delyn = 'N'
 </update>
+
+<update id="freeBoardDelete" parameterType="int">
+	UPDATE board
+	SET delyn = 'Y'
+	WHERE board_pk = #{board_pk}
+</update>
+
+<!-- 댓글기능 -->
+<insert id="commentInsert" parameterType="cv">
+	INSERT INTO comment(content, ip, user_pk, board_pk)
+	VALUES(#{content}, #{ip}, #{user_pk}, #{board_pk})
+</insert>
 
 </mapper>

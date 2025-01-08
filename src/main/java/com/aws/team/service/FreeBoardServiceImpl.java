@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aws.team.domain.BoardVo;
+import com.aws.team.domain.CommentVo;
 import com.aws.team.domain.SearchCriteria;
 import com.aws.team.persistance.FreeBoardMapper;
 
@@ -77,9 +78,31 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	@Override
 	public int freeBoardUpdateRecom(int board_pk) {
 		
-		int recom = fbm.freeBoardUpdateRecom(board_pk);
+		BoardVo bv = new BoardVo();
+		
+		bv.setBoard_pk(board_pk);
+		fbm.freeBoardUpdateRecom(bv);
+		
+		int recom = bv.getRecom();
 		
 		return recom;
+	}
+
+	@Override
+	public int freeBoardDelete(int board_pk) {
+		
+		int value = fbm.freeBoardDelete(board_pk);
+		
+		return value;
+	}
+
+	//댓글 기능
+	@Override
+	public int commentInsert(CommentVo cv) {
+
+		int value = fbm.commentInsert(cv);
+				
+		return value;
 	}
 
 }

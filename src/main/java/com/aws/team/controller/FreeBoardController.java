@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aws.team.domain.BoardVo;
+import com.aws.team.domain.CommentVo;
 import com.aws.team.domain.PageMaker;
 import com.aws.team.domain.SearchCriteria;
 import com.aws.team.service.FreeBoardService;
@@ -186,7 +187,41 @@ public class FreeBoardController {
 		return js; 
 	}
 
+	@RequestMapping(value = "freeBoardDeleteAction.aws", method = RequestMethod.POST)
+	public String freeBoardDeleteAction(
+			@RequestParam("board_pk") int board_pk,
+			RedirectAttributes rttr
+			) { 
+		
+		int value = freeBoardService.freeBoardDelete(board_pk);
+		
+		if (value == 1) {
+			rttr.addFlashAttribute("msg", "글이 삭제되었습니다.");
+			path = "redirect:/freeBoard/freeBoardList.aws";			
+		} else {
+			rttr.addFlashAttribute("msg", "오류가 생겼습니다.");
+			path = "redirect:/freeBoard/freeBoardContents.aws";
+		}
+		
+		return path;
+	}
 	
+	@ResponseBody
+	@RequestMapping(value = "commentWriteAction.aws", method = RequestMethod.POST)
+	public JSONObject commentWriteAction(
+			CommentVo cv, 
+			HttpServletRequest request
+			) throws Exception {
+		JSONObject js = new JSONObject();
+		
+		String ip = userIp.getUserIp(request);
+		cv.setIp(ip);
+		
+		int value = freeBoardService.commentInsert(cv);
+		
+		js.put("value", value);
+		
+		return js;
+	}
+} 
 
-
-}
