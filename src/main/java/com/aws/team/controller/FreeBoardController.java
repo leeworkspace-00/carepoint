@@ -181,4 +181,22 @@ public class FreeBoardController {
 		return js; 
 	}
 
+	@RequestMapping(value = "freeBoardDeleteAction.aws", method = RequestMethod.POST)
+	public String freeBoardDeleteAction(
+			@RequestParam("board_pk") int board_pk,
+			RedirectAttributes rttr
+			) { 
+		
+		int value = freeBoardService.freeBoardDelete(board_pk);
+		
+		if (value == 1) {
+			rttr.addFlashAttribute("msg", "글이 삭제되었습니다.");
+			path = "redirect:/freeBoard/freeBoardList.aws";			
+		} else {
+			rttr.addFlashAttribute("msg", "오류가 생겼습니다.");
+			path = "redirect:/freeBoard/freeBoardContents.aws";
+		}
+		
+		return path;
+	}
 } 

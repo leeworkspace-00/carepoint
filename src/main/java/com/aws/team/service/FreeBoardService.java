@@ -21,4 +21,6 @@ public interface FreeBoardService {
 
 	public int freeBoardUpdateRecom(int board_pk);
 
+	public int freeBoardDelete(int board_pk);
+
 }

@@ -55,4 +55,10 @@
 	WHERE board_pk = #{board_pk} AND delyn = 'N'
 </update>
 
+<update id="freeBoardDelete" parameterType="int">
+	UPDATE board
+	SET delyn = 'Y'
+	WHERE board_pk = #{board_pk}
+</update>
+
 </mapper>

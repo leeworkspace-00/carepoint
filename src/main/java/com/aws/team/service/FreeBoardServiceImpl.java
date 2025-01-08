@@ -87,4 +87,12 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		return recom;
 	}
 
+	@Override
+	public int freeBoardDelete(int board_pk) {
+		
+		int value = fbm.freeBoardDelete(board_pk);
+		
+		return value;
+	}
+
 }
