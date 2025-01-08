@@ -1,3 +1,4 @@
+
 package com.aws.team.domain;
 
 import org.springframework.stereotype.Component;

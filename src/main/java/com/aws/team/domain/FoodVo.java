@@ -12,7 +12,7 @@ public class FoodVo {
 	private int kcal;
 	
 	
-	
+	// API용 
     private String menuName;  // 메뉴 이름
     private double calorie;  // 칼로리
     private double protein;  // 단백질

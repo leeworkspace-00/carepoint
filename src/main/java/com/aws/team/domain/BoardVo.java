@@ -1,3 +1,4 @@
+
 package com.aws.team.domain;
 
 public class BoardVo {
@@ -116,4 +117,3 @@ public class BoardVo {
 		this.uploadedFileName = uploadedFileName;
 	}
 }
-

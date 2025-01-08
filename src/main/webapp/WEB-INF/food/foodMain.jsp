@@ -6,8 +6,8 @@
 <meta charset="UTF-8">
 <title>식단 메인</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href= "<%=request.getContextPath()%>/resources/css/food/foodMain.css" type="text/css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link href= "<%=request.getContextPath()%>/resources/css/food/foodMain.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 
@@ -27,8 +27,8 @@
       </div>
    </form>
 
-<div class="results mt-4">
-    <table class="table table-bordered">
+<div class="results">
+    <table>
         <thead>
             <tr>
                 <th>음식명</th>
@@ -196,52 +196,67 @@
 
 <script>
 
-
-//JavaScript 코드
+//'searchButton' 요소에 'click' 이벤트 리스너를 추가
 document.getElementById('searchButton').addEventListener('click', function () {
+    // 사용자가 입력한 음식 이름을 가져와 공백을 제거한 값을 변수에 저장
     const foodName = document.getElementById('foodNameInput').value.trim();
 
+    // 음식 이름이 비어 있으면 경고 메시지를 표시하고 함수 종료
     if (!foodName) {
         alert("음식 이름을 입력하세요!");
         return;
     }
 
-    // JavaScript에서 encodeURIComponent 사용
+    // 음식 이름을 URL에 사용할 수 있도록 인코딩
     const encodedFoodName = encodeURIComponent(foodName);
-    fetch(`/food/foodMainAction.aws?foodName=${encodedFoodName}`)
+    
+    // 서버에 GET 요청을 보내 음식 정보를 검색
+    fetch('/food/foodMainAction.aws?foodName=' + encodedFoodName)
         .then(response => {
+            // 서버 응답이 성공적인지 확인 (HTTP 상태 코드 확인)
             if (!response.ok) {
+                // 응답이 실패하면 에러를 던짐
                 throw new Error("네트워크 응답에 문제가 있습니다.");
             }
-            return response.json(); // JSON 데이터 반환
+            // 응답 데이터를 JSON 형식으로 변환하여 반환
+            return response.json();
         })
         .then(data => {
+            // 검색 결과를 표시할 테이블의 tbody 요소를 가져옴
             const resultsTableBody = document.getElementById('resultsTableBody');
-            resultsTableBody.innerHTML = ""; // 기존 결과 초기화
+            
+            // 기존 검색 결과를 초기화 (테이블 내용을 비움)
+            resultsTableBody.innerHTML = "";
 
-            if (data && data.menuName) {
-                // 검색 결과 표시
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${data.menuName}</td>
-                    <td>${data.calorie} kcal</td>
-                    <td>단백질: ${data.protein}g, 지방: ${data.fat}g, 탄수화물: ${data.carb}g</td>
-                `;
-                resultsTableBody.appendChild(row);
+            // 서버에서 받은 데이터가 존재하고, 데이터 길이가 0보다 큰 경우
+            if (data && data.length > 0) {
+                // 데이터 배열을 반복하면서 각 항목을 테이블 행으로 추가
+                data.forEach(item => {
+                    const row = document.createElement('tr'); // 새로운 행 생성
+					
+					// 행의 HTML 내용을 설정 (음식 이름, 칼로리, 영양 성분 정보 포함)
+                    row.innerHTML = 
+                        "<td>" + item.menuName + "</td>" + // 음식 이름
+                        "<td>" + item.calorie + "kcal" + "</td>" + // 칼로리
+                        "<td>단백질: " + item.protein + "g, " + // 단백질
+                        "지방: " + item.fat + "g, " + // 지방
+                        "탄수화물: " + item.carb + "g" + "</td>"; // 탄수화물
+                    
+                    // 완성된 행을 테이블 tbody에 추가
+                    resultsTableBody.appendChild(row);
+                });
             } else {
-                // 검색 결과 없음 표시
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td colspan="3">검색 결과가 없습니다.</td>
-                `;
-                resultsTableBody.appendChild(row);
+                // 데이터가 없으면 검색 결과가 없다는 알림을 표시
+                alert("검색 결과가 없습니다.");
             }
         })
         .catch(error => {
-            console.error("오류 발생:", error);
-            alert("오류가 발생했습니다. 다시 시도해주세요.");
+            // 네트워크 요청 중 에러가 발생한 경우 콘솔에 에러 메시지 출력
+            console.error("에러 발생:", error);
         });
 });
+
+
 
 
 

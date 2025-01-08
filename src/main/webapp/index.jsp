@@ -45,7 +45,9 @@
 	<a href="/noticeBoard/noticeBoardWrite.aws">공지사항 작성하기(이슬)</a>
    <br>   
 	<a href="/noticeBoard/noticeBoardModify.aws">공지사항 수정하기(이슬)</a>
-   <br>    
+   <br>       
+	<a href="/noticeBoard/noticeBoardList.aws">공지사항 목록</a>
+   <br>
 	<a href="/food/foodRecom.aws">식단추천(이슬)</a>
    <br>
     <a href="/food/foodDetail.aws">식단기록표 상세내용(이슬)</a>
