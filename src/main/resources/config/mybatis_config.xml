@@ -4,6 +4,7 @@
 <configuration> 
 	<typeAliases>
         <typeAlias alias="bv" type="com.aws.team.domain.BoardVo"/>
+        <typeAlias alias="ev" type="com.aws.team.domain.ExerciseVo"/>
         <typeAlias alias="scri" type="com.aws.team.domain.SearchCriteria"/>
     </typeAliases>
 </configuration>

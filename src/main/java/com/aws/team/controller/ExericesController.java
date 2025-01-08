@@ -1,27 +1,24 @@
 package com.aws.team.controller;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.aws.team.domain.ExerciseVo;
+import com.aws.team.service.ExerciseService;
+
 @Controller
 @RequestMapping(value="/exercise/")
 public class ExericesController {
 	
+	@Autowired(required=false)
+    private ExerciseService exerciseService;
 	
 	@RequestMapping(value="exerciseMain.aws", method=RequestMethod.GET)
 	public String exerciseMain() {
@@ -61,8 +58,24 @@ public class ExericesController {
         return "WEB-INF/exercise/bmi";
     }
 
-	
-	
+	@ResponseBody
+	@RequestMapping(value="saveExercise.aws", method=RequestMethod.POST)
+	public ResponseEntity<?> saveExercise(@RequestBody ExerciseVo ev) {
+        try {
+            // 유효성 검사
+            if (ev.getHour() < 0 || ev.getMinute() < 0 || ev.getMinute() >= 60) {
+                return ResponseEntity.badRequest().body("{\"success\": false, \"message\": \"Invalid time values.\"}");
+            }
+
+            exerciseService.saveExercise(ev);
+            
+            return ResponseEntity.ok("{\"success\": true}");
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("{\"success\": false, \"message\": \"Server error.\"}");
+        }
+    }
 	
 	
 	
