@@ -13,6 +13,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var today = new Date().toISOString().split('T')[0]; // 오늘 날짜
+    var isSuccessPressed = false; // success 버튼이 눌렸는지 여부를 나타내는 플래그
     var exerciseForm = document.querySelector('.exercise-entry'); // 운동 시간 입력 폼
     var selectedDateInput = document.getElementById('selected-date'); // 선택한 날짜 input
     var hourInput = document.getElementById('hour'); // 운동 시간 input
@@ -28,41 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // 오늘 날짜와 마지막 클릭 날짜가 동일하면 버튼 비활성화
     if (lastClickDate === today) {
         successBtn.disabled = true; // 버튼 비활성화
+        isSuccessPressed = true; // 이미 눌렸다고 설정
     }
-
-    // 자정 체크를 위한 타이머 설정
-    setInterval(function() {
-        var currentDate = new Date().toISOString().split('T')[0];
-        if (currentDate !== today) {
-            // 날짜가 변경되었을 경우 초기화
-            today = currentDate; // 오늘 날짜 업데이트
-            successBtn.disabled = false; // 버튼 활성화
-
-            // 자동으로 새로운 이벤트 생성
-            var newEvent = {
-                id: new Date().getTime().toString(), // 새로운 이벤트 ID
-                resourceId: 'a', // 리소스 ID
-                title: '자동 생성 미션', // 이벤트 제목
-                start: today, // 오늘 날짜
-                eventContent: {
-                    html: `<div><img src="/resources/image/fail.png" class="event-icon" /></div>`,
-                },
-            };
-
-            // 캘린더에 이벤트 추가
-            calendar.addEvent(newEvent);
-            storedEvents.push(newEvent);
-            localStorage.setItem('calendarEvents', JSON.stringify(storedEvents)); // 로컬 저장소에 저장
-
-            // 마지막 클릭 날짜 업데이트
-            localStorage.setItem('lastClickDate', today);
-        }
-    }, 1000 * 60); // 매 1분마다 실행
    
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        /* events: [], // 초기 이벤트는 빈 배열로 시작 */
-        dayMaxEvents: true,
+        events: '/fetch-events', // 서버에서 이벤트를 가져오는 API         
         resources: [
             {
                 id: 'a',
@@ -78,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
         views: 
             {
                 dayGridMonth: {
-                titleFormat: { year: 'numeric', month: '2-digit' } // 객체 형태로 전달
+                	titleFormat: { year: 'numeric', month: '2-digit' } // 객체 형태로 전달
                 }                 
             },
         dateClick: function(info) {
@@ -91,10 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 hourInput.focus(); // 강제로 다시 포커스 설정
             }, 0);
-        },
-        events: storedEvents, // 로컬 저장소에서 가져온 이벤트 사용
-        eventContent: {
-            html: `<div><img src="/resources/image/success.png" class="event-icon" /></div>`,
         },
         datesSet: function(info) {
             setTimeout(() => {
@@ -129,28 +97,70 @@ document.addEventListener('DOMContentLoaded', function() {
                     titleEl.appendChild(calendarTitle);
                 }
             }, 0);
-        }
+        },
+        events: storedEvents, // 로컬 저장소에서 가져온 이벤트 사용
+        eventContent: function(arg) {
+            // 이벤트에 따라 이미지를 다르게 표시
+            if (arg.event.extendedProps.eventType === 'success') {
+                return { html: `<div><img src="/resources/image/success.png" class="event-icon" /></div>` };
+            } else if (arg.event.extendedProps.eventType === 'fail') {
+                return { html: `<div><img src="/resources/image/fail.png" class="event-icon" /></div>` };
+            } else {
+                return { html: arg.event.title }; // 기본 텍스트 표시
+            }
+        },
+        dayMaxEvents: true
     });
    
     // 캘린더 렌더링
     calendar.render();
+    
+ 	// 자정 체크를 위한 타이머 설정
+    setInterval(function() {
+        var currentDate = new Date().toISOString().split('T')[0];
+        if (currentDate !== today) {
+            // 자정이 지났을 때
+            if (!isSuccessPressed) {
+                // success 버튼이 눌리지 않았다면 fail 이벤트 추가
+                var failEvent = {
+                    id: new Date().getTime().toString(), // 새로운 이벤트 ID
+                    resourceId: 'a', // 리소스 ID
+                    title: '미션 실패',
+                    start: today,
+                    extendedProps: {
+                        eventType: 'fail' // 추가 속성으로 구분 가능
+                    }
+                };
+
+                // 캘린더에 fail 이벤트 추가
+                calendar.addEvent(failEvent);
+                storedEvents.push(failEvent);
+                localStorage.setItem('calendarEvents', JSON.stringify(storedEvents));
+            }
+
+            // 날짜 업데이트 및 버튼 활성화
+            today = currentDate;
+            successBtn.disabled = false;
+            isSuccessPressed = false; // 플래그 초기화
+        }
+    }, 1000 * 60); // 매 1분마다 실행
    
     // 성공 버튼 클릭 시 동적으로 이벤트 추가
     document.getElementById('success-btn').addEventListener('click', function() {
-        // 현재 날짜에 이벤트 추가
-        var currentDate = new Date().toISOString().split('T')[0]; // 오늘 날짜
-        var newEvent = {
-            id: new Date().getTime().toString(), // 새로운 이벤트 ID (타임스탬프 사용)
-            resourceId: 'a', // 리소스 ID (Room A)
-            title: '미션완료', // 이벤트 제목
-            start: currentDate, // 오늘 날짜
-            eventContent: {
-                html: `<div><img src="/resources/image/success.png" class="event-icon" /></div>`,
+    	// 현재 날짜에 이벤트 추가
+        var currentDate = new Date().toISOString().split('T')[0];
+        var successEvent = {
+            id: new Date().getTime().toString(),
+            resourceId: 'a',
+            title: '미션 성공',
+            start: currentDate,
+            extendedProps: {
+                eventType: 'success' // 추가 속성으로 구분 가능
             }
         };
    
         // 캘린더에 이벤트 추가
-        calendar.addEvent(newEvent);
+        calendar.addEvent(successEvent);
      
         // 캘린더 전체로 포커스 이동
         setTimeout(() => {
@@ -161,17 +171,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 300);
    
-        // 로컬 저장소에 이벤트 추가
-        storedEvents.push(newEvent);
-        localStorage.setItem('calendarEvents', JSON.stringify(storedEvents)); // 로컬 저장소에 저장
+     	// 로컬 저장소에 이벤트 추가
+        storedEvents.push(successEvent);
+        localStorage.setItem('calendarEvents', JSON.stringify(storedEvents));
    
         // 마지막 클릭 날짜를 저장
         localStorage.setItem('lastClickDate', currentDate);
-     
-        alert("미션 success!");
    
-        // 버튼 비활성화
-        document.getElementById('success-btn').disabled = true;
+     	// 플래그 업데이트 및 버튼 비활성화
+        isSuccessPressed = true;
+        successBtn.disabled = true;
+        
+        alert("미션 success!");
     });
    
     //운동 시간 폼 제출 이벤트
@@ -184,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var minute = minuteInput.value;
    
         // 서버로 운동 기록 저장 요청
-        fetch('/saveExercise', {
+        fetch('/exercise/saveExercise.aws', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -202,8 +213,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     calendar.addEvent({
                         title: `${hour}시간 ${minute}분 운동`,
                         start: selectedDate,
+                        allDay: true, // 하루 종일 이벤트로 설정 (필요시 조정)
                     });
+                    
                     exerciseForm.style.display = 'none'; // 폼 숨기기
+                    
+                 	// 성공 메시지 표시
+                    alert('운동 기록이 저장되고 캘린더에 추가되었습니다!');
+                    
                 } else {
                     alert('운동 기록 저장 실패!');
                 }
@@ -250,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
          <div class="mission">
             <h3>오늘의 미션!</h3>
             <form name="success-frm">
-            <p>산책 1시간 하기<button id="success-btn" class="success-btn">success</button></p>
+            <p>관절 가동성을 높이기 위해 손목과 발목을 부드럽게 돌리기<button id="success-btn" class="success-btn">success</button></p>
             </form>
          </div>
          <div class="graph">

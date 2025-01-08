@@ -9,6 +9,8 @@
  		<typeAlias alias="scri" type="com.aws.team.domain.SearchCriteria"/>
  		<typeAlias alias="fv" type="com.aws.team.domain.FoodVo"/>
  		<typeAlias alias="cv" type="com.aws.team.domain.CommentVo"/>
+        <typeAlias alias="ev" type="com.aws.team.domain.ExerciseVo"/>
+
     </typeAliases>
 
 </configuration>

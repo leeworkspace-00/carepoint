@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>bmi 계산 페이지</title>
-<link href="/resources/css/exercise/exercise.css" rel="stylesheet">
+<link href="/resources/css/exercise/bmi.css" rel="stylesheet">
 </head>
 <body>
 

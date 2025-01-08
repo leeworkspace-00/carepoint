@@ -1,0 +1,185 @@
+@charset "UTF-8";
+
+/* bmi 페이지 */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 800px;
+    margin: 130px auto;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #424242;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.highlight {
+    color: #4169E1; /* 강조 색상 */
+    font-weight: bold;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+input[type="number"] {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    background-color: #4169E1;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #315AB0;
+}
+
+.result {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.bmi-value, .standard-weight {
+    font-weight: bold;
+    color: #4169E1;
+}
+
+.legend {
+    margin-top: 30px;
+}
+
+.bmi-range {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.underweight {
+    background-color: #ADD8E6;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.normal {
+    background-color: #90EE90;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.overweight {
+    background-color: #FFD700;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.obese {
+    background-color: #FF6347;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+
+
+/* bmi 결과 */
+
+.bmi-result {
+	height: 100px;
+	margin-top: 50px;
+}
+
+.bmi-ul {
+    display: flex;
+    list-style: none;
+    margin-bottom: 0px; /* 기존 여백 제거 */
+    padding: 0;        /* ul의 기본 패딩 제거 */
+    justify-content: space-between; /* 리스트 아이템 간의 간격 균등 배치 */
+    font-weight: bold; /* 텍스트 강조 */
+    font-size: 16px;   /* 텍스트 크기 조정 */
+    margin-top: 0;     /* ul과 bmi-bar의 간격을 없애기 위해 추가 */
+}
+
+.bmi-li-1 {
+	width: 27%;
+}
+
+.bmi-li-2 {
+	width: 20%; 	
+}
+
+.bmi-li-3 {
+	width: 15%;
+}
+
+.bmi-li-4 {
+	width: 35%; 	
+}
+
+.bmi-bar {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 0; /* ul과 bmi-bar 사이 간격 제거 */
+}
+
+.bar-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.bar-section.underweight {
+	width: 30%;
+    background-color: #00AEEF; /* 저체중 색상 */
+}
+
+.bar-section.normal {
+	width: 20%;
+    background-color: #7ED321; /* 정상 색상 */
+}
+
+.bar-section.overweight {
+	width: 15%;
+    background-color: #F5A623; /* 과체중 색상 */
+}
+
+.bar-section.obese {
+	width: 35%;
+    background-color: #D0021B; /* 비만 색상 */
+}

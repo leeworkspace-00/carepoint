@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aws.team.persistance.ExerciseMapper">
+
+<insert id="insertExercise" parameterType="com.aws.team.domain.ExerciseVo">
+    INSERT INTO exercise(selectdate, hour, minute, user_pk, detail_pk)
+    VALUES (#{selectdate}, #{hour}, #{minute}, 1, 1)
+</insert>
+    
+</mapper>
