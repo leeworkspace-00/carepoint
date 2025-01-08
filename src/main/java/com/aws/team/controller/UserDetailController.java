@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aws.team.domain.UserDetailVo;
@@ -38,17 +39,20 @@ public class UserDetailController {
 	}
 	// 상세정보 입력 동작 기능
 	@RequestMapping(value = "userDetailAction.aws", method = RequestMethod.POST)
-	public String userDetailAction(UserDetailVo u_dv, 
+	public String userDetailAction(UserDetailVo u_dv,
 			RedirectAttributes rttr, 
 			HttpSession session) {
 		System.out.println("userdetailaction 들어옴");
 		System.out.println("drink : " + u_dv.getDrink());
 		System.out.println("smoke : " + u_dv.getSmoke());
 		
+		// 세션에서 user_pk가져오자
 		Integer user_pk = (Integer)session.getAttribute("user_pk");
+		
+		 // UserDetailVo 객체에 user_pk 설정 u_dv에 담기 회원번호
+	    u_dv.setUser_pk(user_pk);
 		System.out.println("user_pk : " + u_dv.getUser_pk());
 		
-		u_dv.setUser_pk(user_pk);
 		int value = userDetailService.userDetailInsert(u_dv) ;
 		String path = "";
 		if(value == 1) {

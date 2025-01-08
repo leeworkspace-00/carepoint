@@ -4,16 +4,16 @@
     <!-- SQL 매핑 내용 -->
     <!-- 회원가입 인서트 쿼리문 -->
     <insert id="userInsert" parameterType="com.aws.team.domain.UserVo">
-		insert into user(grade,username,usernick,userid,userpwd,userphone,useremail,joindate) 
-		values(#{grade},#{username},#{usernick},#{userid},#{userpwd},#{userphone},#{useremail},#{joindate})		
+		Insert INTO user(grade,username,usernick,userid,userpwd,userphone,useremail,joindate) 
+		VALUES(#{grade},#{username},#{usernick},#{userid},#{userpwd},#{userphone},#{useremail},#{joindate})		
 	</insert>
 	<!-- 아이디 중복체크 쿼리문 -->
 	<select id="userIdCheck" parameterType="String" resultType="int">
-		SELECT COUNT(*) as cnt from user where userid=#{userid}
+		SELECT COUNT(*) as cnt FROM user WHERE userid=#{userid}
 	</select>
 	<!-- 닉네임 중복체크 쿼리문 -->
 	<select id="userNickCheck" parameterType="String" resultType="int">
-		SELECT COUNT(*) as cnt from user where usernick=#{usernick}
+		SELECT COUNT(*) as cnt FROM user WHERE usernick=#{usernick}
 	</select>
 	
 	<!-- 로그인시 아이디로 확인해서 전체 데이터값 가져오는 쿼리문 -->
@@ -21,5 +21,4 @@
 		SELECT * FROM user WHERE userid=#{userid}
 	</select>
 	
-
 </mapper>

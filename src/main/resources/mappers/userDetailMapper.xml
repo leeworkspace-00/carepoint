@@ -4,9 +4,8 @@
     <!-- SQL 매핑 내용 -->
     <!-- 상세정보 입력 insert쿼리문 -->
    <insert id="userDetailInsert" parameterType="u_dv">
-		insert into user_detail(userbirth,weight,height,sicktype,exercise_cnt,smoke,drink,e_level,user_pk) 
-		values(#{userbirth},#{weight},#{height},#{sicktype},#{exercise_cnt},#{smoke},#{drink},#{e_level},#{user_pk})		
+		INSERT into user_detail(userbirth,weight,height,sicktype,exercise_cnt,smoke,drink,e_level,user_pk) 
+		VALUES(#{userbirth},#{weight},#{height},#{sicktype},#{exercise_cnt},#{smoke},#{drink},#{e_level},#{user_pk})		
 	</insert> 
 	
-
 </mapper>

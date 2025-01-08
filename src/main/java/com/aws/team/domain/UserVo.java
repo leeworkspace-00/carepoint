@@ -13,7 +13,7 @@ public class UserVo {
 	private String modifydate;
 	private String delyn; 
 	private String ip;
-	private boolean detail_yn;
+	private boolean detail_yn;	// 수정 필요 
 	
 
 	public int getUser_pk() {

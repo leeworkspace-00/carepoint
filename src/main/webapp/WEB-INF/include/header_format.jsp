@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ <%@ taglib prefix = "c" uri ="http://java.sun.com/jsp/jstl/core"%>
 <%
 boolean isLoggedIn = false;
 
@@ -13,7 +14,7 @@ if (session.getAttribute("user_pk") == null) {
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href= "<%=request.getContextPath()%>/resources/css/format.css" type="text/css" rel="stylesheet">
+<link href= "${pageContext.request.contextPath}/resources/css/format.css" type="text/css" rel="stylesheet">
 </head>
 
   <script>
@@ -51,7 +52,7 @@ if (session.getAttribute("user_pk") == null) {
     <div class="header-container">
       <!-- 로고 -->
       <a href="/index.jsp">
-      	<img src="<%=request.getContextPath()%>/resources/image/logo.jpg" alt="로고" class="logo">
+      	<img src="${pageContext.request.contextPath}/resources/image/logo.jpg" alt="로고" class="logo">
       </a>
     </div>
     <ul class="menu">
@@ -79,7 +80,7 @@ if (session.getAttribute("user_pk") == null) {
         <li><a href="#">TodoList</a></li>
         <li><a href="/exercise/bmi.aws">BMI계산기</a></li>
         <li><a href="/freeBoard/freeBoardList.aws">자유게시판</a></li>
-        <li><a href="<%=request.getContextPath()%>/qnaBoard/qnaBoardList.aws">Q&A</a></li>
+        <li><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoardList.aws">Q&A</a></li>
         <li><a href="/noticeBoard/noticeBoardList.aws">공지사항</a></li>
     </ul>
     <!-- Bottom Links for Login/Signup or My Page/Logout -->

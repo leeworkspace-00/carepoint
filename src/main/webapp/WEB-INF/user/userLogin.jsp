@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,20 +9,27 @@
 <link href= "${pageContext.request.contextPath}/resources/css/user/login.css" type="text/css" rel="stylesheet">
 <script>
 
-
 //아이디 비밀번호 유효성 검사
 	function check() {
-
 	
 	var fm = document.frm;
-	fm.action = "${pageContext.request.contextPath}/user/userLoginAction.aws"; 
-	fm.method = "post";
-	fm.submit();
+	
+	if(fm.userid.value=="") {
+		alert("아이디를 입력해주세요");
+		fm.userid.focus();
+		return;
+	}else if(fm.userpwd.value=="") {
+		alert("비밀번호를 입력해주세요")
+		fm.userpwd.focus();
+		return;
+	}
+		fm.action = "${pageContext.request.contextPath}/user/userLoginAction.aws"; 
+		fm.method = "post";
+		fm.submit();
 	return;
 }
 
 </script>
-
 
 </head>
 <body>
@@ -41,8 +47,8 @@
         <button type="submit" class="login-btn" onclick="check();">로그인하기</button>
 
         <div class="options">
-          <a href="#" class="find-id">비밀번호 찾기</a>
-          <a href="#" class="register">회원가입</a>
+          <a href="${pageContext.request.contextPath}/user/findId.aws" class="find-id">비밀번호 찾기</a>
+          <a href="${pageContext.request.contextPath}/user/userJoin.aws" class="register">회원가입</a>
         </div>
       </form>
     </div>

@@ -13,8 +13,6 @@ public class UserDetailVo {
 	private  String photo;
 	private int e_level;
 	private int user_pk;
-	private int mission_pk;
-	
 	
 	public int getDetail_pk() {
 		return detail_pk;
@@ -88,14 +86,5 @@ public class UserDetailVo {
 	public void setUser_pk(int user_pk) {
 		this.user_pk = user_pk;
 	}
-	public int getMission_pk() {
-		return mission_pk;
-	}
-	public void setMission_pk(int mission_pk) {
-		this.mission_pk = mission_pk;
-	}
-
-	
-	
 	
 }

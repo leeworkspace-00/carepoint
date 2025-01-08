@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -7,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>회원 상세정보 입력</title>
   <link href= "${pageContext.request.contextPath}/resources/css/user/detail.css" type="text/css" rel="stylesheet">
-  <script>
+  <script> 
   document.addEventListener("DOMContentLoaded", () => {
     const buttons = document.querySelectorAll(".toggle-btn");
 
@@ -17,7 +18,7 @@
         button.classList.toggle("selected");
       });
     });
-  });
+
   // 상세정보 제출
   function save() {
 	var fm = document.frm;
@@ -26,9 +27,6 @@
 	fm.submit();
 	return;
   }
-  
-  
-  
   
 </script>
 </head>

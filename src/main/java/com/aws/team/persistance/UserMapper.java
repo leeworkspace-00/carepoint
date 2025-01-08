@@ -1,6 +1,5 @@
 package com.aws.team.persistance;
 
-
 import com.aws.team.domain.UserVo;
 
 public interface UserMapper {
