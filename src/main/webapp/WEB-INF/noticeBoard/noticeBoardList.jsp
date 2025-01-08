@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.aws.team.domain.*"%>
+<%
+String msg = "";  
+if (request.getAttribute("msg") != null) {
+	msg = (String)request.getAttribute("msg");
+}
 
+if (msg != "") {
+	out.println("<script>alert('" + msg + "');</script>");	
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,113 +32,16 @@
 				<th>작성일</th>
 			</tr>
 			
+			<c:forEach items = "${blist}" var = "bv" varStatus="status">
 			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 15</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
+				<td class="noticeNo">${pm.totalCount - (status.index + (pm.scri.page-1) * pm.scri.perPageNum)}</td>
+				<td class="subject"><a href="${pageContext.request.contextPath}/noticeBoard/noticeBoardContents.aws?board_pk=${bv.board_pk}">${bv.subject }</a></td>
+				<td class="writer">[관리자]</td>
+				<td class="writeday">${bv.writedate.substring(0,10)}</td>
 			</tr>
-			
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 14</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 13</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 12</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 11</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 10</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-	
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 9</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 8</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 7</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 6</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 5</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 4</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 3</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 2</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
-			<tr>
-				<td class="noticeNo">공지</td>
-				<td class="subject"><a>공지사항 1</a></td>
-				<td class="writer">22na</td>
-				<td class="writeday">2024-12-24</td>
-			</tr>
-			
+			</c:forEach>
 			<tr class="write-tr">
-				<td class="write-td" colspan="4"><button onclick="location.href='/KES/noticeBoardWrite.aws';">글 작성</button></td>
+				<td class="write-td" colspan="4"><button onclick="location.href='/noticeBoaerd/noticeBoardWrite.aws';">글 작성</button></td>
 			</tr>
 			
 		</table>
@@ -136,18 +49,18 @@
 	
 	<div class="page">
 		<ul>
-			<li><a href="#" class="prev">◀</a></li>
-	        <li><a href="#">1</a></li>
-	        <li><a href="#">2</a></li>
-	        <li><a href="#">3</a></li>
-	        <li><a href="#">4</a></li>
-	        <li><a href="#">5</a></li>
-	        <li><a href="#">6</a></li>
-	        <li><a href="#">7</a></li>
-	        <li><a href="#">8</a></li>
-	        <li><a href="#">9</a></li>
-	        <li><a href="#">10</a></li>
-	        <li><a href="#" class="next">▶</a></li>
+			<c:if test="${pm.prev == true}">
+				<li><a class="prev" href = "${pageContext.request.contextPath}/noticeBoard/noticeBoardList.aws?page=${pm.startPage - 1}&${queryParam}">◀</a></li>
+			</c:if>		
+			<c:forEach var = "i" begin = "${pm.startPage}" end = "${pm.endPage}" step = "1">
+				<li <c:if test="${i == pm.scri.page}"> class = 'on'</c:if>>
+					<a href = "${pageContext.request.contextPath}/noticeBoard/noticeBoardList.aws?page=${i}&${queryParam}">
+					${i}</a>
+				</li>
+			</c:forEach>
+			<c:if test="${pm.next && pm.endPage > 0 }">
+				<li><a class="next" href = "${pageContext.request.contextPath}/noticeBoard/noticeBoardList.aws?page=${pm.endPage + 1}&${queryParam}">▶</a></li>
+			</c:if>
 		</ul>	
 	</div>
 	
