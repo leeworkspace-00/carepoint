@@ -35,6 +35,43 @@ $(document).ready(function() {
         });
     });
 	
+$("#cmtbtn").click(function() {
+		
+		/* let loginCheck = "${user_pk}";
+		if (loginCheck == "" || loginCheck == "null" || loginCheck == null || loginCheck == 0) {
+			alert("로그인을 해주세요.");
+			return;
+		} */
+		
+		let content = $("#content").val();
+		
+		if (content == "") {
+			alert("댓글을 입력해주세요.");
+			$("#content").focus();
+			return;
+		}
+		
+		$.ajax({
+			type : "post",
+			url : "${pageContext.request.contextPath}/freeBoard/commentWriteAction.aws",
+			data : {"content" : content, 
+					"board_pk" : "${board_pk}", 
+					"user_pk" : "1"
+					},
+			dataType : "json",		
+			success : function(result) {
+		 		alert("댓글이 등록되었습니다.");
+		 		if(result.value == 1) {
+		 			$("#content").val("");
+		 			$("#block").val(1);
+		 		}
+			},
+			error : function() {
+				alert("전송실패");
+			}			
+		});		
+	});
+	
 });
 
 function deletecheck() {
@@ -85,11 +122,11 @@ function deletecheck() {
 			        <button class="btn" type="button" onclick = "deletecheck();">삭제</button>
 			    </div>
 			</form>
-	    </div> 
+	    </div>
 	    <form name="commentfrm">
 		    <div class="comment-box">
-		        <input type="text" class="comment-input" placeholder="댓글을 입력하세요">
-		        <button class="comment-submit">등록</button>
+		        <input type="text" class="comment-input" id="content" name="content" placeholder="댓글을 입력하세요">
+		        <button class="comment-submit" id="cmtbtn">등록</button>
 		    </div>
 		    <div class="comment-list">
 			    <div class="comment-item">

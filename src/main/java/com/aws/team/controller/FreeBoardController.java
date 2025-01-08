@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aws.team.domain.BoardVo;
+import com.aws.team.domain.CommentVo;
 import com.aws.team.domain.PageMaker;
 import com.aws.team.domain.SearchCriteria;
 import com.aws.team.service.FreeBoardService;
@@ -198,5 +199,23 @@ public class FreeBoardController {
 		}
 		
 		return path;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "commentWriteAction.aws", method = RequestMethod.POST)
+	public JSONObject commentWriteAction(
+			CommentVo cv, 
+			HttpServletRequest request
+			) throws Exception {
+		JSONObject js = new JSONObject();
+		
+		String ip = userIp.getUserIp(request);
+		cv.setIp(ip);
+		
+		int value = freeBoardService.commentInsert(cv);
+		
+		js.put("value", value);
+		
+		return js;
 	}
 } 

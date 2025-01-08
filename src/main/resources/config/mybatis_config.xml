@@ -5,6 +5,7 @@
 <typeAliases>
  <typeAlias alias="bv" type="com.aws.team.domain.BoardVo"/>
  <typeAlias alias="scri" type="com.aws.team.domain.SearchCriteria"/>
+ <typeAlias alias="cv" type="com.aws.team.domain.CommentVo"/>
  
 
 </typeAliases>

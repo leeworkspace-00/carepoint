@@ -3,6 +3,7 @@ package com.aws.team.service;
 import java.util.ArrayList;
 
 import com.aws.team.domain.BoardVo;
+import com.aws.team.domain.CommentVo;
 import com.aws.team.domain.SearchCriteria;
 
 public interface FreeBoardService {
@@ -22,5 +23,8 @@ public interface FreeBoardService {
 	public int freeBoardUpdateRecom(int board_pk);
 
 	public int freeBoardDelete(int board_pk);
+
+	// 댓글기능
+	public int commentInsert(CommentVo cv);
 
 }

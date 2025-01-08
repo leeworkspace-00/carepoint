@@ -61,4 +61,10 @@
 	WHERE board_pk = #{board_pk}
 </update>
 
+<!-- 댓글기능 -->
+<insert id="commentInsert" parameterType="cv">
+	INSERT INTO comment(content, ip, user_pk, board_pk)
+	VALUES(#{content}, #{ip}, #{user_pk}, #{board_pk})
+</insert>
+
 </mapper>
