@@ -28,7 +28,7 @@
 	SELECT b.*, u.usernick
 	FROM board b
 	JOIN user u
-    ON b.user_key = u.user_key
+    ON b.user_pk = u.user_pk
 	WHERE b.board_type = 'Q'
 	AND b.delyn = 'N'
 	AND b.board_pk = #{board_pk}

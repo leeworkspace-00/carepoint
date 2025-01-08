@@ -56,6 +56,8 @@ public class QnaBoardController {
 			Model model,
 			HttpServletRequest request,
 			RedirectAttributes rttr) {
+		
+		System.out.println("QnA Controller 들어옴");
 
 		BoardVo bv = qnaBoardService.qnaSelectOne(board_pk);
 		model.addAttribute("bv", bv);
@@ -69,7 +71,7 @@ public class QnaBoardController {
 		
 	    // 관리자는 모든 게시글에 접근 가능
 	    if ("A".equals(grade)) {
-	        path = "WEB-INF/qnaBoard/qnaBoardContent";
+	        path = "WEB-INF/qnaBoard/qnaBoardContents";
 	    } 
 	    // 회원은 자신이 작성한 글과 해당 글의 origin_num이 같은 모든 게시글 열람 가능
 	    else {
@@ -78,13 +80,14 @@ public class QnaBoardController {
 
 	        // 현재 게시글의 origin_num이 회원의 origin_num 목록에 포함되어 있는지 확인
 	        if (userOriginNums.contains(bv.getOrigin_num())) {
-	            path = "WEB-INF/qnaBoard/qnaBoardContent";
+	            path = "WEB-INF/qnaBoard/qnaBoardContents";
 	        } else {
 	            rttr.addFlashAttribute("msg", "열람 권한이 없습니다.");
 	            path = "redirect:/qnaBoard/qnaBoardList.aws";
 	        }
 	    }
-
+	    
+	    System.out.println("path ======> " + path);
 	    return path;
 	}
 

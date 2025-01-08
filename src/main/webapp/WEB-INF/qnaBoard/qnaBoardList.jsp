@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- 메세지 출력 -->
+<c:set var="msg" value="${msg}" />
+<c:if test="${!empty msg}">
+    <script>alert('${msg}');</script>
+</c:if>
 
 <!DOCTYPE html>
 <html>
@@ -29,11 +34,11 @@
 						<c:forEach var="i" begin="1" end="${bv.level_}" step="1">
 							&nbsp;&nbsp;
 							<c:if test="${i==bv.level_}">
-								ㄴ <a href="${pageContext.request.contextPath}/qnaBoard/qnaContent.aws?board_pk=${bv.board_pk}">A. 답변입니다.</a>
+								ㄴ <a href="${pageContext.request.contextPath}/qnaBoard/qnaBoardContents.aws?board_pk=${bv.board_pk}">A. 답변입니다.</a>
 							</c:if>
 						</c:forEach>
 						<c:if test="${0==bv.level_}">
-							<a href="${pageContext.request.contextPath}/qnaBoard/qnaContent.aws?board_pk=${bv.board_pk}">Q. 질문입니다.</a>
+							<a href="${pageContext.request.contextPath}/qnaBoard/qnaBoardContents.aws?board_pk=${bv.board_pk}">Q. 질문입니다.</a>
 						</c:if>
 					</td>
 					<td class="writer">${bv.usernick}</td>
