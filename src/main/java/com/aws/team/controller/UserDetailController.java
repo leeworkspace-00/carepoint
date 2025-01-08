@@ -51,15 +51,16 @@ public class UserDetailController {
 		
 		 // UserDetailVo 객체에 user_pk 설정 u_dv에 담기 회원번호
 	    u_dv.setUser_pk(user_pk);
-		System.out.println("user_pk : " + u_dv.getUser_pk());
+		System.out.println("detailcontroller 세션값 user_pk : " + u_dv.getUser_pk());
 		
 		int value = userDetailService.userDetailInsert(u_dv) ;
+		System.out.println("메서드 실행 성공 하면 1 실패하면 0 : "+value);
 		String path = "";
 		if(value == 1) {
 			//성공시 메시지 정달
 			rttr.addFlashAttribute("msg", "상세정보 입력을 완료하셨습니다 !!");
 			path = "redirect:/user/myPage.aws";
-		}else {
+		}else if(value==0) {
 			rttr.addFlashAttribute("msg", "상세정보 등록 실패 다시 시도해주세요.");
 			path = "redirect:/user/detail/userDetail.aws";
 		}
