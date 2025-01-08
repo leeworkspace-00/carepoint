@@ -1,5 +1,8 @@
 package com.aws.team.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,34 +41,48 @@ public class FoodController {
 	    return "WEB-INF/food/foodMain"; // 화면 렌더링
 	}
 
-//	// 검색 기능을 담당하는 메서드
-//	@RequestMapping(value = "foodMainAction.aws")
-//	public String getFoodInfo(@RequestParam(value = "foodName") String foodName, Model model) {
-//	    // foodName에 따라 검색 처리
-//	    FoodVo foodInfo = foodService.getFoodInfo(foodName);
-//	    System.out.println("Food Info: " + foodInfo); // 디버깅용 출력 vo에 잘 들어갔다. 완료
-//	    model.addAttribute("foodInfo", foodInfo);
-//	    
-//	    System.out.println("Menu Name: " + foodInfo.getMenuName());
-//	    System.out.println("Calories: " + foodInfo.getCalorie());
-//	    System.out.println("Protein: " + foodInfo.getProtein());
-//	    System.out.println("Fat: " + foodInfo.getFat());
-//	    System.out.println("Carbs: " + foodInfo.getCarb()); //정상적으로 들어감
-//	    
-//	    System.out.println("Model contains 'foodInfo': " + model.containsAttribute("foodInfo"));
-//
-//	    // 검색 결과를 포함하여 동일한 화면을 렌더링
-//	    return "WEB-INF/food/foodMain";
-//	}
-	
-	
 
-	@RequestMapping(value = "foodMainAction.aws", produces = "application/json; charset=UTF-8")
+	
+	@RequestMapping(value = "foodMainAction.aws", produces = "application/json; charset=UTF-8") 
 	@ResponseBody
-	public FoodVo getFoodInfo(@RequestParam(value = "foodName") String foodName) {
-	    System.out.println("Received foodName: " + foodName); // 디버깅용 출력
-	    return foodService.getFoodInfo(foodName); // FoodVo 객체를 JSON 형식으로 반환
+	public List<FoodVo> getFoodInfo(@RequestParam(value = "foodName", required = false, defaultValue = "") String foodName) {
+	    // 요청 매핑 설정:
+	    // - URL: "foodMainAction.aws"로 매핑
+	    // - JSON 형식의 응답을 UTF-8 인코딩으로 반환
+
+	    // @ResponseBody:
+	    // - 메서드의 반환 값을 HTTP 응답 본문으로 변환하여 클라이언트에 전달
+
+	    // @RequestParam:
+	    // - HTTP 요청 파라미터 "foodName"을 메서드 파라미터에 매핑
+	    // - 필수 값이 아니며, 값이 없으면 기본값("") 사용
+
+	    if (foodName.isEmpty()) { 
+	        // foodName이 비어있거나 null일 경우 로그를 출력하고 빈 리스트 반환
+	        System.out.println("foodName is empty or null");
+	        return new ArrayList<>(); // 빈 리스트 반환
+	    }
+
+	    // 서비스 호출:
+	    // - foodService의 getFoodInfo 메서드를 호출해서 음식 정보 리스트 가져오기
+	    List<FoodVo> foodList = foodService.getFoodInfo(foodName);
+
+	    if (foodList != null && !foodList.isEmpty()) {
+	        // foodList에 데이터가 있는 경우 로그 출력
+	        System.out.println("Returned Food Info List: " + foodList);
+	    } else {
+	        // foodList가 비어있거나 null일 경우 로그 출력
+	        System.out.println("No data found for foodName: " + foodName);
+	    }
+
+	    // 결과 반환:
+	    // - 음식 정보를 담은 리스트를 클라이언트에 반환
+	    return foodList;
 	}
+
+
+
+	
 
 
 

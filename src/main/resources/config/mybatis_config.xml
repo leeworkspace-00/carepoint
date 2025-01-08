@@ -2,5 +2,9 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
  
 <configuration> 
-
+<typeAliases>
+ <typeAlias alias="fv" type="com.aws.team.domain.FoodVo"/>
+ <typeAlias alias="bv" type="com.aws.team.domain.BoardVo"/>
+ <typeAlias alias="scri" type="com.aws.team.domain.SearchCriteria"/>
+</typeAliases>
 </configuration>
