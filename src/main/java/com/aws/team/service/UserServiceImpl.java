@@ -3,7 +3,10 @@ package com.aws.team.service;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.aws.team.domain.UserDetailVo;
 import com.aws.team.domain.UserVo;
+import com.aws.team.persistance.UserDetailMapper;
 import com.aws.team.persistance.UserMapper;
 
 
@@ -42,6 +45,8 @@ public class UserServiceImpl implements UserService {
 		UserVo uv = um.userLoginCheck(userid);
 		return uv;
 	}
+
+
 
 
 

@@ -56,15 +56,17 @@ public class UserController {
 		String userpwd_enc = bCryptPasswordEncoder.encode(uv.getUserpwd()); // 이게 비밀번호 암호화 시키는 코드
 		logger.info("암호화된 비밀번호 :  "+userpwd_enc);
 		uv.setUserpwd(userpwd_enc);
-		uv.setDetail_yn(false);
+		
 		
 		int value = userService.userInsert(uv);
 		String path = "";
 		if (value == 1) {
 			 // 성공 시 메시지 전달
-	        rttr.addFlashAttribute("msg", "회원가입 성공!!");
+	        rttr.addFlashAttribute("msg", "회원가입 성공!! 상세정보를 입력해주세요");
+	        rttr.addAttribute("user_pk", uv.getUser_pk()); // 회원번호 전달
 	        return "redirect:/user/detail/userDetail.aws"; // 로그인 페이지로 리다이렉트
-		} else if (value == 0) {
+		} else {
+			rttr.addFlashAttribute("msg", "회원가입 실패 다시 작성해주세요");
 			path = "redirect:/user/userJoin.aws";
 		}
 		return path;
@@ -103,34 +105,33 @@ public class UserController {
 			HttpSession session) {
 		UserVo uv = userService.userLoginCheck(userid); // 로그인 확인하는 메서드 
 		String path = ""; // 리턴값 초기화
+		
 		if(uv != null) {	// uv가 null이 아니라면 >> uv에 뭐라도 담았다면?
 			String reservedPwd = uv.getUserpwd();// uv에 있는 비밀번호를 변수에 담아준다
-			System.out.println("비밀번호 담겼나 확인 : " + reservedPwd);
-			
+			//System.out.println("비밀번호 담겼나 확인 : " + reservedPwd);
+			//Integer detail_pk = (Integer)session.getAttribute("detail_pk");
+			//System.out.println("세션에 저장된 detail_pk : " + session.getAttribute("detail_pk"));
+			 // UserDetailVo 객체에 user_pk 설정 u_dv에 담기 회원번호
 			if(bCryptPasswordEncoder.matches(userpwd, reservedPwd)) {	// 암호화된 비밀번호와 입력된 비번을 맞춰보고 맞으면
 				session.setAttribute("user_pk", uv.getUser_pk());	// 회원번호
-				System.out.println("세션에 저장된 user_pk : " + session.getAttribute("user_pk"));
+				//System.out.println("세션에 저장된 user_pk : " + session.getAttribute("user_pk"));
 				session.setAttribute("grade", uv.getGrade());		// 회원등급
 				session.setAttribute("username", uv.getUsername());// 회원 이름이랑
 				session.setAttribute("usernick", uv.getUsernick());// 회원 닉네임 담아서 
-				session.setAttribute("detail_yn", uv.isDetail_yn()); // 상세정보 입력 여부 저장 // 수정예정임
-				
-				if(!uv.isDetail_yn()) {
-					path = "redirect:/user/detail/userDetail.aws";
-				}else {
-					path = "redirect:/user/mainPage.aws";
-				} 
-			}else {
-					rttr.addFlashAttribute("msg", "아이디 또는 비밀번호가 잘못되었습니다."); // 한번 사용하고 없어질 세션. 값을 사용한 후에 지워버림
-					path = "redirect:/user/userLogin.aws";
-				}
-				
-			}else {
-				rttr.addFlashAttribute("msg", "해당하는 아이디가 없습니다");
-				path = "redirect:/user/userLogin.aws";	
-			}
-				
-		return path;
+				//session.setAttribute("detail_pk", u_dv.getDetail_pk()); // 상세정보 입력 여부 저장
+				//System.out.println("세션에 저장된 detail_pk : " + session.getAttribute("detail_pk"));
+				//System.out.println("[DEBUG] 로그인 성공: user_pk = " + uv.getUser_pk());
+	            path = "redirect:/user/mainPage.aws"; // 메인 페이지로 이동
+	        } else {
+	            rttr.addFlashAttribute("msg", "아이디 또는 비밀번호가 잘못되었습니다.");
+	            path = "redirect:/user/userLogin.aws";
+	        }
+	    } else {
+	        rttr.addFlashAttribute("msg", "해당하는 아이디가 없습니다.");
+	        path = "redirect:/user/userLogin.aws";    
+	    }
+	    
+	    return path;
 	}
 	// ========= 이전 url 기억하기 추가 예정 ============
 	

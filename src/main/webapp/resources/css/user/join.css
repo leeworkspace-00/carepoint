@@ -63,7 +63,7 @@ main {
   position: relative; /* 버튼 위치 조정을 위해 부모를 기준으로 설정 */
 }
 
-#id, #nickname {
+#userid, #usernick {
 	width: 440px;
 }
 
@@ -92,7 +92,7 @@ button {
   padding-right: 80px; /* 버튼 공간 확보 */
 }
 
-.input-wrapper .nickcheck-btn .idcheck-btn {
+.input-wrapper button {
   position: absolute; /* 부모 요소 기준 위치 고정 */
   top: 50%; /* 세로 중앙 정렬 */
   right: 20px; /* 오른쪽 여백 */
@@ -104,22 +104,6 @@ button {
   border: none;
 }
 
-
-
-
 button:hover {
    background-color: #27408B; /* 배경색 변경 */
-}
-/* 검색 기록 드롭다운 */
-
-.search-dropdown {
-   position: absolute;
-   top: 100%; /* 검색창 바로 아래 */
-   left: 0;
-   width: 200px; /* 검색창과 동일한 너비 */
-   background: white;
-   border: 1px solid lightgray;
-   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-   z-index: 1000;
-   border-radius: 4px;
 }

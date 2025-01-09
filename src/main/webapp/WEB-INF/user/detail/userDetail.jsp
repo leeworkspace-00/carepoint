@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%--     <%
+     <%
 String msg = "";  
 if (request.getAttribute("msg") != null) {
    msg = (String)request.getAttribute("msg");
 }
 
-if (msg != "") {
+if (msg != null) {
    out.println("<script>alert('" + msg + "');</script>");   
 }
-%> --%>
+
+%> 
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -18,26 +19,70 @@ if (msg != "") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>회원 상세정보 입력</title>
   <link href= "${pageContext.request.contextPath}/resources/css/user/detail.css" type="text/css" rel="stylesheet">
-  <script> 
-  document.addEventListener("DOMContentLoaded", () => {
+  <script>
+
+
+document.addEventListener("DOMContentLoaded", () => {
     const buttons = document.querySelectorAll(".toggle-btn");
 
     buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        // 선택 상태를 토글
-        button.classList.toggle("selected");
-      });
+        button.addEventListener("click", () => {
+            // 선택 상태를 토글
+            button.classList.toggle("selected");
+        });
     });
+});
+function save() {
+    var fm = document.frm;
+    
+    if(fm.userbirth.value=="") {
+    	alert("생년월일을 입력해주세요");
+    	fm.userbirth.focus();
+    	return;
+    }else if (fm.weight.value=="") {
+    	alert("체중을 입력해주세요");
+    	fm.weight.focus();
+    	return;
+    }else if (fm.height.value=="") {
+    	alert("신장을 입력해주세요");
+    	fm.height.focus();
+    	return;
+    }else if (fm.sicktype.value=="") {
+    	alert("관리하고싶은 질환을 입력해주세요");
+    	fm.sicktype.focus();
+    	return;
+    }else if (fm.exercise_cnt.value=="") {
+    	alert("운동빈도를 입력해주세요");
+    	fm.exercise_cnt.focus();
+    	return;
+    }
+    // 체크박스 값 설정
+    fm.smoke.value = document.getElementById('smoke').checked ? "Y" : "N";
+    fm.drink.value = document.getElementById('drink').checked ? "Y" : "N";
 
-  // 상세정보 제출
-  function save() {
-	var fm = document.frm;
-	fm.action = "${pageContext.request.contextPath}/user/detail/userDetailAction.aws"; 
-	fm.method = "post";
-	fm.submit();
-	return;
-  }
-  
+    var ans = confirm("상세정보를 저장하시겠습니까?");
+    if (ans) {
+        fm.action = "${pageContext.request.contextPath}/user/detail/userDetailAction.aws";
+        fm.method = "post";
+        fm.submit();
+    }
+}
+
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 </head>
 <body>
@@ -47,6 +92,7 @@ if (msg != "") {
   <div class="form-container">
     <h2>상세 정보 입력 페이지</h2>
     <form name = "frm">
+    <input type="hidden" name="user_pk" id = "user_pk" value="${user_pk}">
       <div class="form-group">
         <label for="birthdate">생년월일</label>
         <input type="date" id="userbirth" name="userbirth">
@@ -85,14 +131,16 @@ if (msg != "") {
       <div class="checkbox-main">흡연 음주 여부
       <div class="checkbox-group">
       <span>
+      <input type="hidden" name="smoke" value="N">
       	<input type="checkbox" id="smoke" name="smoke" value = "Y">흡연
       </span>
       <span>
+      <input type="hidden" name="drink" value="N">
       	<input type="checkbox" id="drink" name="drink" value = "Y">음주
       </span>
   	  </div>
       </div>
-      <button type="submit" onclick = "save();">저장하기</button>
+      <button type="button" onclick = "save();">저장하기</button>
     </form>
   </div>
 </main>  

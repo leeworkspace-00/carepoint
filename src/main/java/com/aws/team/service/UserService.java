@@ -1,9 +1,6 @@
 package com.aws.team.service;
 
-
 import org.springframework.stereotype.Service;
-
-import com.aws.team.domain.UserDetailVo;
 import com.aws.team.domain.UserVo;
 
 @Service
@@ -19,6 +16,7 @@ public interface UserService  {
 	
 	// 회원로그인시 확인하는 메서드
 	public UserVo userLoginCheck(String userid);
+	
 	
 	
 	

@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ <%
+String msg = "";  
+if (request.getAttribute("msg") != null) {
+   msg = (String)request.getAttribute("msg");
+}
+
+if (msg != "") {
+   out.println("<script>alert('" + msg + "');</script>");   
+}
+%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,11 +35,17 @@ function check(){
 		alert("닉네임을 입력해주세요");
 		fm.usernick.focus();
 		return;
-	}else if(fm.userid.value=="") {
+	}else if ($("#nickcheck-btn").val() == "N") { // 닉네임 중복확인 여부 확인
+        alert("닉네임 중복확인을 해주세요");
+        return;
+    }else if(fm.userid.value=="") {
 		alert("아이디를 입력해주세요");
 		fm.userid.focus();
 		return;
-	}else if (fm.userpwd.value==""){
+	}else if ($("#idcheck-btn").val() == "N") { // 아이디 중복확인 여부 확인
+        alert("아이디 중복확인을 해주세요");
+        return;
+    }else if (fm.userpwd.value==""){
 		alert("비밀번호를 입력해주세요");
 		fm.userpwd.focus();
 		return;
@@ -56,7 +72,7 @@ function check(){
 
 // check 함수 끝	
 	
-	var ans = confirm("저장하시겠습니까?");
+	var ans = confirm("회원가입 하시겠습니까?");
 	
 	if (ans == true){						
 		fm.action="${pageContext.request.contextPath}/user/userJoinAction.aws"; 
@@ -70,9 +86,9 @@ function check(){
  function checkUserId() {
     let userid = $("#userid").val();
     if (userid == "") {
-        alert("아이디를 입력해주세요");
+        alert("아이디 입력란이 공란입니다.");
         return;
-    }
+    } // 입력란에 아무것도 입력하지 않은 경우 다시 입력하도록 제한
 
     $.ajax({
         type: "post",
@@ -80,7 +96,7 @@ function check(){
         dataType: "json",
         data: {"userid": userid},
         success: function(result) {
-            if (result.cnt == 0) {
+            if (result.cnt == 0) {	// 사용가능한 경우
                 alert("사용할 수 있는 아이디입니다.");
                 $("#idcheck-btn").val("Y");
                 
@@ -100,10 +116,9 @@ function check(){
  function checkNickname() {
     let usernick = $("#usernick").val();
     if (usernick == "") {
-        alert("닉네임을 입력해주세요");
+        alert("닉네임 입력란이 공란입니다.");
         return;
-    }
-
+    } // 입력란에 아무것도 입력하지 않은 경우 다시 입력하도록 제한
     $.ajax({
         type: "post",
         url: "${pageContext.request.contextPath}/user/userNickCheck.aws",
@@ -150,7 +165,7 @@ function check(){
           <label for="nickname">닉네임</label>
           <div class="input-wrapper">
           <input type="text" id="usernick" name="usernick" placeholder="닉네임을 입력하세요" required>
-          	<button type="button" id="nickcheck-btn" class="nickcheck-btn" onclick="checkNickname()">중복확인</button>
+          	<button type="button" id="nickcheck-btn" class="nickcheck-btn" onclick="checkNickname()" value="N">중복확인</button>
         </div>
         </div>
         
@@ -158,8 +173,7 @@ function check(){
           <label for="id">아이디</label>
            <div class="input-wrapper">
           <input type="text" id="userid" name="userid" placeholder="아이디를 입력하세요" required>
-          <div class="search-dropdown" id="searchDropdown" style="display: none;"></div>
-          	<button type="button" id="idcheck-btn" class="idcheck-btn" onclick="checkUserId()">중복확인</button>
+          	<button type="button" id="idcheck-btn" class="idcheck-btn" onclick="checkUserId()" value="N">중복확인</button>
         </div>
         </div>
         

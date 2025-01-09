@@ -21,6 +21,13 @@ public class UserDetailServiceImpl implements UserDetailService {
 	@Override
 	public int userDetailInsert(UserDetailVo u_dv) {
 		int value = u_dm.userDetailInsert(u_dv);
+
+		return value;
+	}
+
+	@Override
+	public int updateDetail_pk(UserDetailVo u_dv) {
+		int value = u_dm.updateDetail_pk(u_dv);
 		return value;
 	}
 

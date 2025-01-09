@@ -3,9 +3,16 @@
 <mapper namespace="com.aws.team.persistance.UserDetailMapper">
     <!-- SQL 매핑 내용 -->
     <!-- 상세정보 입력 insert쿼리문 -->
-   <insert id="userDetailInsert" parameterType="u_dv">
-		INSERT into user_detail(userbirth,weight,height,sicktype,exercise_cnt,smoke,drink,e_level,user_pk) 
-		VALUES(#{userbirth},#{weight},#{height},#{sicktype},#{exercise_cnt},#{smoke},#{drink},#{e_level},#{user_pk})		
+   <insert id="userDetailInsert" parameterType="com.aws.team.domain.UserDetailVo">
+		INSERT into user_detail(userbirth,weight,height,sicktype,exercise_cnt,smoke,drink,user_pk) 
+		VALUES(#{userbirth},#{weight},#{height},#{sicktype},#{exercise_cnt},#{smoke},#{drink},#{user_pk})		
 	</insert> 
+	
+	<update id="updateDetail_pk" parameterType="int">
+	    UPDATE user_detail
+	    SET detail_pk = user_pk
+	    WHERE user_pk = #{user_pk};
+	</update>
+
 	
 </mapper>
