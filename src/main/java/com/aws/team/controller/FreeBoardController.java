@@ -39,6 +39,7 @@ public class FreeBoardController {
 	private static final Logger logger = LoggerFactory.getLogger(FreeBoardController.class);   
 	   
 	String path = "";
+	
 	   
 	@Autowired
 	private FreeBoardService freeBoardService;
