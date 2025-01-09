@@ -3,9 +3,9 @@
 <mapper namespace="com.aws.team.persistance.UserMapper">
     <!-- SQL 매핑 내용 -->
     <!-- 회원가입 인서트 쿼리문 -->
-    <insert id="userInsert" parameterType="com.aws.team.domain.UserVo">
+    <insert id="userInsert" parameterType="com.aws.team.domain.UserVo" useGeneratedKeys="true" keyProperty="user_pk">
 		Insert INTO user(grade,username,usernick,userid,userpwd,userphone,useremail,joindate) 
-		VALUES(#{grade},#{username},#{usernick},#{userid},#{userpwd},#{userphone},#{useremail},#{joindate})		
+		VALUES(#{grade},#{username},#{usernick},#{userid},#{userpwd},#{userphone},#{useremail},NOW())		
 	</insert>
 	<!-- 아이디 중복체크 쿼리문 -->
 	<select id="userIdCheck" parameterType="String" resultType="int">

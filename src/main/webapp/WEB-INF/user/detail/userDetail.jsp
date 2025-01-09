@@ -9,6 +9,12 @@ if (request.getAttribute("msg") != null) {
 if (msg != null) {
    out.println("<script>alert('" + msg + "');</script>");   
 }
+//세션 또는 모델에서 user_pk 값 가져오기
+Integer user_pk = (Integer) session.getAttribute("user_pk"); // 세션에서 가져오기
+if (request.getAttribute("user_pk") != null) {               // 모델에서 가져오기
+ user_pk = (Integer) request.getAttribute("user_pk");
+}
+
 
 %> 
 
@@ -92,7 +98,7 @@ function save() {
   <div class="form-container">
     <h2>상세 정보 입력 페이지</h2>
     <form name = "frm">
-    <input type="hidden" name="user_pk" id = "user_pk" value="${user_pk}">
+    <input type="text" name="user_pk" id="user_pk" value="<%= user_pk != null ? user_pk : "" %>">
       <div class="form-group">
         <label for="birthdate">생년월일</label>
         <input type="date" id="userbirth" name="userbirth">
@@ -132,11 +138,11 @@ function save() {
       <div class="checkbox-group">
       <span>
       <input type="hidden" name="smoke" value="N">
-      	<input type="checkbox" id="smoke" name="smoke" value = "Y">흡연
+      	<input type="checkbox" id="smoke" name="smoke_checkbox" value = "Y">흡연
       </span>
       <span>
       <input type="hidden" name="drink" value="N">
-      	<input type="checkbox" id="drink" name="drink" value = "Y">음주
+      	<input type="checkbox" id="drink" name="drink_checkbox" value = "Y">음주
       </span>
   	  </div>
       </div>
