@@ -49,4 +49,38 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 		return cnt;
 	}
 
+
+	@Override
+	public int noticeBoardInsert(BoardVo bv) {
+		
+		int value= nbm.noticeBoardInsert(bv);
+		return value;
+	}
+
+
+	@Override
+	public BoardVo noticeBoardSelectOne(int board_pk) {
+		
+		BoardVo bv = nbm.noticeBoardSelectOne(board_pk);
+		return bv;
+	}
+
+
+	@Override
+	public int noticeBoardDelete(int board_pk) {
+		
+		int value = nbm.noticeBoardDelete(board_pk);
+		return value;
+	}
+
+
+	@Override
+	public int noticeBoardUpdate(BoardVo bv) {
+		
+		int value = nbm.noticeBoardUpdate(bv);
+		return value;
+	}
+	
+
+
 }

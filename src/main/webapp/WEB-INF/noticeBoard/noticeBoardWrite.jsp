@@ -1,13 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- 게시물 입력 작성 실패시 띄우는 메세지-->
+<%
+String msg = "";
+if(request.getAttribute("msg") != null) {
+msg = (String)request.getAttribute("msg");
+}
+
+if(msg != "") {  
+out.println("<script>alert('"+msg+"');</script>");
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title></title>
-<link href= "<%=request.getContextPath()%>/resources/css/board/boardWrite.css" type="text/css" rel="stylesheet">
+<link href= "${pageContext.request.contextPath}/resources/css/board/boardWrite.css" type="text/css" rel="stylesheet">
 </head>
 <body>
+
+<script>
+function check() {
+	
+	//유효성 검사하기
+	var fm = document.frm;
+	
+	if(fm.subject.value == "") {
+		alert("제목을 입력해주세요");
+		fm.subject.focus();  // 커서가 입력안한 해당 자리로 갈수 있도록 
+		return;
+	} else if(fm.content.value =="") {
+		alert("내용을 입력해주세요");
+		fm.content.focus(); 
+		return;
+	}
+	
+	var ans = confirm("저장하시겠습니까?");  // 함수의 값은 참과 거짓 true false로 나눈다. 
+	
+	if(ans == true) {	
+		fm.action="${pageContext.request.contextPath}/noticeBoard/noticeBoardWriteAction.aws"; 
+		fm.method="post";
+		fm.enctype="multipart/form-data";   //파일을 올리기 위해서 지정해야한다. 
+		fm.submit();	//파일 업로드를 포함한 폼 데이터를 전송할 때 필요한 인코딩 방식을 지정
+	}
+		return; 
+}
+</script>
+
+
 
 <!-- header -->
 <jsp:include page="/WEB-INF/include/header_format.jsp" />
@@ -15,6 +57,7 @@
 <h2>공지사항 작성</h2>
 <div class="edit-container">
   <form name="frm">
+    <input type="hidden" name = "board_type" value = "N">
   
     <div class="form-group">
       <label for="title">제목</label>

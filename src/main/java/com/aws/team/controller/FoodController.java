@@ -39,10 +39,10 @@ public class FoodController {
 	}
 	
 	
-	// 단순히 화면만 띄워주는 메서드
+	// �떒�닚�엳 �솕硫대쭔 �쓣�썙二쇰뒗 硫붿꽌�뱶
 	@RequestMapping(value = "foodMain.aws", method = RequestMethod.GET)
 	public String foodMain() {
-	    return "WEB-INF/food/foodMain"; // 화면 렌더링
+	    return "WEB-INF/food/foodMain"; // �솕硫� �젋�뜑留�
 	}
 
 
@@ -68,7 +68,7 @@ public class FoodController {
 	    }
 
 	    // 서비스 호출:
-	    // - foodService의 getFoodInfo 메서드를 호출해서 음식 정보 리스트 가져오기
+	    // - foodService의 getFoodInfo 메서드를 호출하여 음식 정보 리스트 가져오기
 	    List<FoodVo> foodList = foodService.getFoodInfo(foodName);
 
 	    if (foodList != null && !foodList.isEmpty()) {
