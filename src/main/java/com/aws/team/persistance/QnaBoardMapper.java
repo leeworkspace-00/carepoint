@@ -20,5 +20,22 @@ public interface QnaBoardMapper {
 	
 	// 로그인 한 회원이 쓴 글의 origin_num과 같은 origin_num을 가지고 있는 게시글 찾기	
 	public List<Integer> getUserOriginNums(int user_pk);
+	
+	// QnA 게시글 생성
+	public int qnaInsert(BoardVo bv);
+	
+	// 게시글 생성 후 0이 들어가있는 origin_num에 maxboard_pk값을 넣어주는 Update 메서드
+	public int origin_numUpdate(int board_pk);
+	
+	// QnA 삭제
+	public int qnaDelete(BoardVo bv);	
+	
+	// QnA 수정
+	public int qnaUpdate(BoardVo bv);
+	
+	// 게시글 답변 생성
+	public int qnaReplyInsert(BoardVo bv);
+	
+	public int countReplies(int origin_num);
 
 }

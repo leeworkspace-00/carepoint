@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.aws.team.domain.BoardVo;
 import com.aws.team.domain.SearchCriteria;
@@ -59,13 +60,55 @@ public class QnaBoardServiceImpl implements QnaBoardService{
 	    return qm.getUserOriginNums(user_pk);
 	}
 	
+	// Write
+	@Override
+	@Transactional
+	public int qnaInsert(BoardVo bv) {
 	
+		int value = qm.qnaInsert(bv);
+		int max_board_pk = bv.getBoard_pk();
+		int value2 = qm.origin_numUpdate(max_board_pk);
+		
+		return value+value2;
+	}
 	
+	// Delete
+	@Override
+	public int qnaDelete(BoardVo bv) {
+		
+		int value = qm.qnaDelete(bv);
+		
+		return value;
+	}
 	
+	// Modify
+	@Override
+	public int qnaUpdate(BoardVo bv) {
+
+		int value = qm.qnaUpdate(bv);
+		
+		return value;
+	}
 	
-	
-	
-	
+	// Reply
+	@Transactional // update, insert 둘 중 하나라도 실행 실패하면 원복
+	@Override
+	public int qnaReply(BoardVo bv) {
+
+		int value = qm.qnaReplyInsert(bv);
+		
+		return value;
+	}
+
+	// Reply
+	@Override
+	public int hasReply(int origin_num) {
+		
+		// 답변의 개수를 세는 용도
+		int value = qm.countReplies(origin_num);
+		
+		return value;
+	}
 	
 	
 	

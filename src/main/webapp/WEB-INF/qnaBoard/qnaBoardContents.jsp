@@ -17,7 +17,7 @@ function deleteCheck() {
 	  let ans = confirm("삭제하시겠습니까?");
 	  
 	  if (ans == true) {
-		  fm.action="${pageContext.request.contextPath}/qnrBoard/qnaDeleteAction.aws?qnrboard_key=${qv.qnrboard_key}";
+		  fm.action="${pageContext.request.contextPath}/qnaBoard/qnaBoardDeleteAction.aws?board_pk=${bv.board_pk}";
 		  fm.method="post";
 		  fm.submit();
 	  }	  
@@ -46,14 +46,17 @@ function deleteCheck() {
 		    <a class="btn btn-left" href="${pageContext.request.contextPath}/qnaBoard/qnaBoardList.aws" >목록</a>
 		    <!-- 수정 및 삭제 버튼 -->
 		    <div class="btn-group">
-		    	<a class="btn" href="#">답변</a>
-		        <a class="btn" href="#">수정</a>
+		    	<a class="btn" href="${pageContext.request.contextPath}/qnaBoard/qnaBoardReply.aws?board_pk=${bv.board_pk}">답변</a>
+		        <a class="btn" href="${pageContext.request.contextPath}/qnaBoard/qnaBoardModify.aws?board_pk=${bv.board_pk}">수정</a>
 		        <form name="deletefrm">
 		        	<button type="button" class="btn" onclick="deleteCheck();">삭제</button>
 		        </form>
 		    </div>
 	    </div>
 	</div>
+	
+	<!-- 여백 -->
+	<div style="height: 200px;"></div>
 
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/include/footer_format.jsp" />

@@ -31,33 +31,46 @@ document.addEventListener('DOMContentLoaded', function() {
         successBtn.disabled = true; // 버튼 비활성화
         isSuccessPressed = true; // 이미 눌렸다고 설정
     }
-   
+
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        events: '/fetch-events', // 서버에서 이벤트를 가져오는 API         
         resources: [
             {
                 id: 'a',
                 title: 'Room A'
             }
         ],
-        headerToolbar: 
-            {
-                left: 'prev',
-                center: 'title', // 제목 설정
-                right: 'next'
-            },
-        views: 
-            {
-                dayGridMonth: {
-                	titleFormat: { year: 'numeric', month: '2-digit' } // 객체 형태로 전달
-                }                 
-            },
+        headerToolbar: {
+            left: 'prev',
+            center: 'title', // 제목 설정
+            right: 'next'
+        },
+        views: {
+            dayGridMonth: {
+                titleFormat: { year: 'numeric', month: '2-digit' } // 객체 형태로 전달
+            }
+        },
+        events: function(fetchInfo, successCallback, failureCallback) {
+            // 서버에서 이벤트를 가져오기
+            fetch('/exercise/calendar-events.aws', {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(serverEvents => {
+                    // 서버 이벤트와 로컬 이벤트 병합
+                    var mergedEvents = serverEvents.concat(storedEvents);
+                    successCallback(mergedEvents); // 병합된 이벤트 전달
+                })
+                .catch(error => {
+                    console.error('Error fetching events:', error);
+                    failureCallback();
+                });
+        },
         dateClick: function(info) {
             // 날짜 클릭 이벤트
             exerciseForm.style.display = 'block';
             selectedDateInput.value = info.dateStr;
-          
+
             // 강제로 포커스 설정
             hourInput.blur(); // 포커스 해제
             setTimeout(() => {
@@ -98,9 +111,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }, 0);
         },
-        events: storedEvents, // 로컬 저장소에서 가져온 이벤트 사용
         eventContent: function(arg) {
-            // 이벤트에 따라 이미지를 다르게 표시
+        	// 이벤트에 따라 이미지를 다르게 표시
             if (arg.event.extendedProps.eventType === 'success') {
                 return { html: `<div><img src="/resources/image/success.png" class="event-icon" /></div>` };
             } else if (arg.event.extendedProps.eventType === 'fail') {
@@ -111,11 +123,11 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         dayMaxEvents: true
     });
-   
+
     // 캘린더 렌더링
     calendar.render();
     
- 	// 자정 체크를 위한 타이머 설정
+    // 자정 체크를 위한 타이머 설정
     setInterval(function() {
         var currentDate = new Date().toISOString().split('T')[0];
         if (currentDate !== today) {
@@ -185,15 +197,14 @@ document.addEventListener('DOMContentLoaded', function() {
         alert("미션 success!");
     });
    
-    //운동 시간 폼 제출 이벤트
     exerciseForm.addEventListener('submit', function (event) {
         event.preventDefault(); // 기본 폼 제출 방지
-    
+
         // 입력된 값 가져오기
         var selectedDate = selectedDateInput.value;
         var hour = hourInput.value;
         var minute = minuteInput.value;
-   
+
         // 서버로 운동 기록 저장 요청
         fetch('/exercise/saveExercise.aws', {
             method: 'POST',
@@ -209,18 +220,28 @@ document.addEventListener('DOMContentLoaded', function() {
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    // 저장된 운동 시간을 캘린더에 표시
-                    calendar.addEvent({
-                        title: `${hour}시간 ${minute}분 운동`,
-                        start: selectedDate,
-                        allDay: true, // 하루 종일 이벤트로 설정 (필요시 조정)
-                    });
-                    
-                    exerciseForm.style.display = 'none'; // 폼 숨기기
-                    
-                 	// 성공 메시지 표시
-                    alert('운동 기록이 저장되고 캘린더에 추가되었습니다!');
-                    
+                    // 운동 기록 저장 후 fetch-events.aws 호출
+                    fetch('/exercise/calendar-events.aws')
+                        .then((response) => response.json())
+                        .then((events) => {
+                            // FullCalendar에서 기존 이벤트를 모두 제거
+                            calendar.removeAllEvents();
+
+                            // 새로운 이벤트를 캘린더에 추가
+                            events.forEach((event) => {
+                                calendar.addEvent(event);
+                            });
+
+                            // 폼 숨기기
+                            exerciseForm.style.display = 'none';
+
+                            // 성공 메시지 표시
+                            alert('운동 기록이 저장되고 캘린더가 업데이트되었습니다!');
+                        })
+                        .catch((error) => {
+                            console.error('Error fetching events:', error);
+                            alert('캘린더 이벤트를 가져오는 중 오류가 발생했습니다.');
+                        });
                 } else {
                     alert('운동 기록 저장 실패!');
                 }
@@ -229,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error:', error);
                 alert('운동 기록 저장 중 오류 발생!');
             });
-     });
+    });
 });
 
 </script>
