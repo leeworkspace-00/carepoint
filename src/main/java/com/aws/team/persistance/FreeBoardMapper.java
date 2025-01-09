@@ -27,4 +27,10 @@ public interface FreeBoardMapper {
 	
 	// 댓글기능
 	public int commentInsert(CommentVo cv);
+	
+	public int commentTotalCnt(int board_pk);
+	
+	public ArrayList<CommentVo> commentSelectAll(HashMap<String, Object> hm);
+	
+	public int commentDelete(CommentVo cv);
 }

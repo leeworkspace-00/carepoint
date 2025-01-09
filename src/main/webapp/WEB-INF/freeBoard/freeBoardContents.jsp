@@ -20,6 +20,8 @@ if (msg != "") {
 <script>
 $(document).ready(function() {
 
+   $.boardCommentList();
+  
    $("#recommend-btn").click(function() {
         $.ajax({
             type: "get",
@@ -36,7 +38,7 @@ $(document).ready(function() {
         });
     });
    
-   $("#cmtbtn").click(function() {
+   $("#cmtbtn").click(function(event) {
       
       event.preventDefault();
          
@@ -72,12 +74,18 @@ $(document).ready(function() {
              if(result.value == 1) {
                 $("#content").val("");
                 $("#block").val(1);
+	            $.boardCommentList();
              }
+             
          },
          error : function() {
             alert("전송실패");
          }         
       });      
+   });
+   
+   $("#more").click(function() {
+		$.boardCommentList();
    });
    
 });
@@ -91,6 +99,82 @@ function deletecheck() {
         fm.method = "post";
         fm.submit();
     }
+}
+
+$.boardCommentList = function(){
+	
+	let block = $("#block").val();
+	
+	$.ajax({
+		type : "get",	
+		url : "${pageContext.request.contextPath}/freeBoard/${bv.board_pk}/"+ block +"/commentList.aws",
+		dataType : "json",		
+		success : function(result) {	
+			// alert("전송성공");
+			
+			var strTr = "";
+			$(result.clist).each(function(){
+			
+				var btn = "";
+				if (this.user_pk == "${user_pk}"){		
+					if (this.delyn == 'N') {
+						btn = "<button class = 'comment-delete' type = 'button' onclick = 'commentDel(" + this.comment_pk + ")'>×</button>";					
+					}				
+				}
+			
+				strTr = strTr 
+				+ "<div class='comment-item'>"
+				+ "<div class='comment-left'>"
+				+ "<div class='comment-author'>" + this.usernick + "</div>"
+				+ "<div class='comment-text'>" + this.content + "</div>"
+				+ "</div>"
+				+ "<div class='comment-right'>"
+				+ "<div class='comment-date'>" + this.writedate.substring(0,10) + "</div>"
+				+ btn 
+				+ "</div>"
+				+ "</div>"
+			
+			});
+			
+			$("#commentListView").html(strTr);
+	
+			if (result.moreView == "N") {
+				$("#morebtn").css("display", "none");	// 감춘다.
+			} else {
+				$("#morebtn").css("display", "block");	// 보여준다.
+			}
+			
+			$("#block").val(result.nextBlock);	
+		
+		},
+		error : function() {		
+			// alert("전송실패");
+		}			
+	});		
+	
+}
+
+function commentDel(comment_pk) {
+	
+	let ans = confirm("삭제하시겠습니까?");
+	
+	if (ans == true) {
+		
+		$.ajax({
+			type : "get",	
+			url : "${pageContext.request.contextPath}/freeBoard/"+ comment_pk +"/commentDeleteAction.aws",
+			dataType : "json",		
+			success : function(result) {	
+				
+				$.boardCommentList();
+			},
+			error : function() {
+				alert("전송실패");
+			}			
+		});
+	}
+	
+	return;
 }
 
 </script>
@@ -143,31 +227,11 @@ function deletecheck() {
               <input type="text" class="comment-input" id="content" name="content" placeholder="댓글을 입력하세요">
               <button class="comment-submit" id="cmtbtn">등록</button>
           </div>
-          <div class="comment-list">
-             <div class="comment-item">
-                 <!-- 왼쪽: 작성자와 내용 -->
-                 <div class="comment-left">
-                     <div class="comment-author">유진</div>
-                     <div class="comment-text">저도 건강 챙기면서 ...</div>
-                 </div>
-                 <!-- 오른쪽: 작성일과 삭제 버튼 -->
-                 <div class="comment-right">
-                     <div class="comment-date">2024-12-26</div>
-                     <button class="comment-delete">×</button>
-                 </div>
-             </div>
-             <div class="comment-item">
-                 <!-- 왼쪽: 작성자와 내용 -->
-                 <div class="comment-left">
-                     <div class="comment-author">아영</div>
-                     <div class="comment-text">화이팅입니다!</div>
-                 </div>
-                 <!-- 오른쪽: 작성일과 삭제 버튼 -->
-                 <div class="comment-right">
-                     <div class="comment-date">2024-12-26</div>
-                     <button class="comment-delete">×</button>
-                 </div>
-             </div>
+          <div class="comment-list" id = "commentListView">
+             <div id = "morebtn" style = "text-align:center; line-height:50px">
+				 <button type = "button" id = "more" >더보기</button>
+				 <input type = "hidden" id = "block" value = "1">
+			 </div>
          </div>
       </form>
    </div>

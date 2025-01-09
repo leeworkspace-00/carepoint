@@ -67,4 +67,23 @@
    VALUES(#{content}, #{ip}, #{user_pk}, #{board_pk})
 </insert>
 
+<select id="commentTotalCnt" parameterType="int" resultType="int">
+	SELECT COUNT(*) AS cnt FROM comment
+	WHERE delyn = 'N' AND board_pk = #{board_pk}
+</select>
+
+<select id="commentSelectAll" parameterType="HashMap" resultType="cv">
+	SELECT c.comment_pk AS comment_pk, c.content AS content, c.writedate AS writedate, c.delyn AS delyn, u.user_pk AS user_pk, u.usernick AS usernick FROM comment c 
+	JOIN user u ON c.user_pk = u.user_pk
+	WHERE c.delyn = 'N' AND board_pk = #{board_pk}
+	ORDER BY comment_pk DESC
+	LIMIT 0, #{block}
+</select>
+
+<update id="commentDelete" parameterType="cv">
+	UPDATE comment 
+	SET delyn = 'Y', ip = #{ip} 
+	WHERE comment_pk = #{comment_pk} AND  user_pk = #{user_pk}
+</update>
+
 </mapper>

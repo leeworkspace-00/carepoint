@@ -2,6 +2,7 @@ package com.aws.team.controller;
 
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -279,6 +280,7 @@ public class FreeBoardController {
       JSONObject js = new JSONObject();
       
       String ip = userIp.getUserIp(request);
+      
       cv.setIp(ip);
       
       int value = freeBoardService.commentInsert(cv);
@@ -287,5 +289,55 @@ public class FreeBoardController {
       
       return js;
    }
+   
+   @ResponseBody
+   @RequestMapping(value = "{board_pk}/{block}/commentList.aws")
+   public JSONObject commentList(
+		   @PathVariable("board_pk") int board_pk,
+		   @PathVariable("block") int block
+		   ) {
+		
+	   JSONObject js = new JSONObject();
+		
+	   String moreView = "";
+	   int nextBlock = 0;
+	   int cnt = freeBoardService.commentTotalCnt(board_pk);
+	   if (cnt > block*15) {
+		   moreView = "Y";
+		   nextBlock = block + 1;
+	   } else {
+		   moreView = "N";
+		   nextBlock = block;
+	   }
+		
+	   ArrayList<CommentVo> clist = freeBoardService.commentSelectAll(board_pk, block);
+	   js.put("clist", clist);
+	   js.put("moreView", moreView);
+	   js.put("nextBlock", nextBlock);
+		
+	   return js;
+	}
+   
+   @RequestMapping(value = "{comment_pk}/commentDeleteAction.aws", method = RequestMethod.GET)
+   public JSONObject commentDeleteAction(
+		   CommentVo cv,
+		   @PathVariable("comment_pk") int comment_pk,
+		   HttpServletRequest request
+		   ) throws Exception {
+	   JSONObject js = new JSONObject();
+		
+	   int user_pk = Integer.parseInt(request.getSession().getAttribute("user_pk").toString());
+	   String ip = userIp.getUserIp(request);
+		
+	   cv.setComment_pk(comment_pk);
+	   cv.setUser_pk(user_pk);
+	   cv.setIp(ip);
+		
+	   int value = freeBoardService.commentDelete(cv);
+		
+	   js.put("value", value);
+		
+	   return js;
+	}
 } 
 

@@ -27,4 +27,10 @@ public interface FreeBoardService {
 	// 댓글기능
 	public int commentInsert(CommentVo cv);
 
+	public int commentTotalCnt(int board_pk);
+
+	public ArrayList<CommentVo> commentSelectAll(int board_pk, int block);
+
+	public int commentDelete(CommentVo cv);
+
 }
