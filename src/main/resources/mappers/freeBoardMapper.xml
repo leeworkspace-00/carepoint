@@ -4,67 +4,67 @@
 <mapper namespace="com.aws.team.persistance.FreeBoardMapper">
 
 <sql id="search">
-	<if test="keyword != null and keyword != ''">
-		AND subject LIKE CONCAT('%', #{keyword}, '%')
-	</if>
+   <if test="keyword != null and keyword != ''">
+      AND subject LIKE CONCAT('%', #{keyword}, '%')
+   </if>
 </sql>
 
 <select id="freeBoardTatalCount" parameterType="scri" resultType="int">
-	SELECT COUNT(*) AS cnt FROM board 
-	WHERE delyn = 'N' AND board_type = 'F'
-	<include refid="search"/>
+   SELECT COUNT(*) AS cnt FROM board 
+   WHERE delyn = 'N' AND board_type = 'F'
+   <include refid="search"/>
 </select>
 
 <select id="freeBoardSelectAll" parameterType="HashMap" resultType="bv">
-	SELECT b.board_pk AS board_pk, b.subject AS subject, b.writedate AS writedate, u.usernick AS usernick FROM board b
+   SELECT b.board_pk AS board_pk, b.subject AS subject, b.writedate AS writedate, u.user_pk AS user_pk, u.usernick AS usernick FROM board b
     JOIN user u ON b.user_pk = u.user_pk
-	WHERE b.delyn = 'N' AND board_type = 'F'
-	<include refid="search"/>
-	ORDER BY board_pk DESC LIMIT #{startPageNum}, #{perPageNum}
+   WHERE b.delyn = 'N' AND board_type = 'F'
+   <include refid="search"/>
+   ORDER BY board_pk DESC LIMIT #{startPageNum}, #{perPageNum}
 </select>
 
 <insert id="freeBoardInsert" parameterType="bv">
-   	INSERT INTO board(board_type, subject, content, filename, ip, user_pk) 
-   	VALUES(#{board_type}, #{subject}, #{content}, #{uploadedFileName}, #{ip}, 1)
+      INSERT INTO board(board_type, subject, content, filename, ip, user_pk) 
+      VALUES(#{board_type}, #{subject}, #{content}, #{uploadedFileName}, #{ip}, #{user_pk})
 </insert>
 
 <select id="freeBoardSelectOne" parameterType="int" resultType="bv">
-	SELECT b.board_pk AS board_pk, b.subject AS subject, b.content AS content, b.writedate AS writedate, b.recom AS recom, b.viewcnt AS viewcnt, u.usernick AS usernick FROM board b
-	JOIN user u ON b.user_pk = u.user_pk
-	WHERE b.board_pk = #{board_pk} AND b.delyn = 'N'
+   SELECT b.board_pk AS board_pk, b.subject AS subject, b.content AS content, b.writedate AS writedate, b.recom AS recom, b.viewcnt AS viewcnt, b.filename AS filename, u.user_pk AS user_pk, u.usernick AS usernick FROM board b
+   JOIN user u ON b.user_pk = u.user_pk
+   WHERE b.board_pk = #{board_pk} AND b.delyn = 'N'
 </select>
 
 <update id="freeBoardUpdate" parameterType="bv">
-	UPDATE board
-	SET subject = #{subject}, content = #{content}, filename = #{filename}
-	WHERE board_pk = #{board_pk} AND delyn = 'N'
+   UPDATE board
+   SET subject = #{subject}, content = #{content}, filename = #{uploadedFileName}
+   WHERE board_pk = #{board_pk} AND delyn = 'N'
 </update>
 
 <update id="freeBoardUpdateViewcnt" parameterType="int">
-	UPDATE board
-	SET viewcnt = viewcnt + 1
-	WHERE board_pk = #{board_pk} AND delyn = 'N'
+   UPDATE board
+   SET viewcnt = viewcnt + 1
+   WHERE board_pk = #{board_pk} AND delyn = 'N'
 </update>
 
 <update id="freeBoardUpdateRecom" parameterType="bv">
-	<selectKey keyProperty="recom" resultType="int" order = "AFTER">
-		SELECT recom FROM board WHERE board_pk = #{board_pk}
-	</selectKey>
-	UPDATE board
-	SET recom = recom + 1
-	WHERE board_pk = #{board_pk} AND delyn = 'N'
+   <selectKey keyProperty="recom" resultType="int" order = "AFTER">
+      SELECT recom FROM board WHERE board_pk = #{board_pk}
+   </selectKey>
+   UPDATE board
+   SET recom = recom + 1
+   WHERE board_pk = #{board_pk} AND delyn = 'N'
 </update>
 
 <update id="freeBoardDelete" parameterType="int">
-	UPDATE board
-	SET delyn = 'Y'
-	WHERE board_pk = #{board_pk}
+   UPDATE board
+   SET delyn = 'Y'
+   WHERE board_pk = #{board_pk}
 </update>
 
 <!-- 댓글기능 -->
 <insert id="commentInsert" parameterType="cv">
-	INSERT INTO comment(content, ip, user_pk, board_pk)
-	VALUES(#{content}, #{ip}, #{user_pk}, #{board_pk})
+   INSERT INTO comment(content, ip, user_pk, board_pk)
+   VALUES(#{content}, #{ip}, #{user_pk}, #{board_pk})
 </insert>
 
 </mapper>

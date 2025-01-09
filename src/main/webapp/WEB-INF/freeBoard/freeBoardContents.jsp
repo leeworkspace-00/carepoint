@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String msg = "";  
 if (request.getAttribute("msg") != null) {
@@ -39,11 +40,11 @@ $(document).ready(function() {
       
       event.preventDefault();
          
-         /* let loginCheck = "${user_pk}";
-         if (loginCheck == "" || loginCheck == "null" || loginCheck == null || loginCheck == 0) {
-            alert("로그인을 해주세요.");
-            return;
-         } */
+      let loginCheck = "${user_pk}";
+      if (loginCheck == "" || loginCheck == "null" || loginCheck == null || loginCheck == 0) {
+         alert("로그인을 해주세요.");
+         return;
+      }
          
       let content = $("#content").val();
          
@@ -63,7 +64,7 @@ $(document).ready(function() {
          url : "${pageContext.request.contextPath}/freeBoard/commentWriteAction.aws",
          data : {"content" : content, 
                "board_pk" : "${board_pk}", 
-               "user_pk" : "1"
+               "user_pk" : "${user_pk}"
                },
          dataType : "json",      
          success : function(result) {
@@ -113,6 +114,11 @@ function deletecheck() {
        <div class="content">
            ${bv.content }
        </div>
+       <c:if test="${bv.filename != null && !bv.filename.isEmpty()}">
+         <div class="content-file">
+             <img src="${pageContext.request.contextPath}/freeBoard/displayFile.aws?fileName=${bv.filename}" alt="첨부파일 이미지" class="file-image">
+         </div>
+      </c:if>
        <div class="recommend-button">
           <button class="thumb-btn" id="recommend-btn">
               <img style = "color:white; " src="/resources/image/thumb.png" alt="추천" class="thumb-icon">
@@ -125,8 +131,10 @@ function deletecheck() {
              <input type="hidden" name="board_pk" value="${board_pk}">
              <!-- 수정 및 삭제 버튼 -->
              <div class="btn-group">
-                 <a href="${pageContext.request.contextPath}/freeBoard/freeBoardModify.aws?board_pk=${board_pk}" class="btn">수정</a>
-                 <button class="btn" type="button" onclick = "deletecheck();">삭제</button>
+                <c:if test="${sessionScope.grade == 'A' || sessionScope.user_pk == bv.user_pk}">
+                   <a href="${pageContext.request.contextPath}/freeBoard/freeBoardModify.aws?board_pk=${board_pk}" class="btn">수정</a>
+                   <button class="btn" type="button" onclick = "deletecheck();">삭제</button>
+                </c:if>
              </div>
          </form>
        </div>
