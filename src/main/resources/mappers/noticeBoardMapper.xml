@@ -5,16 +5,47 @@
 <!-- 게시글 목록 조회 쿼리 -->
 <select id="noticeBoardSelectAll" parameterType="HashMap" resultType="bv">
 	SELECT b.board_pk AS board_pk, b.subject AS subject, b.writedate AS writedate
-	FROM board b 
+	FROM board b
+	JOIN user u ON b.user_pk = u.user_pk 
 	WHERE b.delyn = 'N' AND board_type = 'N' <!-- 삭제되지 않은 게시글만 조회 -->
 	ORDER BY board_pk DESC 
 	LIMIT #{startPageNum}, #{perPageNum} <!-- 페이징 처리 -->
 </select>
+
 
 <!-- 게시글 총 개수를 조회하는 쿼리 -->
 <select id ="noticeBoardTotalCount" parameterType="scri" resultType="int">
    SELECT COUNT(*) AS cnt FROM board 
    WHERE delyn = 'N' AND board_type = 'N'
 </select>
+
+
+<!-- 새로운 게시물 추가하는 쿼리 -->
+<insert id="noticeBoardInsert" parameterType="bv">
+	INSERT into board(board_type, subject, content, user_pk, filename, ip)
+	VALUES (#{board_type}, #{subject}, #{content}, #{user_pk}, #{uploadedFileName}, #{ip})
+</insert>
+
+
+<select id="noticeBoardSelectOne" parameterType="int" resultType="bv">
+	SELECT * 
+	FROM board 
+	WHERE delyn='N' AND board_pk = #{board_pk} AND board_type = 'N'
+</select>
+
+
+<!-- 게시물 삭제하는 쿼리 구문 -->
+<update id="noticeBoardDelete" parameterType="int">
+	UPDATE board SET delyn='Y' 
+	WHERE board_pk = #{board_pk} 
+</update>
+
+
+<!-- 게시물 수정 쿼리 --> 
+<update id="noticeBoardUpdate" parameterType="bv">
+	UPDATE board 
+	SET subject =#{subject}, content =#{content}, ip=#{ip}, filename=#{uploadedFileName} 
+	WHERE board_pk = #{board_pk} AND delyn = 'N'
+</update>
 
 </mapper>

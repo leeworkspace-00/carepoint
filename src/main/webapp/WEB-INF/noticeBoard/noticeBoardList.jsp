@@ -1,21 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.aws.team.domain.*"%>
-<%
-String msg = "";  
-if (request.getAttribute("msg") != null) {
-	msg = (String)request.getAttribute("msg");
-}
-
-if (msg != "") {
-	out.println("<script>alert('" + msg + "');</script>");	
-}
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자유 게시판 목록 페이지</title>
+<title>공지사항 목록</title>
 <link href="/resources/css/board/boardList.css" rel="stylesheet">
 </head>
 <body>
@@ -40,9 +30,13 @@ if (msg != "") {
 				<td class="writeday">${bv.writedate.substring(0,10)}</td>
 			</tr>
 			</c:forEach>
-			<tr class="write-tr">
-				<td class="write-td" colspan="4"><button onclick="location.href='/noticeBoaerd/noticeBoardWrite.aws';">글 작성</button></td>
-			</tr>
+			<!-- 글쓰기 버튼 (관리자만 보이게) -->
+			<c:if test="${sessionScope.grade == 'A'}">
+    			<tr class="write-tr">
+       				<td class="write-td" colspan="4"><button onclick="location.href='/noticeBoard/noticeBoardWrite.aws';">글 작성</button></td>
+   				</tr>
+			</c:if>
+
 			
 		</table>
 	</div>
@@ -54,8 +48,7 @@ if (msg != "") {
 			</c:if>		
 			<c:forEach var = "i" begin = "${pm.startPage}" end = "${pm.endPage}" step = "1">
 				<li <c:if test="${i == pm.scri.page}"> class = 'on'</c:if>>
-					<a href = "${pageContext.request.contextPath}/noticeBoard/noticeBoardList.aws?page=${i}&${queryParam}">
-					${i}</a>
+					<a href = "${pageContext.request.contextPath}/noticeBoard/noticeBoardList.aws?page=${i}&${queryParam}">${i}</a>
 				</li>
 			</c:forEach>
 			<c:if test="${pm.next && pm.endPage > 0 }">
