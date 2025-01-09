@@ -12,12 +12,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aws.team.domain.BoardVo;
 import com.aws.team.domain.PageMaker;
 import com.aws.team.domain.SearchCriteria;
 import com.aws.team.service.QnaBoardService;
+import com.aws.team.util.UploadFileUtiles;
+import com.aws.team.util.UserIp;
 @Controller
 @RequestMapping(value="/qnaBoard/")
 public class QnaBoardController {
@@ -27,6 +30,9 @@ public class QnaBoardController {
 	
 	@Autowired(required=false)
 	private PageMaker pm;
+	
+	@Autowired(required=false)
+	private UserIp userIp;
 	
 	@Resource(name="uploadPath")
 	private String uploadPath;
@@ -56,8 +62,6 @@ public class QnaBoardController {
 			Model model,
 			HttpServletRequest request,
 			RedirectAttributes rttr) {
-		
-		System.out.println("QnA Controller 들어옴");
 
 		BoardVo bv = qnaBoardService.qnaSelectOne(board_pk);
 		model.addAttribute("bv", bv);
@@ -87,7 +91,6 @@ public class QnaBoardController {
 	        }
 	    }
 	    
-	    System.out.println("path ======> " + path);
 	    return path;
 	}
 
@@ -96,17 +99,182 @@ public class QnaBoardController {
 		
 		return "WEB-INF/qnaBoard/qnaBoardWrite";
 	}
+	
+	@RequestMapping(value="qnaBoardWriteAction.aws", method=RequestMethod.POST)
+	public String qnaBoardWriteAction(
+			BoardVo bv,
+			@RequestParam("attachfile") MultipartFile attachfile,
+			HttpServletRequest request,
+			RedirectAttributes rttr
+			) throws Exception {
+		
+		MultipartFile file = attachfile;
+		String uploadedFileName = "";
+		
+		if (! file.getOriginalFilename().equals("")) {	
+			uploadedFileName = UploadFileUtiles.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+			// 업로드 파일 이름 추출
+		}
+		
+		String user_pk = request.getSession().getAttribute("user_pk").toString();
+		int user_pk_int = Integer.parseInt(user_pk); // 회원번호를 숫자형으로 추출
+		String ip = userIp.getUserIp(request); // ip 추출
+		
+		bv.setUser_pk(user_pk_int);
+		bv.setIp(ip);
+		bv.setUploadedFileName(uploadedFileName);
+		
+		int value = qnaBoardService.qnaInsert(bv);
+
+		String path = "";
+		if (value == 2) { 
+			rttr.addFlashAttribute("msg", "게시글이 등록 되었습니다.");
+			path = "redirect:/qnaBoard/qnaBoardList.aws"; 
+		} else { 
+			rttr.addFlashAttribute("msg", "입력이 잘못 되었습니다.");
+			path = "redirect:/qnaBoard/qnaBoardWrite.aws"; 
+		}	
+		
+		return path;  
+	}
+	
+	@RequestMapping(value="qnaBoardDeleteAction.aws", method=RequestMethod.POST)
+    public String qnaBoardDeleteAction(
+    		@RequestParam("board_pk") int board_pk,
+			RedirectAttributes rttr) {
+		
+		String path = "";
+	 
+		BoardVo bv = qnaBoardService.qnaSelectOne(board_pk); 	 
+		int value = qnaBoardService.qnaDelete(bv);
+	
+		if(value == 1 || value == 2) {
+			rttr.addFlashAttribute("msg", "게시글이 삭제 되었습니다."); 
+			path = "redirect:/qnaBoard/qnaBoardList.aws"; 
+		}
+	 
+		return path; 
+	}
 
 	@RequestMapping(value= "qnaBoardModify.aws", method=RequestMethod.GET)
-	public String qnaBoardModify() {
+	public String qnaBoardModify(@RequestParam("board_pk") int board_pk, Model model) {
+		
+		BoardVo bv = qnaBoardService.qnaSelectOne(board_pk);
+		model.addAttribute("bv", bv);
 		
 		return "WEB-INF/qnaBoard/qnaBoardModify";
 	}
+	
+	@RequestMapping(value="qnaBoardModifyAction.aws", method=RequestMethod.POST)
+	public String qnaBoardModifyAction(
+			BoardVo bv,
+			@RequestParam("attachfile") MultipartFile attachfile,
+			HttpServletRequest request,
+			RedirectAttributes rttr
+			) throws Exception {
+		
+		MultipartFile file = attachfile;
+		String uploadedFileName = "";
+		
+		if (! file.getOriginalFilename().equals("")) {	
+			uploadedFileName = UploadFileUtiles.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+			// 업로드 파일 이름 추출
+		}
+
+		String user_pk = request.getSession().getAttribute("user_pk").toString();
+		int user_pk_int = Integer.parseInt(user_pk); // 회원번호를 숫자형으로 추출
+		String ip = userIp.getUserIp(request); // ip 추출
+		
+		String path = "";
+		
+		if (bv.getUser_pk() == user_pk_int) {
+			
+			bv.setUploadedFileName(uploadedFileName);
+			bv.setIp(ip);
+
+			int value = qnaBoardService.qnaUpdate(bv);
+			
+			if (value == 1) {
+				rttr.addFlashAttribute("msg", "게시글이 수정 되었습니다.");
+				path = "redirect:/qnaBoard/qnaBoardContents.aws?board_pk=" + bv.getBoard_pk();
+			}
+		} else { 
+		    rttr.addFlashAttribute("msg", "자신의 게시글만 수정 할 수 있습니다.");
+		    path = "redirect:/qnaBoard/qnaBoardList.aws";
+		}
+				
+		return path; 
+	}
 
 	@RequestMapping(value= "qnaBoardReply.aws", method=RequestMethod.GET)
-	public String qnaBoardReply() {
+	public String qnaBoardReply(
+			@RequestParam("board_pk") int board_pk, 
+			Model model,
+			HttpServletRequest request,
+			RedirectAttributes rttr) {
 		
-		return "WEB-INF/qnaBoard/qnaBoardReply";
+		BoardVo bv = qnaBoardService.qnaSelectOne(board_pk);
+		model.addAttribute("bv", bv);
+		
+		String grade = request.getSession().getAttribute("grade").toString();
+		
+		String path = "";
+		
+		if (grade.equals("A")) {
+			path = "WEB-INF/qnaBoard/qnaBoardReply";
+		} else { 
+		    rttr.addFlashAttribute("msg", "관리자만 답변을 작성 할 수 있습니다.");
+		    path = "redirect:/qnaBoard/qnaBoardList.aws";
+		}
+		
+		return path;
+	}
+	
+	@RequestMapping(value="qnaBoardReplyAction.aws", method=RequestMethod.POST)
+	public String qnaBoardReplyAction(
+			BoardVo bv,
+			@RequestParam("attachfile") MultipartFile attachfile,
+			HttpServletRequest request,
+			RedirectAttributes rttr
+			) throws Exception {
+		
+		int replyCnt =qnaBoardService.hasReply(bv.getBoard_pk());
+		
+		// 답변 존재 여부 확인
+	    if (replyCnt == 2) {
+	        rttr.addFlashAttribute("msg", "이미 답변이 존재합니다.");
+	        return "redirect:/qnaBoard/qnaBoardList.aws";
+	    }
+		
+		MultipartFile file = attachfile;
+		String uploadedFileName = "";
+		
+		if (! file.getOriginalFilename().equals("")) {	
+			uploadedFileName = UploadFileUtiles.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+			// 업로드 파일 이름 추출
+		}
+		
+		String user_pk = request.getSession().getAttribute("user_pk").toString();
+		int user_pk_int = Integer.parseInt(user_pk); // 회원번호를 숫자형으로 추출
+		
+		String ip = userIp.getUserIp(request); // ip 추출
+		
+		bv.setUploadedFileName(uploadedFileName);
+		bv.setUser_pk(user_pk_int);
+		bv.setIp(ip);
+		
+		int value = qnaBoardService.qnaReply(bv);
+		
+		String path = "";
+		if (value == 1) { 
+			rttr.addFlashAttribute("msg", "답변이 등록 되었습니다.");
+			path = "redirect:/qnaBoard/qnaBoardList.aws"; 
+		} else { 
+			rttr.addFlashAttribute("msg", "입력이 잘못 되었습니다.");
+			path = "redirect:/qnaBoard/qnaBoardReply.aws?board_pk=" + bv.getBoard_pk(); 
+		}	
+		
+		return path; 
 	}
 
 }

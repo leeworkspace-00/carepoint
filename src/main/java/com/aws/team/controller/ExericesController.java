@@ -1,5 +1,10 @@
 package com.aws.team.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -79,5 +84,31 @@ public class ExericesController {
             e.printStackTrace();
             return ResponseEntity.status(500).body("{\"success\": false, \"message\": \"Server error.\"}");
         }
+    }
+	
+	@ResponseBody
+ 	@RequestMapping(value="calendar-events.aws", method=RequestMethod.GET)
+    public List<Map<String, Object>> fetchEvents() {
+		
+        // 이벤트 데이터를 리스트로 생성
+        List<Map<String, Object>> events = new ArrayList<>();
+
+        // 첫 번째 이벤트 추가
+        Map<String, Object> event1 = new HashMap<>();
+        event1.put("id", "1");
+        event1.put("title", "회의");
+        event1.put("start", "2025-01-10T10:00:00");
+        event1.put("end", "2025-01-10T11:00:00");
+        events.add(event1);
+
+        // 두 번째 이벤트 추가
+        Map<String, Object> event2 = new HashMap<>();
+        event2.put("id", "2");
+        event2.put("title", "점심");
+        event2.put("start", "2025-01-10T12:00:00");
+        event2.put("end", "2025-01-10T13:00:00");
+        events.add(event2);
+
+        return events; // JSON 형식으로 반환
     }
 }

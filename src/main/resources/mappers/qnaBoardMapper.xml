@@ -42,6 +42,68 @@
 	AND board_type = 'Q'
 </select>
 
+<!-- Write -->
+<insert id="qnaInsert" parameterType="bv">
+<selectKey keyProperty="board_pk" resultType="int" order="AFTER"> <!-- insert를 하고 난 후(AFTER) board_pk 최고값(MAX)를 찾겠다 -->
+	SELECT MAX(board_pk) AS board_pk
+	FROM board
+</selectKey>
+	INSERT INTO board(subject, content, user_pk, board_type, filename, ip)
+    VALUE(#{subject}, #{content}, #{user_pk}, 'Q', #{uploadedFileName}, #{ip})
+</insert>
+
+<!-- Write -->
+<update id="origin_numUpdate" parameterType="int">
+	UPDATE board
+	SET origin_num = #{board_pk}
+	WHERE board_pk = #{board_pk}
+</update>
+
+<!-- include -->
+<sql id="replyDelete">
+	<if test="origin_num != board_pk">
+		AND board_pk = #{board_pk}
+	</if>
+</sql>
+
+<!-- Delete -->
+<update id="qnaDelete" parameterType="bv">
+	UPDATE board
+	SET delyn = 'Y'
+	WHERE origin_num = #{origin_num}
+	<include refid="replyDelete"/>
+</update>
+
+<!-- Modify -->
+<update id="qnaUpdate" parameterType="bv">
+	UPDATE board
+	SET subject=#{subject}, content=#{content}, filename=#{uploadedFileName}
+    WHERE board_pk=#{board_pk} 
+    AND user_pk = #{user_pk}
+</update>
+
+<!-- Reply -->
+<insert id="qnaReplyInsert" parameterType="bv">
+<selectKey keyProperty="board_pk" resultType="int" order="AFTER"> <!-- insert를 하고 난 후(AFTER) qnrboard_key 최고값(MAX)를 찾겠다 -->
+	SELECT MAX(board_pk) AS max_board_pk
+	FROM board 
+</selectKey>
+	INSERT INTO board (subject, content, filename, origin_num, user_pk, board_type, level_, ip)
+	VALUES(#{subject}, #{content}, #{uploadedFileName}, #{origin_num}, #{user_pk}, 'Q', #{level_}+1, #{ip})
+</insert>
+
+<!-- Reply -->
+<select id="countReplies" parameterType="int">
+	SELECT COUNT(*) 
+	FROM board 
+	WHERE origin_num = #{origin_num}
+</select>
+
+
+
+
+
+
 
     
 </mapper>

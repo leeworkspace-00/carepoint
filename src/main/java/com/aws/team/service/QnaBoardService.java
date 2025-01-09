@@ -19,5 +19,20 @@ public interface QnaBoardService {
 	
 	// 로그인 한 회원이 쓴 글의 origin_num과 같은 origin_num을 가지고 있는 게시글 찾기
 	public List<Integer> getUserOriginNums(int user_pk);
+	
+	// QnA 작성
+	public int qnaInsert(BoardVo bv);
+	
+	// QnA 삭제
+	public int qnaDelete(BoardVo bv);
+	
+	// QnA 수정
+	public int qnaUpdate(BoardVo bv);
+	
+	// QnA 답변 작성
+	public int qnaReply(BoardVo bv);
+	
+	// 답변 수 1개로 제한
+	public int hasReply(int origin_num);
 
 }
