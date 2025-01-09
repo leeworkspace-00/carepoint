@@ -82,7 +82,7 @@ public class UserDetailController {
 			rttr.addFlashAttribute("msg", "상세정보 등록 실패 다시 시도해주세요.");
 			path = "redirect:/user/detail/userDetail.aws";
 		}
-		
+		 
 		return path;
 	}
 
