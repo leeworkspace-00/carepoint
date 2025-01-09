@@ -1,5 +1,5 @@
-@charset "EUC-KR";
-/* ÄÁÅ×ÀÌ³Ê ÀüÃ¼ */
+@charset "UTF-8";
+/* ì»¨í…Œì´ë„ˆ ì „ì²´ */
 .container {
     width: 80%;
     margin: 0 auto;
@@ -9,7 +9,7 @@
     line-height: 1.5;
 }
 
-/* Á¦¸ñ */
+/* ì œëª© */
 .title {
     font-size: 1.6em;
     font-weight: bold;
@@ -17,7 +17,7 @@
     margin-bottom: 10px;
 }
 
-/* ÀÛ¼º Á¤º¸¿Í Åë°è */
+/* ì‘ì„± ì •ë³´ì™€ í†µê³„ */
 .info-bar {
     display: flex;
     justify-content: space-between;
@@ -36,46 +36,46 @@
     justify-content: flex-end;
 }
 
-/* ÀÛ¼º ³¯Â¥ ½ºÅ¸ÀÏ */
+/* ì‘ì„± ë‚ ì§œ ìŠ¤íƒ€ì¼ */
 .info-left span:last-child {
-    font-size: 0.8em; /* ±Û¾¾ Å©±â Ãà¼Ò */
-    color: #999; /* ¿¬ÇÑ »ö»ó */
+    font-size: 0.8em; /* ê¸€ì”¨ í¬ê¸° ì¶•ì†Œ */
+    color: #999; /* ì—°í•œ ìƒ‰ìƒ */
 }
 
-/* º»¹® ³»¿ë */
+/* ë³¸ë¬¸ ë‚´ìš© */
 .content {
     margin: 20px 0;
     padding: 20px;
     background-color: #f9f9f9;
     border-top: 2px solid #ddd;
     border-radius: 5px;
-    min-height: 500px; /* ÃÖ¼Ò ³ôÀÌ ¼³Á¤ */
-    overflow: auto; /* ½ºÅ©·Ñ Ã³¸® */
-    word-wrap: break-word; /* ±ä ´Ü¾î ÁÙ¹Ù²Ş */
+    min-height: 300px; /* ìµœì†Œ ë†’ì´ ì„¤ì • */
+    overflow: auto; /* ìŠ¤í¬ë¡¤ ì²˜ë¦¬ */
+    word-wrap: break-word; /* ê¸´ ë‹¨ì–´ ì¤„ë°”ê¿ˆ */
 }
 
-/* ÃßÃµ ¹× ¹öÆ° */
+/* ì¶”ì²œ ë° ë²„íŠ¼ */
 .actions {
     display: flex;
     border-top: 2px solid #ddd;
-    justify-content: flex-end; /* ¹öÆ°À» ¿ŞÂÊÀ¸·Î Á¤·Ä */
-    gap: 10px; /* ¹öÆ° °£°İ */
+    justify-content: flex-end; /* ë²„íŠ¼ì„ ì™¼ìª½ìœ¼ë¡œ ì •ë ¬ */
+    gap: 10px; /* ë²„íŠ¼ ê°„ê²© */
     margin-top: 20px;
 }
 
-/* ÃßÃµ ¹öÆ° ¿µ¿ª */
+/* ì¶”ì²œ ë²„íŠ¼ ì˜ì—­ */
 .recommend-button {
-    text-align: center; /* °¡¿îµ¥ Á¤·Ä */
-    margin: 20px 0; /* À§¾Æ·¡ °£°İ */
+    text-align: center; /* ê°€ìš´ë° ì •ë ¬ */
+    margin: 20px 0; /* ìœ„ì•„ë˜ ê°„ê²© */
     
 }
 
 .thumb-btn {
-    display: inline-flex; /*¹öÆ° Áß¾Ó ¹è¿­*/
+    display: inline-flex; /*ë²„íŠ¼ ì¤‘ì•™ ë°°ì—´*/
     justify-content: center;
     align-items: center;
-    width: 80px; /* ¹öÆ°ÀÇ °¡·Î Å©±â */
-    height: 80px; /* ¹öÆ°ÀÇ ¼¼·Î Å©±â (¿øÇü) */
+    width: 80px; /* ë²„íŠ¼ì˜ ê°€ë¡œ í¬ê¸° */
+    height: 80px; /* ë²„íŠ¼ì˜ ì„¸ë¡œ í¬ê¸° (ì›í˜•) */
     cursor: pointer;
     color: white;
     border-radius: 50%;
@@ -85,14 +85,16 @@
 }
 
 .thumb-icon {
-    width: 80px; /* ÀÌ¹ÌÁö Å©±â */
+    width: 80px; /* ì´ë¯¸ì§€ í¬ê¸° */
     height: 80px;
-    object-fit: contain; /* ÀÌ¹ÌÁö ºñÀ² À¯Áö */
+    object-fit: contain; /* ì´ë¯¸ì§€ ë¹„ìœ¨ ìœ ì§€ */
     padding : 0px;
 }
 
 .btn {
-    display: inline-block;
+    display: inline-flex; /* ë²„íŠ¼ ì•ˆì˜ í…ìŠ¤íŠ¸ë¥¼ ì¤‘ì•™ ì •ë ¬ */
+    align-items: center; /* ìˆ˜ì§ ì¤‘ì•™ ì •ë ¬ */
+    justify-content: center; /* ìˆ˜í‰ ì¤‘ì•™ ì •ë ¬ */
     margin: 20px 0;
     padding: 7px 12px;
     background-color: #4169E1;
@@ -102,29 +104,61 @@
     cursor: pointer;
     text-decoration: none;
     font-size: 16px;
+    height: 38px; /* ëª¨ë“  ë²„íŠ¼ ë†’ì´ë¥¼ ê³ ì • */
+    box-sizing: border-box; /* íŒ¨ë”© í¬í•¨í•œ ë†’ì´ ê³„ì‚° */
 }
 
-/* ¸ñ·Ï ¹öÆ° (¿ŞÂÊ ³¡¿¡ ¹èÄ¡) */
+button {
+    all: unset; /* ê¸°ë³¸ ìŠ¤íƒ€ì¼ ì œê±° */
+    display: inline-flex; /* í…ìŠ¤íŠ¸ ì •ë ¬ì„ a íƒœê·¸ì™€ ë™ì¼í•˜ê²Œ */
+    align-items: center;
+    justify-content: center;
+    width: auto; /* í¬ê¸° ì¡°ì • */
+    height: 38px; /* a íƒœê·¸ì™€ ë™ì¼í•œ ë†’ì´ */
+    padding: 0 12px; /* ë²„íŠ¼ ë‚´ë¶€ ì—¬ë°± */
+    font-size: 16px; /* í…ìŠ¤íŠ¸ í¬ê¸° ë™ì¼í•˜ê²Œ */
+    background-color: #4169E1;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box; /* íŒ¨ë”© í¬í•¨ ë†’ì´ ê³„ì‚° */
+}
+
+/* ëª©ë¡ ë²„íŠ¼ (ì™¼ìª½ ëì— ë°°ì¹˜) */
 .btn-left {
-    margin-right: auto; /* ¿À¸¥ÂÊ ¿©¹é ÃÖ´ëÈ­ */
+    margin-right: auto; /* ì˜¤ë¥¸ìª½ ì—¬ë°± ìµœëŒ€í™” */
 }
 
-/* ¼öÁ¤ ¹× »èÁ¦ ¹öÆ° ±×·ì */
+/* ìˆ˜ì • ë° ì‚­ì œ ë²„íŠ¼ ê·¸ë£¹ */
 .btn-group {
     display: flex;
-    gap: 10px; /* ¹öÆ° °£°İ */
+    gap: 10px; /* ë²„íŠ¼ ê°„ê²© */
 }
 
 .btn:hover {
     background-color: #3156b3;
 }
 
-/* ´ñ±Û ÀÛ¼º */
+/* ì²¨ë¶€íŒŒì¼ ì´ë¯¸ì§€ ì˜ì—­ */
+.content-file {
+    margin-top: 20px; /* ì½˜í…ì¸ ì™€ì˜ ê°„ê²© */
+    text-align: left; /* ì´ë¯¸ì§€ ì¤‘ì•™ ì •ë ¬ */
+}
+
+.file-image {
+    max-width: 100%; /* ì´ë¯¸ì§€ê°€ ì½˜í…ì¸  ì˜ì—­ì„ ë„˜ì§€ ì•Šë„ë¡ */
+    height: auto; /* ì´ë¯¸ì§€ ë¹„ìœ¨ ìœ ì§€ */
+    border: 1px solid #ddd; /* í…Œë‘ë¦¬ */
+    border-radius: 5px; /* ì•½ê°„ì˜ ë‘¥ê·¼ ëª¨ì„œë¦¬ */
+    margin-top: 10px; /* ìœ„ìª½ ì—¬ë°± */
+}
+
+/* ëŒ“ê¸€ ì‘ì„± */
 .comment-box {
     margin-top: 30px;
     display: flex;
     align-items: center;
-    gap: 10px; /* ÀÔ·Â ÇÊµå¿Í ¹öÆ° °£°İ */
+    gap: 10px; /* ì…ë ¥ í•„ë“œì™€ ë²„íŠ¼ ê°„ê²© */
 }
 
 .comment-input {
@@ -147,7 +181,7 @@
     background-color: #3156b3;
 }
 
-/* ´ñ±Û ¸ñ·Ï */
+/* ëŒ“ê¸€ ëª©ë¡ */
 .comment-list {
     margin-top: 20px;
     border-top: 1px solid #ddd;
@@ -158,45 +192,45 @@
     margin-bottom: 15px;
     padding-bottom: 10px;
     border-bottom: 1px solid #ddd;
-    display: flex; /* ÇÑ ÁÙ·Î ¹èÄ¡ */
-    align-items: center; /* ¼öÁ÷ Á¤·Ä */
-    gap: 10px; /* ÀÛ¼ºÀÚ¿Í ³»¿ë °£°İ */
+    display: flex; /* í•œ ì¤„ë¡œ ë°°ì¹˜ */
+    align-items: center; /* ìˆ˜ì§ ì •ë ¬ */
+    gap: 10px; /* ì‘ì„±ìì™€ ë‚´ìš© ê°„ê²© */
 }
 
 .comment-left {
     display: flex;
     align-items: center;
-    gap: 10px; /* ÀÛ¼ºÀÚ¿Í ³»¿ë °£°İ */
-    flex: 1; /* ¿ŞÂÊ °ø°£ Â÷Áö */
+    gap: 10px; /* ì‘ì„±ìì™€ ë‚´ìš© ê°„ê²© */
+    flex: 1; /* ì™¼ìª½ ê³µê°„ ì°¨ì§€ */
 }
 
 .comment-author {
     font-weight: bold;
     padding: 0px 10px;
     color: #555;
-    white-space: nowrap; /* ÀÛ¼ºÀÚ ÀÌ¸§ ÁÙ¹Ù²Ş ¹æÁö */
+    white-space: nowrap; /* ì‘ì„±ì ì´ë¦„ ì¤„ë°”ê¿ˆ ë°©ì§€ */
 }
 
 .comment-text {
     font-size: 0.9em;
     color: #333;
-    word-break: break-word; /* ±ä ³»¿ë ÁÙ¹Ù²Ş */
+    word-break: break-word; /* ê¸´ ë‚´ìš© ì¤„ë°”ê¿ˆ */
 }
 
 .comment-right {
     display: flex;
     align-items: center;
-    gap: 10px; /* ÀÛ¼ºÀÏ°ú »èÁ¦ ¹öÆ° °£°İ */
+    gap: 10px; /* ì‘ì„±ì¼ê³¼ ì‚­ì œ ë²„íŠ¼ ê°„ê²© */
 }
 
 .comment-date {
     font-size: 0.8em;
-    color: #999; /* ¿¬ÇÑ »ö»ó */
+    color: #999; /* ì—°í•œ ìƒ‰ìƒ */
 }
 
 .comment-delete {
     font-size: 1em;
-    color: #e74c3c; /* »èÁ¦ ¹öÆ° »ö»ó */
+    color: #e74c3c; /* ì‚­ì œ ë²„íŠ¼ ìƒ‰ìƒ */
     cursor: pointer;
     background: none;
     border: none;

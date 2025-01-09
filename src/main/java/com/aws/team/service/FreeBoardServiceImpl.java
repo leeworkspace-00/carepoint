@@ -105,4 +105,33 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		return value;
 	}
 
+	@Override
+	public int commentTotalCnt(int board_pk) {
+
+		int cnt = fbm.commentTotalCnt(board_pk);
+		
+		return cnt;
+	}
+	
+	@Override
+	public ArrayList<CommentVo> commentSelectAll(int board_pk, int block) {
+		
+		block = block * 15;
+		
+		HashMap<String, Object> hm = new HashMap<String, Object>(); // 알아보기
+		hm.put("board_pk", board_pk);
+		hm.put("block", block);
+		
+		ArrayList<CommentVo> clist = fbm.commentSelectAll(hm);
+		
+		return clist;
+	}
+
+	@Override
+	public int commentDelete(CommentVo cv) {
+
+		int value = fbm.commentDelete(cv);
+		
+		return value;
+	}
 }

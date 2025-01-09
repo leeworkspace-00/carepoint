@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String msg = "";  
 if (request.getAttribute("msg") != null) {
@@ -19,6 +20,8 @@ if (msg != "") {
 <script>
 $(document).ready(function() {
 
+   $.boardCommentList();
+  
    $("#recommend-btn").click(function() {
         $.ajax({
             type: "get",
@@ -35,15 +38,15 @@ $(document).ready(function() {
         });
     });
    
-   $("#cmtbtn").click(function() {
+   $("#cmtbtn").click(function(event) {
       
       event.preventDefault();
          
-         /* let loginCheck = "${user_pk}";
-         if (loginCheck == "" || loginCheck == "null" || loginCheck == null || loginCheck == 0) {
-            alert("로그인을 해주세요.");
-            return;
-         } */
+      let loginCheck = "${user_pk}";
+      if (loginCheck == "" || loginCheck == "null" || loginCheck == null || loginCheck == 0) {
+         alert("로그인을 해주세요.");
+         return;
+      }
          
       let content = $("#content").val();
          
@@ -63,7 +66,7 @@ $(document).ready(function() {
          url : "${pageContext.request.contextPath}/freeBoard/commentWriteAction.aws",
          data : {"content" : content, 
                "board_pk" : "${board_pk}", 
-               "user_pk" : "1"
+               "user_pk" : "${user_pk}"
                },
          dataType : "json",      
          success : function(result) {
@@ -71,12 +74,18 @@ $(document).ready(function() {
              if(result.value == 1) {
                 $("#content").val("");
                 $("#block").val(1);
+	            $.boardCommentList();
              }
+             
          },
          error : function() {
             alert("전송실패");
          }         
       });      
+   });
+   
+   $("#more").click(function() {
+		$.boardCommentList();
    });
    
 });
@@ -90,6 +99,82 @@ function deletecheck() {
         fm.method = "post";
         fm.submit();
     }
+}
+
+$.boardCommentList = function(){
+	
+	let block = $("#block").val();
+	
+	$.ajax({
+		type : "get",	
+		url : "${pageContext.request.contextPath}/freeBoard/${bv.board_pk}/"+ block +"/commentList.aws",
+		dataType : "json",		
+		success : function(result) {	
+			// alert("전송성공");
+			
+			var strTr = "";
+			$(result.clist).each(function(){
+			
+				var btn = "";
+				if (this.user_pk == "${user_pk}"){		
+					if (this.delyn == 'N') {
+						btn = "<button class = 'comment-delete' type = 'button' onclick = 'commentDel(" + this.comment_pk + ")'>×</button>";					
+					}				
+				}
+			
+				strTr = strTr 
+				+ "<div class='comment-item'>"
+				+ "<div class='comment-left'>"
+				+ "<div class='comment-author'>" + this.usernick + "</div>"
+				+ "<div class='comment-text'>" + this.content + "</div>"
+				+ "</div>"
+				+ "<div class='comment-right'>"
+				+ "<div class='comment-date'>" + this.writedate.substring(0,10) + "</div>"
+				+ btn 
+				+ "</div>"
+				+ "</div>"
+			
+			});
+			
+			$("#commentListView").html(strTr);
+	
+			if (result.moreView == "N") {
+				$("#morebtn").css("display", "none");	// 감춘다.
+			} else {
+				$("#morebtn").css("display", "block");	// 보여준다.
+			}
+			
+			$("#block").val(result.nextBlock);	
+		
+		},
+		error : function() {		
+			// alert("전송실패");
+		}			
+	});		
+	
+}
+
+function commentDel(comment_pk) {
+	
+	let ans = confirm("삭제하시겠습니까?");
+	
+	if (ans == true) {
+		
+		$.ajax({
+			type : "get",	
+			url : "${pageContext.request.contextPath}/freeBoard/"+ comment_pk +"/commentDeleteAction.aws",
+			dataType : "json",		
+			success : function(result) {	
+				
+				$.boardCommentList();
+			},
+			error : function() {
+				alert("전송실패");
+			}			
+		});
+	}
+	
+	return;
 }
 
 </script>
@@ -113,6 +198,11 @@ function deletecheck() {
        <div class="content">
            ${bv.content }
        </div>
+       <c:if test="${bv.filename != null && !bv.filename.isEmpty()}">
+         <div class="content-file">
+             <img src="${pageContext.request.contextPath}/freeBoard/displayFile.aws?fileName=${bv.filename}" alt="첨부파일 이미지" class="file-image">
+         </div>
+      </c:if>
        <div class="recommend-button">
           <button class="thumb-btn" id="recommend-btn">
               <img style = "color:white; " src="/resources/image/thumb.png" alt="추천" class="thumb-icon">
@@ -125,8 +215,10 @@ function deletecheck() {
              <input type="hidden" name="board_pk" value="${board_pk}">
              <!-- 수정 및 삭제 버튼 -->
              <div class="btn-group">
-                 <a href="${pageContext.request.contextPath}/freeBoard/freeBoardModify.aws?board_pk=${board_pk}" class="btn">수정</a>
-                 <button class="btn" type="button" onclick = "deletecheck();">삭제</button>
+                <c:if test="${sessionScope.grade == 'A' || sessionScope.user_pk == bv.user_pk}">
+                   <a href="${pageContext.request.contextPath}/freeBoard/freeBoardModify.aws?board_pk=${board_pk}" class="btn">수정</a>
+                   <button class="btn" type="button" onclick = "deletecheck();">삭제</button>
+                </c:if>
              </div>
          </form>
        </div>
@@ -135,31 +227,11 @@ function deletecheck() {
               <input type="text" class="comment-input" id="content" name="content" placeholder="댓글을 입력하세요">
               <button class="comment-submit" id="cmtbtn">등록</button>
           </div>
-          <div class="comment-list">
-             <div class="comment-item">
-                 <!-- 왼쪽: 작성자와 내용 -->
-                 <div class="comment-left">
-                     <div class="comment-author">유진</div>
-                     <div class="comment-text">저도 건강 챙기면서 ...</div>
-                 </div>
-                 <!-- 오른쪽: 작성일과 삭제 버튼 -->
-                 <div class="comment-right">
-                     <div class="comment-date">2024-12-26</div>
-                     <button class="comment-delete">×</button>
-                 </div>
-             </div>
-             <div class="comment-item">
-                 <!-- 왼쪽: 작성자와 내용 -->
-                 <div class="comment-left">
-                     <div class="comment-author">아영</div>
-                     <div class="comment-text">화이팅입니다!</div>
-                 </div>
-                 <!-- 오른쪽: 작성일과 삭제 버튼 -->
-                 <div class="comment-right">
-                     <div class="comment-date">2024-12-26</div>
-                     <button class="comment-delete">×</button>
-                 </div>
-             </div>
+          <div class="comment-list" id = "commentListView">
+             <div id = "morebtn" style = "text-align:center; line-height:50px">
+				 <button type = "button" id = "more" >더보기</button>
+				 <input type = "hidden" id = "block" value = "1">
+			 </div>
          </div>
       </form>
    </div>
