@@ -309,7 +309,7 @@ public class FreeBoardController {
 		   moreView = "N";
 		   nextBlock = block;
 	   }
-		
+	   
 	   ArrayList<CommentVo> clist = freeBoardService.commentSelectAll(board_pk, block);
 	   js.put("clist", clist);
 	   js.put("moreView", moreView);
@@ -318,12 +318,14 @@ public class FreeBoardController {
 	   return js;
 	}
    
+   @ResponseBody
    @RequestMapping(value = "{comment_pk}/commentDeleteAction.aws", method = RequestMethod.GET)
    public JSONObject commentDeleteAction(
 		   CommentVo cv,
 		   @PathVariable("comment_pk") int comment_pk,
 		   HttpServletRequest request
 		   ) throws Exception {
+	   
 	   JSONObject js = new JSONObject();
 		
 	   int user_pk = Integer.parseInt(request.getSession().getAttribute("user_pk").toString());
@@ -334,7 +336,7 @@ public class FreeBoardController {
 	   cv.setIp(ip);
 		
 	   int value = freeBoardService.commentDelete(cv);
-		
+	   
 	   js.put("value", value);
 		
 	   return js;
