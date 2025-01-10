@@ -55,6 +55,14 @@ public class UserDetailController {
 		int user_pk_int = Integer.parseInt(user_pk);
 		System.out.println("userdetailaction 들어옴");
 	    System.out.println("user_pk_int 값 : " + user_pk_int);
+	    // drink와 smoke 값 null 체크 후 기본값 N으로 설정
+	    if (u_dv.getDrink() == null) {
+	        u_dv.setDrink("N"); // drink가 null이면 N으로 설정
+	    }
+	    if (u_dv.getSmoke() == null) {
+	        u_dv.setSmoke("N"); // smoke가 null이면 N으로 설정
+	    }
+	    
 		System.out.println("drink : " + u_dv.getDrink());
 		System.out.println("smoke : " + u_dv.getSmoke());
 		u_dv.setUser_pk(user_pk_int);
@@ -62,11 +70,12 @@ public class UserDetailController {
 		int value2 = userDetailService.updateDetail_pk(u_dv);
 		int result = value+value2;
 		System.out.println("메서드 실행 성공 하면 2 실패하면 0 : "+result);
+		
 		String path = "";
 		if(result == 2) {
 			//성공시 메시지 정달
 			rttr.addFlashAttribute("msg", "상세정보 입력을 완료하셨습니다 !!");
-			path = "redirect:/user/myPage.aws";
+			path = "redirect:/user/mainPage.aws";
 		}else {
 			rttr.addFlashAttribute("msg", "상세정보 등록 실패 다시 시도해주세요.");
 			path = "redirect:/user/detail/userDetail.aws";

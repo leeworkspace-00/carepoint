@@ -1,6 +1,7 @@
 package com.aws.team.controller;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
@@ -9,13 +10,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.json.simple.JSONObject;
+
+import com.aws.team.domain.BoardVo;
+import com.aws.team.domain.UserDetailVo;
 import com.aws.team.domain.UserVo;
+import com.aws.team.service.FreeBoardService;
+import com.aws.team.service.QnaBoardService;
+import com.aws.team.service.UserDetailService;
 import com.aws.team.service.UserService;
 
 @Controller
@@ -26,6 +34,18 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserDetailService userDetailService;
+	
+	// board
+	@Autowired
+	private FreeBoardService freeBoardService;
+	
+	@Autowired
+	private QnaBoardService qnaBoardService;
+	
+	
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -112,19 +132,25 @@ public class UserController {
 
 		if(uv != null) {	// uv가 null이 아니라면 >> uv에 뭐라도 담았다면?
 			String reservedPwd = uv.getUserpwd();// uv에 있는 비밀번호를 변수에 담아준다
-			//System.out.println("비밀번호 담겼나 확인 : " + reservedPwd);
-			//Integer detail_pk = (Integer)session.getAttribute("detail_pk");
-			//System.out.println("세션에 저장된 detail_pk : " + session.getAttribute("detail_pk"));
-			 // UserDetailVo 객체에 user_pk 설정 u_dv에 담기 회원번호
+			
 			if(bCryptPasswordEncoder.matches(userpwd, reservedPwd)) {	// 암호화된 비밀번호와 입력된 비번을 맞춰보고 맞으면
 				session.setAttribute("user_pk", uv.getUser_pk());	// 회원번호
 				session.setAttribute("grade", uv.getGrade());		// 회원등급
 				session.setAttribute("username", uv.getUsername());// 회원 이름이랑
-				session.setAttribute("usernick", uv.getUsernick());// 회원 닉네임 담아서 
-				//session.setAttribute("detail_pk", u_dv.getDetail_pk()); // 상세정보 입력 여부 저장
-				//System.out.println("세션에 저장된 detail_pk : " + session.getAttribute("detail_pk"));
-				//System.out.println("[DEBUG] 로그인 성공: user_pk = " + uv.getUser_pk());
+				session.setAttribute("usernick", uv.getUsernick());// 닉네임 담아서
+				session.setAttribute("joindate", uv.getJoindate());
+				session.setAttribute("userphone", uv.getUserphone());
+				session.setAttribute("useremail", uv.getUseremail());
 				
+				UserDetailVo u_dv = userDetailService.userDetailSelectOne(uv.getUser_pk());
+				List<BoardVo> mypageFreeList = freeBoardService.mypageFreeList(uv.getUser_pk());
+				List<BoardVo> mypageQnaList = qnaBoardService.mypageQnaList(uv.getUser_pk());
+				
+				session.setAttribute("u_dv", u_dv);
+				session.setAttribute("mypageQnaList", mypageQnaList);
+				session.setAttribute("mypageFreeList", mypageFreeList);
+				
+
 				  if (session.getAttribute("saveUrl") != null) { path = "redirect:" +
 						  session.getAttribute("saveUrl").toString();
 						  System.out.println("이전 url값 확인하기  : " + path);
@@ -144,9 +170,6 @@ public class UserController {
 	    return path;
 	}
 	
-	
-
-	 
 	// 로그아웃 기능 완성
 	@RequestMapping(value = "userLogout.aws", method = RequestMethod.GET)	
 	public String userLogout(HttpSession session) {
@@ -154,14 +177,29 @@ public class UserController {
 		session.removeAttribute("grade");
 		session.removeAttribute("username");
 		session.removeAttribute("usernick");
-		session.removeAttribute("detail_yn");
 		session.invalidate(); 
 		
 		return "redirect:/user/mainPage.aws";
 	}
 
 	@RequestMapping(value = "myPage.aws", method = RequestMethod.GET)
-	public String myPage() {
+	public String myPage(Model model, HttpSession session) {
+		//세션에서 사용자 ID 가져오기
+		Integer user_pk = (Integer)session.getAttribute("user_pk");
+		
+		// 로그인되지 않은 경우, 로그인 페이지로 리다이렉트
+	    if (user_pk == null) {
+	        return "redirect:/user/userLogin.aws";
+	    }
+		
+		// 사용자 정보를 데이터베이스에서 가져오기
+		UserVo uv = userService.userSelectOne(user_pk);
+		// 모델에 사용자 정보 추가해줌
+		model.addAttribute("uv", uv);
+		
+		
+		
+		
 		return "WEB-INF/user/myPage";
 	}
 	@RequestMapping(value = "mainPage.aws", method = RequestMethod.GET)

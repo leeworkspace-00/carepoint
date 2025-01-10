@@ -8,5 +8,7 @@ public interface UserDetailMapper {
 	
 	// 삽입할 때 detailpk값 업데이트 메서드
 	public int updateDetail_pk (UserDetailVo u_dv);
+	
+	public UserDetailVo userDetailSelectOne(int user_pk);
 
 }

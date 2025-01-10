@@ -4,8 +4,8 @@
     <!-- SQL 매핑 내용 -->
     <!-- 회원가입 인서트 쿼리문 -->
     <insert id="userInsert" parameterType="com.aws.team.domain.UserVo" useGeneratedKeys="true" keyProperty="user_pk">
-		Insert INTO user(grade,username,usernick,userid,userpwd,userphone,useremail,joindate) 
-		VALUES(#{grade},#{username},#{usernick},#{userid},#{userpwd},#{userphone},#{useremail},NOW())		
+		Insert INTO user(grade,username,usernick,userid,userpwd,userphone,useremail,joindate,delyn) 
+		VALUES(#{grade},#{username},#{usernick},#{userid},#{userpwd},#{userphone},#{useremail},NOW(),#{delyn})		
 	</insert>
 	<!-- 아이디 중복체크 쿼리문 -->
 	<select id="userIdCheck" parameterType="String" resultType="int">
@@ -20,5 +20,10 @@
 	<select id = "userLoginCheck" parameterType = "String" resultType = "com.aws.team.domain.UserVo">
 		SELECT * FROM user WHERE userid=#{userid}
 	</select>
+	
+	<select id = "userSelectOne" parameterType = "int" resultType = "uv">
+		SELECT * FROM user WHERE user_pk = #{user_pk};
+	</select>
+	
 	
 </mapper>

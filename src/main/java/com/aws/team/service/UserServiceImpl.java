@@ -46,6 +46,12 @@ public class UserServiceImpl implements UserService {
 		return uv;
 	}
 
+	@Override
+	public UserVo userSelectOne(int user_pk) {
+		UserVo uv = um.userSelectOne(user_pk);
+		return uv;
+	}
+
 
 
 

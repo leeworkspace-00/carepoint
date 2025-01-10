@@ -86,4 +86,15 @@
 	WHERE comment_pk = #{comment_pk} AND  user_pk = #{user_pk}
 </update>
 
+<!--  경현 : 마이페이지 문의글 목록 가져오는 쿼리문 -->
+<select id = "mypageFreeList" parameterType = "int" resultType="com.aws.team.domain.BoardVo">
+	SELECT * 
+	FROM board 
+	WHERE user_pk = #{user_pk}
+	AND board_type = 'F'
+	ORDER BY writedate DESC 
+	LIMIT 5;
+</select>
+
+
 </mapper>

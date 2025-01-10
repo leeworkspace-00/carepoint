@@ -13,6 +13,10 @@
 	    SET detail_pk = user_pk
 	    WHERE user_pk = #{user_pk};
 	</update>
+	
+	<select id = "userDetailSelectOne" parameterType = "int" resultType = "u_dv">
+		SELECT * FROM user_detail WHERE user_pk = #{user_pk};
+	</select>
 
 	
 </mapper>

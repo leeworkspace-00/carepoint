@@ -13,4 +13,8 @@ public interface UserMapper {
 	
 	// 회원 로그인 시 확인하는 메서드
 	public UserVo userLoginCheck(String userid);
+	
+	// 마이페이지에 회원정보 1개 가져오는 메서드
+	public UserVo userSelectOne(int user_pk);
+	
 }

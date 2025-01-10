@@ -109,6 +109,13 @@ public class QnaBoardServiceImpl implements QnaBoardService{
 		
 		return value;
 	}
+
+	// 경현 : 마이페이지 문의글목록
+	@Override
+	public List<BoardVo> mypageQnaList(int user_pk) {
+		List<BoardVo> bv = qm.mypageQnaList(user_pk);
+		return bv;
+	}
 	
 	
 	

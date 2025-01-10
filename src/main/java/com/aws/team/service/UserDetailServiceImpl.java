@@ -31,4 +31,10 @@ public class UserDetailServiceImpl implements UserDetailService {
 		return value;
 	}
 
+	@Override
+	public UserDetailVo userDetailSelectOne(int user_pk) {
+		UserDetailVo u_dv =u_dm.userDetailSelectOne(user_pk);
+		return u_dv;
+	}
+
 }

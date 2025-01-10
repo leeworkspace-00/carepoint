@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%--     <%
+    <%@ taglib prefix = "c" uri ="http://java.sun.com/jsp/jstl/core"%>
+    <%@page import="java.util.*" %>   
+	<%@ page import="com.aws.team.domain.*" %>  
+<%
 String msg = "";  
 if (request.getAttribute("msg") != null) {
    msg = (String)request.getAttribute("msg");
@@ -9,7 +12,7 @@ if (request.getAttribute("msg") != null) {
 if (msg != "") {
    out.println("<script>alert('" + msg + "');</script>");   
 }
-%> --%>
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +42,7 @@ if (msg != "") {
       const email = document.getElementById('email').value;
 
       // 추가 로직 (서버로 전송하거나 화면 업데이트)
-      alert(`수정된 전화번호: ${phone}, 이메일: ${email}`);
+      alert(`수정된 전화번호: ${userphone}, 이메일: ${useremail}`);
       
       closeEditModal(); // 모달 닫기
   });
@@ -60,11 +63,11 @@ if (msg != "") {
 	    </li>
 	    
 	    <li class="profile-contents">
-	      <p><strong>닉네임: </strong>D.O</p>
-	      <p><strong>운동레벨:</strong> 100kg</p>
-	      <p><strong>질병:</strong> 건강함 ㅎㅎ</p>
-	      <p><strong>생년월일:</strong> 1993-01-12</p>
-	      <p><strong>가입일:</strong> 2022-01-01</p>
+	      <p>닉네임: ${usernick}</p>
+	      <p>운동레벨: ${u_dv.e_level}</p>
+	      <p>질병: ${u_dv.sicktype}</p>
+	      <p>생년월일: ${u_dv.userbirth}</p>
+	      <p>가입일: ${joindate}</p>
 	    </li>
 	  </ul>
 	
@@ -78,11 +81,11 @@ if (msg != "") {
     <div class="additional-info">
      <!-- 수정하기 버튼 -->
   	  <button class="edit-button" onclick="openEditModal()">수정하기</button>
-      <p><strong>전화번호:</strong> 010-1234-5678</p>
-      <p><strong>이메일:</strong> example@example.com</p>
-      <p><strong>키:</strong> 175cm</p>
-      <p><strong>몸무게:</strong> 70kg</p>
-      <p><strong>흡연/음주:</strong> 음주</p>
+      <p>전화번호:${userphone}</p>
+      <p>이메일: ${useremail}</p>
+      <p>키: ${u_dv.height}cm</p>
+      <p>몸무게:${u_dv.weight}kg</p>
+      <p>흡연/음주: ${u_dv.smoke} / ${u_dv.drink}</p>
     </div>
     
      <!-- 수정 모달 -->
@@ -92,16 +95,16 @@ if (msg != "") {
       <h3>추가 정보 수정</h3>
       <form id="editForm">
         <label for="phone">전화번호:</label>
-        <input type="text" id="phone" name="phone" value="010-1234-5678">
+        <input type="text" id="userphone" name="userphone" value="${userphone}">
 
         <label for="email">이메일:</label>
-        <input type="email" id="email" name="email" value="example@example.com">
+        <input type="email" id="useremail" name="useremail" value="${useremail}">
 
         <label for="height">키:</label>
-        <input type="text" id="height" name="height" value="175cm">
+        <input type="text" id="height" name="height" value="${u_dv.height}cm">
 
         <label for="weight">몸무게:</label>
-        <input type="text" id="weight" name="weight" value="70kg">
+        <input type="text" id="weight" name="weight" value="${u_dv.weight}kg">
 
         <label for="habits">흡연/음주 여부:</label>
 	        <input type="checkbox" name="smoking" value="흡연"> 흡연
@@ -110,6 +113,7 @@ if (msg != "") {
       </form>
       <!-- 저장하기 버튼 -->
         <button type="submit" class = "save-button">저장하기</button>
+         <button type="submit" class = "delete-button">회원탈퇴하기</button>
     </div>
   </div>
 
@@ -117,25 +121,21 @@ if (msg != "") {
     <div class="post-container">
       <!-- Q&A 목록 -->
       <div class="post-list">
-        <h3 style="color: #6495ED;">내가 작성한 Q&A</h3>
+        <h3><a href= "${pageContext.request.contextPath}/qnaBoard/qnaBoardList.aws" style="color: #6495ED;">내가 작성한 Q&A</a></h3>
         <ul>
-          <li><a href="#">제목1 - 작성일: 2024-12-12</a></li>
-          <li><a href="#">제목2 - 작성일: 2024-12-11</a></li>
-          <li><a href="#">제목3 - 작성일: 2024-12-10</a></li>
-          <li><a href="#">제목4 - 작성일: 2024-12-09</a></li>
-          <li><a href="#">제목5 - 작성일: 2024-12-08</a></li>
+        <c:forEach var="qna" items = "${mypageQnaList}">
+          <li><a href="#">${qna.subject}	작성일 : ${qna.writedate}</a></li>
+        </c:forEach>
         </ul>
       </div>
 
       <!-- 자유게시판 글 목록 -->
       <div class="post-list">
-        <h3 style="color: #6495ED;">내가 작성한 자유게시판 글</h3>
+        <h3><a href= "${pageContext.request.contextPath}/freeBoard/freeBoardList.aws" style="color: #6495ED;">내가 작성한 자유게시판 글</a></h3>
         <ul>
-          <li><a href="#">제목1 - 작성일: 2024-12-12</a></li>
-          <li><a href="#">제목2 - 작성일: 2024-12-11</a></li>
-          <li><a href="#">제목3 - 작성일: 2024-12-10</a></li>
-          <li><a href="#">제목4 - 작성일: 2024-12-09</a></li>
-          <li><a href="#">제목5 - 작성일: 2024-12-08</a></li>
+        <c:forEach var="free" items = "${mypageFreeList}">
+          <li><a href="#">${free.subject}  작성일:${free.writedate}</a></li>
+        </c:forEach>
         </ul>
       </div>
     </div>

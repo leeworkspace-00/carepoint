@@ -34,5 +34,8 @@ public interface QnaBoardService {
 	
 	// 답변 수 1개로 제한
 	public int hasReply(int origin_num);
+	
+	// 경현 : 마이페이지 하단에 나타나는 내가 작성한 문의글 리스트
+	public List<BoardVo> mypageQnaList(int user_pk);
 
 }

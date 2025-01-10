@@ -17,6 +17,8 @@ public interface UserService  {
 	// 회원로그인시 확인하는 메서드
 	public UserVo userLoginCheck(String userid);
 	
+	public UserVo userSelectOne(int user_pk);
+	
 	
 	
 	

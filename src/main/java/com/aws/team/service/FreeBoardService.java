@@ -1,6 +1,7 @@
 package com.aws.team.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.aws.team.domain.BoardVo;
 import com.aws.team.domain.CommentVo;
@@ -32,5 +33,7 @@ public interface FreeBoardService {
 	public ArrayList<CommentVo> commentSelectAll(int board_pk, int block);
 
 	public int commentDelete(CommentVo cv);
+	// 경현 : 마이페이지 자유게시판 목록 나타내기
+	public List<BoardVo> mypageFreeList(int user_pk);
 
 }

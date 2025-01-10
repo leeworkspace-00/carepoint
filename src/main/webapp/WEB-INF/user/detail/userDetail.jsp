@@ -1,22 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-     <%
-String msg = "";  
-if (request.getAttribute("msg") != null) {
-   msg = (String)request.getAttribute("msg");
-}
-
-if (msg != null) {
-   out.println("<script>alert('" + msg + "');</script>");   
-}
-//세션 또는 모델에서 user_pk 값 가져오기
-Integer user_pk = (Integer) session.getAttribute("user_pk"); // 세션에서 가져오기
-if (request.getAttribute("user_pk") != null) {               // 모델에서 가져오기
- user_pk = (Integer) request.getAttribute("user_pk");
-}
-
-
+<%
+	String msg = "";  
+	if (request.getAttribute("msg") != null) {
+	   msg = (String)request.getAttribute("msg");
+	}
+	
+	if (msg != null) {
+	   out.println("<script>alert('" + msg + "');</script>");   
+	}
+	//user_pk 값 가져오기
+	Integer user_pk = (Integer) session.getAttribute("user_pk"); // 세션에서 가져오기
+	if (request.getAttribute("user_pk") != null) {               // 모델에서 가져오기
+	 user_pk = (Integer) request.getAttribute("user_pk");
+	}
 %> 
 
 <!DOCTYPE html>
@@ -64,7 +62,6 @@ function save() {
     	return;
     }
 
-
     var ans = confirm("상세정보를 저장하시겠습니까?");
     if (ans) {
         fm.action = "${pageContext.request.contextPath}/user/detail/userDetailAction.aws";
@@ -72,20 +69,6 @@ function save() {
         fm.submit();
     }
 }
-
-
-	
-	
-
-
-
-
-
-
-
-
-
-
 
 
 </script>
@@ -97,11 +80,7 @@ function save() {
   <div class="form-container">
     <h2>상세 정보 입력 페이지</h2>
     <form name = "frm">
-<<<<<<< HEAD
-    <input type="text" name="user_pk" id = "user_pk" value="${user_pk}">
-=======
     <input type="text" name="user_pk" id="user_pk" value="<%= user_pk != null ? user_pk : "" %>">
->>>>>>> 74e5820006a46a3d3e5a8940be7a32ebaf7c4642
       <div class="form-group">
         <label for="birthdate">생년월일</label>
         <input type="date" id="userbirth" name="userbirth">
@@ -140,22 +119,14 @@ function save() {
       <div class="checkbox-main">흡연 음주 여부
       <div class="checkbox-group">
       <span>
-<<<<<<< HEAD
-      
+     
       	<input type="checkbox" id="smoke" name="smoke" value = "Y">흡연
       </span>
       <span>
-      
+     
       	<input type="checkbox" id="drink" name="drink" value = "Y">음주
-=======
-      <input type="hidden" name="smoke" value="N">
-      	<input type="checkbox" id="smoke" name="smoke_checkbox" value = "Y">흡연
       </span>
-      <span>
-      <input type="hidden" name="drink" value="N">
-      	<input type="checkbox" id="drink" name="drink_checkbox" value = "Y">음주
->>>>>>> 74e5820006a46a3d3e5a8940be7a32ebaf7c4642
-      </span>
+      
   	  </div>
       </div>
       <button type="button" onclick = "save();">저장하기</button>

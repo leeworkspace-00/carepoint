@@ -37,5 +37,8 @@ public interface QnaBoardMapper {
 	public int qnaReplyInsert(BoardVo bv);
 	
 	public int countReplies(int origin_num);
+	
+	// 경현 : 마이페이지 문의글 목록
+	public List<BoardVo> mypageQnaList(int user_pk);
 
 }

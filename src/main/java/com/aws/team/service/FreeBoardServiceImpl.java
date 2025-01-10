@@ -2,6 +2,7 @@ package com.aws.team.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,5 +134,12 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		int value = fbm.commentDelete(cv);
 		
 		return value;
+	}
+	
+	// 경현 : 마이페이지 자유게시글 목록 나타내는 메서드
+	@Override
+	public List<BoardVo> mypageFreeList(int user_pk) {
+		List<BoardVo> bv = fbm.mypageFreeList(user_pk);
+		return bv;
 	}
 }

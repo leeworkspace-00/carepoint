@@ -2,6 +2,7 @@ package com.aws.team.persistance;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.aws.team.domain.BoardVo;
 import com.aws.team.domain.CommentVo;
@@ -33,4 +34,7 @@ public interface FreeBoardMapper {
 	public ArrayList<CommentVo> commentSelectAll(HashMap<String, Object> hm);
 	
 	public int commentDelete(CommentVo cv);
+	
+	// 경현 : 마이페이지 문의글 목록
+	public List<BoardVo> mypageFreeList(int user_pk);
 }
