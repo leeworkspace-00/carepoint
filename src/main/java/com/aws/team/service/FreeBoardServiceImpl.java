@@ -119,11 +119,7 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		
 		block = block * 15;
 		
-		HashMap<String, Object> hm = new HashMap<String, Object>(); // 알아보기
-		hm.put("board_pk", board_pk);
-		hm.put("block", block);
-		
-		ArrayList<CommentVo> clist = fbm.commentSelectAll(hm);
+		ArrayList<CommentVo> clist = fbm.commentSelectAll(board_pk, block);
 		
 		return clist;
 	}

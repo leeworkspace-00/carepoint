@@ -31,7 +31,7 @@ public interface FreeBoardMapper {
 	
 	public int commentTotalCnt(int board_pk);
 	
-	public ArrayList<CommentVo> commentSelectAll(HashMap<String, Object> hm);
+	public ArrayList<CommentVo> commentSelectAll(int board_pk, int block);
 	
 	public int commentDelete(CommentVo cv);
 	

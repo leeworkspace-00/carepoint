@@ -74,8 +74,9 @@ $(document).ready(function() {
              if(result.value == 1) {
                 $("#content").val("");
                 $("#block").val(1);
-	            $.boardCommentList();
              }
+			
+             $.boardCommentList();
              
          },
          error : function() {
@@ -85,7 +86,7 @@ $(document).ready(function() {
    });
    
    $("#more").click(function() {
-		$.boardCommentList();
+		$.boardCommentList(); 
    });
    
 });
@@ -165,10 +166,9 @@ function commentDel(comment_pk) {
 			url : "${pageContext.request.contextPath}/freeBoard/"+ comment_pk +"/commentDeleteAction.aws",
 			dataType : "json",		
 			success : function(result) {	
-				
 				$.boardCommentList();
 			},
-			error : function() {
+			error : function(xhr, status, errorThrown) {
 				alert("전송실패");
 			}			
 		});
@@ -228,11 +228,11 @@ function commentDel(comment_pk) {
               <button class="comment-submit" id="cmtbtn">등록</button>
           </div>
           <div class="comment-list" id = "commentListView">
-             <div id = "morebtn" style = "text-align:center; line-height:50px">
-				 <button type = "button" id = "more" >더보기</button>
-				 <input type = "hidden" id = "block" value = "1">
-			 </div>
-         </div>
+          </div>
+          <div id = "morebtn" style = "text-align:center; line-height:50px">
+			 <button type = "button" id = "more" >더보기</button>
+			 <input type = "hidden" id = "block" value = "1">
+		  </div>
       </form>
    </div>
 

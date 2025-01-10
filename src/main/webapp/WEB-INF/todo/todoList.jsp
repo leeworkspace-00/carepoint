@@ -82,11 +82,11 @@
                 }, 0);
             },
             events: [
-                { id: '1', title: '운동가기', start: '2024-12-27' },
-                { id: '2', title: '병원갔다 오기', start: '2024-12-27' },
-                { id: '3', title: '약먹기', start: '2024-12-27' },
-                { id: '4', title: '장보기', start: '2024-12-27' },
-                { id: '5', title: '집안일 하기', start: '2024-12-27' },
+                { id: '1', title: '운동가기', start: '2025-01-27' },
+                { id: '2', title: '병원갔다 오기', start: '2025-01-27' },
+                { id: '3', title: '약먹기', start: '2025-01-27' },
+                { id: '4', title: '장보기', start: '2025-01-27' },
+                { id: '5', title: '집안일 하기', start: '2025-01-27' },
                 { id: '6', title: '과제하기', start: '2025-01-27' },
                 { id: '7', title: '친구들이랑 약속', start: '2025-01-28' }
             ],
@@ -148,18 +148,61 @@
         eventForm.addEventListener('submit', function (event) {
             event.preventDefault(); // 기본 폼 제출 방지
 
-            const title = eventTitleInput.value; // 입력된 일정 제목
-            const date = eventDateInput.value; // 입력된 날짜
-            
-       		// 해당 날짜의 기존 이벤트 확인
-            const existingEvents = calendar.getEvents().filter(event => event.startStr === date);
+            const selectdate = eventDateInput.value; // 입력된 날짜
+            const content = eventTitleInput.value; // 입력된 일정 제목
 
-            if (existingEvents.length >= 6) {
-                alert('한 날짜에 최대 6개의 일정만 추가할 수 있습니다.');
+            if (!content || !selectdate) {
+                alert("내용과 날짜를 입력해주세요.");
                 return;
             }
+            
+       		// 해당 날짜의 기존 이벤트 확인
+            const existingEvents = calendar.getEvents().filter(event => event.startStr === selectdate);
+       		
+            if (existingEvents.length >= 6) {
+                alert('한 날짜에 최대 6개의 일정만 추가할 수 있습니다.');
+                
+            	 // 입력 필드 초기화
+                eventTitleInput.value = '';
+                eventDateInput.value = '';
+                return;
+            }
+			
+         	// 서버로 데이터 전송
+            fetch('/todo/todoWriteAction.aws', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    selectdate: selectdate,
+                    content: content,
+                    num: 1,            // 기본값 예시
+                    user_pk: '${user_pk}'   // 사용자 ID
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    alert("일정이 성공적으로 추가되었습니다.");
+                    calendar.addEvent({
+                        title: content,
+                        start: selectdate
+                    });
 
-            if (title && date) {
+                    // 입력 필드 초기화
+                    eventTitleInput.value = '';
+                    eventDateInput.value = '';
+                    
+               		// 일정 추가 폼 숨기기
+                    addEventForm.style.display = 'none';
+                } else {
+                    alert("일정 추가 중 오류가 발생했습니다.");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+         	
+            /* if (title && date) {
                 // FullCalendar에 일정 추가
                 calendar.addEvent({
 				    id: Date.now().toString(), // 고유 ID 생성
@@ -173,7 +216,7 @@
 
                 // 일정 추가 폼 숨기기
                 addEventForm.style.display = 'none';
-            }
+            } */
         });
     });
 </script>
@@ -196,9 +239,9 @@
 	    <h3>일정 추가</h3>
 	    <form id="event-form">
 	        <label for="event-title">일정 제목 :</label>
-	        <input type="text" id="event-title" placeholder="일정 제목 입력" required />
+	        <input type="text" id="event-title" placeholder="일정 제목 입력"/>
 	        <label for="event-date">날짜 :</label>
-	        <input type="date" id="event-date" required />
+	        <input type="date" id="event-date"/>
 	        <button type="submit">추가</button>
 	    </form>
 	</div>
