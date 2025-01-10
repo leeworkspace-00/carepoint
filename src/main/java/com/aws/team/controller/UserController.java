@@ -1,5 +1,7 @@
 package com.aws.team.controller;
 
+import java.time.LocalDateTime;
+
 import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -49,19 +51,30 @@ public class UserController {
 		
 		int value = userService.userInsert(uv);
 		String path = "";
-		if (value == 1) {
-			 // 성공 시 메시지 전달
-	        rttr.addFlashAttribute("msg", "회원가입 성공!! 상세정보를 입력해주세요");
-	        Integer user_pk = (Integer)session.getAttribute("user_pk");
-	        session.setAttribute("user_pk", user_pk); // 회원번호 전달
-	        System.out.println("회원번호 확인 : " + user_pk);
-	        return "redirect:/user/detail/userDetail.aws"; // 로그인 페이지로 리다이렉트
-		} else {
-			rttr.addFlashAttribute("msg", "회원가입 실패 다시 작성해주세요");
-			path = "redirect:/user/userJoin.aws";
+		 if (value == 1) {
+		        // `uv.getUser_pk()`로 회원 번호 가져오기 전에 확인 필요
+		        Integer user_pk = uv.getUser_pk();
+		        if (user_pk == null) {
+		            logger.error("회원가입 성공했지만, 회원번호(user_pk)가 null입니다.");
+		            rttr.addFlashAttribute("msg", "회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
+		            return "redirect:/user/userJoin.aws";
+		        }
+
+		        logger.info("회원가입 성공! user_pk: " + user_pk);
+
+		        // 세션에 회원번호 저장
+		        session.setAttribute("user_pk", user_pk);
+
+		        // 성공 메시지와 리다이렉트 설정
+		        rttr.addFlashAttribute("msg", "회원가입 성공!! 상세정보를 입력해주세요");
+		        path = "redirect:/user/detail/userDetail.aws";
+		    } else {
+		        logger.error("회원가입 실패: 데이터 삽입 실패");
+		        rttr.addFlashAttribute("msg", "회원가입 실패. 다시 작성해주세요.");
+		        path = "redirect:/user/userJoin.aws";
+		    }
+		    return path;
 		}
-		return path;
-	}
 	
 	@ResponseBody // 결과값은 객체로 보낸다는 의미의 어노테이션
 	@RequestMapping(value = "userIdCheck.aws", method = RequestMethod.POST) // 아이디 중복 체크 동작 메서드 구현
@@ -131,7 +144,6 @@ public class UserController {
 	    
 	    return path;
 	}
-	// ========= 이전 url 기억하기 추가 예정 ============
 	
 	
 
