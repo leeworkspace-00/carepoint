@@ -118,7 +118,6 @@ public class UserController {
 			 // UserDetailVo 객체에 user_pk 설정 u_dv에 담기 회원번호
 			if(bCryptPasswordEncoder.matches(userpwd, reservedPwd)) {	// 암호화된 비밀번호와 입력된 비번을 맞춰보고 맞으면
 				session.setAttribute("user_pk", uv.getUser_pk());	// 회원번호
-				//System.out.println("세션에 저장된 user_pk : " + session.getAttribute("user_pk"));
 				session.setAttribute("grade", uv.getGrade());		// 회원등급
 				session.setAttribute("username", uv.getUsername());// 회원 이름이랑
 				session.setAttribute("usernick", uv.getUsernick());// 회원 닉네임 담아서 
