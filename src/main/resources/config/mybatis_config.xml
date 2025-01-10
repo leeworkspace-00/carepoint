@@ -10,6 +10,7 @@
  		<typeAlias alias="fv" type="com.aws.team.domain.FoodVo"/>
  		<typeAlias alias="cv" type="com.aws.team.domain.CommentVo"/>
         <typeAlias alias="ev" type="com.aws.team.domain.ExerciseVo"/>
+        <typeAlias alias="tv" type="com.aws.team.domain.TodoVo"/>
 
     </typeAliases>
 
