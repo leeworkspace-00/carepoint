@@ -35,7 +35,7 @@ function Delete(board_pk) {
 	        </div>
 	    </div>
 		<div class="content">
-           ${bv.content }
+           ${bv.content}
        </div>
        <c:if test="${bv.filename != null && !bv.filename.isEmpty()}">
          <div class="content-file">

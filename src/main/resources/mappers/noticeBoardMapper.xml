@@ -45,7 +45,7 @@
 <update id="noticeBoardUpdate" parameterType="bv">
 	UPDATE board 
 	SET subject =#{subject}, content =#{content}, ip=#{ip}, filename=#{uploadedFileName} 
-	WHERE board_pk = #{board_pk} AND delyn = 'N'
+	WHERE board_pk = #{board_pk} AND user_pk = #{user_pk}
 </update>
 
 </mapper>

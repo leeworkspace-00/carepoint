@@ -11,6 +11,8 @@ import org.apache.http.util.EntityUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.aws.team.domain.FoodVo;
 import com.aws.team.persistance.FoodMapper;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -89,6 +91,32 @@ public class FoodServiceImpl implements FoodService {
 	        // 결과 리스트 반환
 	        return foodList;
 	    }
+	    
+	    
+	    @Override
+	    @Transactional
+	    public int foodInsert(FoodVo foodVo, List<FoodVo> menuList) {
+	        // 1. Food 테이블에 Insert or Update
+	        int result = fm.foodInsert(foodVo);
+
+	        // 2. 메뉴 데이터 삽입
+	        if (result > 0) {
+	            for (FoodVo menuItem : menuList) {
+	                menuItem.setFoodPk(foodVo.getFoodPk());
+	                fm.foodListInsert(menuItem);
+	            }
+	        }
+	        return result;
+	    }
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	}
 
 

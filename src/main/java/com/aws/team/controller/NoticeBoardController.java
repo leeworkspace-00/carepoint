@@ -97,7 +97,7 @@ public class NoticeBoardController {
 		int user_pk_int = Integer.parseInt(user_pk); 
 		String ip = userIp.getUserIp(request);
 			
-		bv.setBoard_pk(user_pk_int);
+		bv.setUser_pk(user_pk_int);
 		bv.setUploadedFileName(uploadedFileName);  
 		bv.setIp(ip);
 		
@@ -105,19 +105,14 @@ public class NoticeBoardController {
 		int value = noticeBoardService.noticeBoardUpdate(bv); // 서비스에서 만든 메서드 호출하기
 			
 		String path="";
-		if(bv.getUser_pk() == user_pk_int) {
-	        if(value == 1) {
+		if(value == 1) { //성공하면
 	           path = "redirect:/noticeBoard/noticeBoardList.aws";
 	        }else {
-	             rttr.addFlashAttribute("msg", "비밀번호가 틀렸습니다.");
-	             path = "redirect:/noticeBoard/noticeBoardModify.aws?board_pk=" + bv.getBoard_pk();
-	         }
-	     }else {
-	         rttr.addFlashAttribute("msg", "자신의 게시글만 수정 할 수 있습니다.");
-	         path = "redirect:/noticeBoard/noticeBoardModify.aws?board_pk=" + bv.getBoard_pk();
-	     } 
-	     return path; 
-	}	
+			rttr.addFlashAttribute("msg","입력이 잘못되었습니다.");
+			path = "redirect:/noticeBoard/noticeBoardModify.aws"; // 리다이랙트로 넘기는것은 내부가 아니라 외부기 때문에 전체경로를 넘겨줘야 한다(aws)
+	        }
+			return path;
+		}
 	
 	
 	// 공지사항 내용

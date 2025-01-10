@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aws.team.persistance.FoodMapper">
-    <!-- SQL 매핑 -->
+    
+<!-- 식단 입력하기  -->    
+<insert id="foodInsert" parameterType="com.aws.team.domain.FoodVo">
+    INSERT INTO food (user_pk, selectdate, foodtype)
+    VALUES (#{user_pk}, #{selectdate}, #{foodtype})
+    ON DUPLICATE KEY UPDATE foodtype = VALUES(foodtype);
+    
+    <selectKey resultType="int" keyProperty="foodPk" order="AFTER">
+        SELECT LAST_INSERT_ID();
+    </selectKey>
+</insert>
+
+<!-- 식단 입력하기2  -->   
+<insert id="foodListInsert" parameterType="com.aws.team.domain.FoodVo">
+    INSERT INTO foodlist (menu, kcal, food_pk)
+    VALUES (#{menu}, #{kcal}, #{foodPk});
+</insert>
+    
 </mapper>
