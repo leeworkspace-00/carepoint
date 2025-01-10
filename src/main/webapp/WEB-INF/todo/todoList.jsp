@@ -18,6 +18,7 @@
         const eventForm = document.getElementById('event-form'); // 폼 요소
         const eventTitleInput = document.getElementById('event-title'); // 일정 제목 입력 필드
         const eventDateInput = document.getElementById('event-date'); // 일정 날짜 입력 필드
+        const tlist = JSON.parse('${tlist}');
 
         const calendar = new FullCalendar.Calendar(calendarEl, {
             dayMaxEventRows: true, // 한 칸에서 최대 이벤트 줄 수 제한
@@ -81,15 +82,11 @@
                     }
                 }, 0);
             },
-            events: [
-                { id: '1', title: '운동가기', start: '2025-01-27' },
-                { id: '2', title: '병원갔다 오기', start: '2025-01-27' },
-                { id: '3', title: '약먹기', start: '2025-01-27' },
-                { id: '4', title: '장보기', start: '2025-01-27' },
-                { id: '5', title: '집안일 하기', start: '2025-01-27' },
-                { id: '6', title: '과제하기', start: '2025-01-27' },
-                { id: '7', title: '친구들이랑 약속', start: '2025-01-28' }
-            ],
+            events: tlist.map(todo => ({
+                id: todo.todo_pk,
+                title: todo.content,
+                start: todo.selectdate
+            })),
             dateClick: function(info) {
                 const clickedDate = info.dateStr;
 
@@ -177,7 +174,7 @@
                 body: JSON.stringify({
                     selectdate: selectdate,
                     content: content,
-                    num: 1,            // 기본값 예시
+                    num: 4,            // 기본값 예시
                     user_pk: '${user_pk}'   // 사용자 ID
                 })
             })
@@ -201,22 +198,6 @@
                 }
             })
             .catch(error => console.error("Error:", error));
-         	
-            /* if (title && date) {
-                // FullCalendar에 일정 추가
-                calendar.addEvent({
-				    id: Date.now().toString(), // 고유 ID 생성
-				    title: title,
-				    start: date
-				})
-
-                // 입력 필드 초기화
-                eventTitleInput.value = '';
-                eventDateInput.value = '';
-
-                // 일정 추가 폼 숨기기
-                addEventForm.style.display = 'none';
-            } */
         });
     });
 </script>

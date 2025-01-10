@@ -3,6 +3,11 @@
 
 <mapper namespace="com.aws.team.persistance.TodoMapper">
 
+<select id="todoSelectAll" parameterType="int" resultType="tv">
+	SELECT * FROM todo
+   WHERE user_pk = #{user_pk}
+</select>
+
 <insert id="todoInsert" parameterType="tv">
 	INSERT INTO todo(selectdate, content, num, user_pk)
 	VALUES(#{selectdate}, #{content}, #{num}, #{user_pk})
