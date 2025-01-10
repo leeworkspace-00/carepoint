@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -77,6 +78,7 @@ public class ExericesController {
             }
 
             exerciseService.saveExercise(ev);
+            System.out.println("controller로 넘어온 selectDate 값 ========> " + ev.getSelectdate());
             
             return ResponseEntity.ok("{\"success\": true}");
             
@@ -88,27 +90,20 @@ public class ExericesController {
 	
 	@ResponseBody
  	@RequestMapping(value="calendar-events.aws", method=RequestMethod.GET)
-    public List<Map<String, Object>> fetchEvents() {
+    public ResponseEntity<List<Map<String, Object>>> getCalendarEvents() {
 		
-        // 이벤트 데이터를 리스트로 생성
-        List<Map<String, Object>> events = new ArrayList<>();
+		// DB에서 저장된 운동 기록 가져오기
+        List<ExerciseVo> ev = exerciseService.getAllExercises();
 
-        // 첫 번째 이벤트 추가
-        Map<String, Object> event1 = new HashMap<>();
-        event1.put("id", "1");
-        event1.put("title", "회의");
-        event1.put("start", "2025-01-10T10:00:00");
-        event1.put("end", "2025-01-10T11:00:00");
-        events.add(event1);
+        // FullCalendar 형식에 맞게 변환
+        List<Map<String, Object>> events = ev.stream().map(exercise -> {
+            Map<String, Object> event = new HashMap<>();           
+            event.put("title", "운동 시간 : " + exercise.getHour() + "시간 " + exercise.getMinute() + "분");
+            event.put("start", exercise.getSelectdate());
+            event.put("extendedProps", Map.of("eventType", "exercise"));
+            return event;
+        }).collect(Collectors.toList());
 
-        // 두 번째 이벤트 추가
-        Map<String, Object> event2 = new HashMap<>();
-        event2.put("id", "2");
-        event2.put("title", "점심");
-        event2.put("start", "2025-01-10T12:00:00");
-        event2.put("end", "2025-01-10T13:00:00");
-        events.add(event2);
-
-        return events; // JSON 형식으로 반환
+        return ResponseEntity.ok(events);
     }
 }

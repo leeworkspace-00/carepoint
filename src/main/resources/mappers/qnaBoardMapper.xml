@@ -93,10 +93,11 @@
 </insert>
 
 <!-- Reply -->
-<select id="countReplies" parameterType="int">
+<select id="countReplies" parameterType="int" resultType="int">
 	SELECT COUNT(*) 
 	FROM board 
 	WHERE origin_num = #{origin_num}
+	AND delyn = 'N'
 </select>
 
 <!--  경현 : 마이페이지 문의글 목록 가져오는 쿼리문 -->

@@ -41,6 +41,8 @@
 .info-left span:last-child {
     font-size: 0.8em; /* 글씨 크기 축소 */
     color: #999; /* 연한 색상 */
+    line-height: 2;
+    vertical-align: middle;
 }
 
 /* 본문 내용 */
@@ -141,19 +143,6 @@ button {
 }
 
 
-/* 첨부파일 이미지 영역 */
-.content-file {
-    margin-top: 20px; /* 콘텐츠와의 간격 */
-    text-align: left; /* 이미지 중앙 정렬 */
-}
-
-.file-image {
-    max-width: 100%; /* 이미지가 콘텐츠 영역을 넘지 않도록 */
-    height: auto; /* 이미지 비율 유지 */
-    border: 1px solid #ddd; /* 테두리 */
-    border-radius: 5px; /* 약간의 둥근 모서리 */
-    margin-top: 10px; /* 위쪽 여백 */
-}
 
 /* 댓글 작성 */
 .comment-box {
@@ -238,3 +227,18 @@ button {
     border: none;
     padding: 0 10px;
 }
+
+/* 첨부파일 이미지 영역 */
+.content-file {
+    margin-top: 20px; /* 콘텐츠와의 간격 */
+    text-align: left; /* 이미지 중앙 정렬 */
+}
+
+.file-image {
+    max-width: 100%; /* 이미지가 콘텐츠 영역을 넘지 않도록 */
+    height: auto; /* 이미지 비율 유지 */
+    border: 1px solid #ddd; /* 테두리 */
+    border-radius: 5px; /* 약간의 둥근 모서리 */
+    margin-top: 10px; /* 위쪽 여백 */
+}
+

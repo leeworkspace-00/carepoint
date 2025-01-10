@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return { html: `<div><img src="/resources/image/success.png" class="event-icon" /></div>` };
             } else if (arg.event.extendedProps.eventType === 'fail') {
                 return { html: `<div><img src="/resources/image/fail.png" class="event-icon" /></div>` };
-            } else {
-                return { html: arg.event.title }; // 기본 텍스트 표시
+            } else if (arg.event.extendedProps.eventType === 'exercise') {
+            	return { html: `<div>운동 시간 : ~시 ~분</div>` };
             }
         },
         dayMaxEvents: true
@@ -200,10 +200,38 @@ document.addEventListener('DOMContentLoaded', function() {
     exerciseForm.addEventListener('submit', function (event) {
         event.preventDefault(); // 기본 폼 제출 방지
 
-        // 입력된 값 가져오기
-        var selectedDate = selectedDateInput.value;
-        var hour = hourInput.value;
-        var minute = minuteInput.value;
+        // 'select' 태그에서 값 가져오기
+        var hour = hourInput.value.trim() || '0';  // 선택된 시간
+        var minute = minuteInput.value.trim() || '0'; // 선택된 분
+        
+        // 선택된 날짜 값 가져오기
+        var selectedDateInput = document.getElementById('selected-date');
+        var selectedDateValue = selectedDateInput.value; // 문자열 값
+        console.log('Selected Date Value:', selectedDateValue);
+
+        // 유효성 검사
+        if (!hour || !minute) {
+            alert('운동 시간을 올바르게 선택하세요.');
+            return;
+        }
+
+        // 문자열을 Date 객체로 변환
+        var selectedDate = new Date(selectedDateValue);
+
+        // Date 객체에서 ISO 형식 문자열로 변환
+        var isoDate = selectedDate.toISOString().split('T')[0]; // "2025-01-01"
+        console.log('ISO Date:', isoDate);
+
+     // 중복 이벤트 확인
+        var existingEvents = calendar.getEvents();
+        var isDuplicate = existingEvents.some((event) => 
+            event.startStr === isoDate && event.extendedProps.eventType === 'exercise'
+        );
+
+        if (isDuplicate) {
+            alert('이미 해당 날짜에 운동 이벤트가 추가되었습니다.');
+            return;
+        }
 
         // 서버로 운동 기록 저장 요청
         fetch('/exercise/saveExercise.aws', {
@@ -212,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                date: selectedDate,
+                selectdate: isoDate,
                 hour: hour,
                 minute: minute,
             }),
@@ -220,35 +248,39 @@ document.addEventListener('DOMContentLoaded', function() {
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    // 운동 기록 저장 후 fetch-events.aws 호출
+                    alert('운동 기록이 저장되었습니다!');
+
+                    // 최신 이벤트 데이터 가져오기
                     fetch('/exercise/calendar-events.aws')
                         .then((response) => response.json())
                         .then((events) => {
-                            // FullCalendar에서 기존 이벤트를 모두 제거
-                            calendar.removeAllEvents();
-
-                            // 새로운 이벤트를 캘린더에 추가
-                            events.forEach((event) => {
-                                calendar.addEvent(event);
-                            });
-
-                            // 폼 숨기기
-                            exerciseForm.style.display = 'none';
-
-                            // 성공 메시지 표시
-                            alert('운동 기록이 저장되고 캘린더가 업데이트되었습니다!');
+                            // 운동 기록 이벤트 추가
+                            var exerciseEvent = {
+                                id: new Date().getTime().toString(),
+                                resourceId: 'a',
+                                title: `운동 시간 : ${hour}시간 ${minute}분`,
+                                start: isoDate,
+                                extendedProps: {
+                                    eventType: 'exercise', // 추가 속성으로 구분 가능    
+                                    hour: hour,
+                                    minute: minute
+                                }
+                            };
+                            
+                            calendar.addEvent(exerciseEvent);       
+                            
+                            storedEvents.push(exerciseEvent);
+                            localStorage.setItem('calendarEvents', JSON.stringify(storedEvents));
                         })
                         .catch((error) => {
-                            console.error('Error fetching events:', error);
-                            alert('캘린더 이벤트를 가져오는 중 오류가 발생했습니다.');
+                            console.error('캘린더 이벤트 가져오기 오류:', error);
                         });
                 } else {
                     alert('운동 기록 저장 실패!');
                 }
             })
             .catch((error) => {
-                console.error('Error:', error);
-                alert('운동 기록 저장 중 오류 발생!');
+                console.error('운동 기록 저장 오류:', error);
             });
     });
 });
@@ -305,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
    </div>
    <div class="exercise-entry" style="display: none; margin-top: 20px;">
        <form>
-           <input type="hidden" id="selected-date" name="selected-date">
+           <input type="hidden" id="selected-date" name="selectdate">
            <label for="exercise-time">총 운동 시간 :</label>
            <select id="hour" name="hour">
                <option value="00" selected>0시간</option>
