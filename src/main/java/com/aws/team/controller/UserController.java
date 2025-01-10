@@ -105,7 +105,6 @@ public class UserController {
 		String path = ""; // 리턴값 초기화
 		if(uv != null) {	// uv가 null이 아니라면 >> uv에 뭐라도 담았다면?
 			String reservedPwd = uv.getUserpwd();// uv에 있는 비밀번호를 변수에 담아준다
-			System.out.println("비밀번호 담겼나 확인 : " + reservedPwd);
 			
 			if(bCryptPasswordEncoder.matches(userpwd, reservedPwd)) {	// 암호화된 비밀번호와 입력된 비번을 맞춰보고 맞으면
 				session.setAttribute("user_pk", uv.getUser_pk());	// 회원번호

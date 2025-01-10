@@ -242,6 +242,11 @@ h3 {
     margin-right: auto; /* 오른쪽 여백 자동 */
 }
 
+/* 날짜에 마우스 올렸을 때 커서 변경 */
+.fc .fc-daygrid-day-frame {
+	cursor: pointer;
+}
+
 /* 일요일 (red 계열) */
 .fc-day-sun {
     color: #FA5858; /* 텍스트 색상 (좀 더 어두운 톤) */
@@ -366,6 +371,12 @@ a.fc-event:hover {
 .fc-h-event .fc-event-main {
     color: #424242;
     text-align: center;
+}
+
+.fc-event-title {
+    color: black; /* 텍스트 색상 설정 */
+    font-size: 14px; /* 글꼴 크기 설정 */
+    visibility: visible; /* 텍스트가 보이도록 설정 */
 }
 
 

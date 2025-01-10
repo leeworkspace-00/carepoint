@@ -106,7 +106,7 @@ public class QnaBoardServiceImpl implements QnaBoardService{
 		
 		// 답변의 개수를 세는 용도
 		int value = qm.countReplies(origin_num);
-		
+	
 		return value;
 	}
 	

@@ -148,7 +148,8 @@ public class QnaBoardController {
 		BoardVo bv = qnaBoardService.qnaSelectOne(board_pk); 	 
 		int value = qnaBoardService.qnaDelete(bv);
 	
-		if(value == 1 || value == 2) {
+		// 작성 되었었던 답글의 수에 따라서 value 값이 달라지기 때문에 1 이상으로 변경함.
+		if(value >= 1) {
 			rttr.addFlashAttribute("msg", "게시글이 삭제 되었습니다."); 
 			path = "redirect:/qnaBoard/qnaBoardList.aws"; 
 		}
@@ -238,10 +239,10 @@ public class QnaBoardController {
 			RedirectAttributes rttr
 			) throws Exception {
 		
-		int replyCnt =qnaBoardService.hasReply(bv.getBoard_pk());
+		int replyCnt = qnaBoardService.hasReply(bv.getOrigin_num());
 		
 		// 답변 존재 여부 확인
-	    if (replyCnt == 2) {
+		if (replyCnt > 1) {
 	        rttr.addFlashAttribute("msg", "이미 답변이 존재합니다.");
 	        return "redirect:/qnaBoard/qnaBoardList.aws";
 	    }
