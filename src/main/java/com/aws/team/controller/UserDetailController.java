@@ -45,16 +45,15 @@ public class UserDetailController {
 			RedirectAttributes rttr, 
 			HttpSession session) {
 		// 세션에서 user_pk 가져오기
-	    
+		Integer user_pk = (Integer)session.getAttribute("user_pk");
+		u_dv.setUser_pk(user_pk);
 		System.out.println("userdetailaction 들어옴");
 		//System.out.println("세션에 담긴 회원번호 user_pk : "+user_pk);
 		System.out.println("drink : " + u_dv.getDrink());
 		System.out.println("smoke : " + u_dv.getSmoke());
 		//System.out.println("detail_pk : " + u_dv.getDetail_pk());
 		
-		//u_dv.setDetail_pk(u_dv.getUser_pk());
-		Integer user_pk = (Integer) session.getAttribute("user_pk");
-		u_dv.setUser_pk(user_pk);
+
 		int value = userDetailService.userDetailInsert(u_dv);
 		int value2 = userDetailService.updateDetail_pk(u_dv);
 		int result = value+value2;

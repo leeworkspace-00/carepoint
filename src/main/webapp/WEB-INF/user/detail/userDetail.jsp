@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
      <%
 String msg = "";  
 if (request.getAttribute("msg") != null) {
@@ -56,9 +57,7 @@ function save() {
     	fm.exercise_cnt.focus();
     	return;
     }
-    // 체크박스 값 설정
-    fm.smoke.value = document.getElementById('smoke').checked ? "Y" : "N";
-    fm.drink.value = document.getElementById('drink').checked ? "Y" : "N";
+
 
     var ans = confirm("상세정보를 저장하시겠습니까?");
     if (ans) {
@@ -92,7 +91,7 @@ function save() {
   <div class="form-container">
     <h2>상세 정보 입력 페이지</h2>
     <form name = "frm">
-    <input type="hidden" name="user_pk" id = "user_pk" value="${user_pk}">
+    <input type="text" name="user_pk" id = "user_pk" value="${user_pk}">
       <div class="form-group">
         <label for="birthdate">생년월일</label>
         <input type="date" id="userbirth" name="userbirth">
@@ -131,11 +130,11 @@ function save() {
       <div class="checkbox-main">흡연 음주 여부
       <div class="checkbox-group">
       <span>
-      <input type="hidden" name="smoke" value="N">
+      
       	<input type="checkbox" id="smoke" name="smoke" value = "Y">흡연
       </span>
       <span>
-      <input type="hidden" name="drink" value="N">
+      
       	<input type="checkbox" id="drink" name="drink" value = "Y">음주
       </span>
   	  </div>

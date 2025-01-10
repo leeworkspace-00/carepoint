@@ -30,10 +30,25 @@
 	<beans:property name="maxUploadSize" value="10485760" />	
 	</beans:bean>
 	
-	<!-- <beans:bean id="loginInterceptor" class="com.aws.team.interceptor.LoginInterceptor">
+<!-- 	<beans:bean id="loginInterceptor" class="com.aws.team.interceptor.LoginInterceptor">
 	</beans:bean>
 	<beans:bean id="authInterceptor" class="com.aws.team.interceptor.AuthInterceptor">
 	</beans:bean>
+	
+	<interceptors>
+      	<interceptor>
+         	<mapping path="/user/userLoginAction.aws"/>
+         	<beans:ref bean="loginInterceptor"/>
+     	</interceptor>   
+     	
+ 	<interceptor>
+         	<mapping path="/user/detail/userDetailAction.aws"/>
+
+        	<beans:ref bean="authInterceptor"/>
+    	</interceptor>   
+    </interceptors> -->
+	
+	<!-- 
 
     	<beans:constructor-arg value="D:\team_pr\project_upload"></beans:constructor-arg>
     </beans:bean>
@@ -49,21 +64,7 @@
     </beans:bean>
 
 
-   	<interceptors>
-      	<interceptor>
-         	<mapping path="/user/userLoginAction.aws"/>
-         	<beans:ref bean="loginInterceptor"/>
-     	</interceptor>   
-      	<interceptor>
-         	<mapping path="/cart/cartList.aws"/>
-         	<mapping path="/cart/cartInsert.aws"/>
-         	<mapping path="/qnrBoard/reviewWrite.aws"/>
-         	<mapping path="/qnrBoard/qnaWrite.aws"/>
-         	<mapping path="/qnrBoard/qnaModify.aws"/>
-         	<mapping path="/qnrBoard/qnaContent.aws"/>
-        	<beans:ref bean="authInterceptor"/>
-    	</interceptor>   
-    </interceptors> -->
+   	 -->
    
 	<context:component-scan base-package="com.aws.team.controller" />
 	

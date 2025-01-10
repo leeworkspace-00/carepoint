@@ -39,7 +39,7 @@ public class UserController {
 
 	// 회원가입 동작구현
 	@RequestMapping(value = "userJoinAction.aws", method = RequestMethod.POST)
-	public String userJoinAction(UserVo uv, RedirectAttributes rttr) {
+	public String userJoinAction(UserVo uv, RedirectAttributes rttr, HttpSession session) {
 		logger.info("회원가입 동작");
 		
 		String userpwd_enc = bCryptPasswordEncoder.encode(uv.getUserpwd()); // 이게 비밀번호 암호화 시키는 코드
@@ -52,7 +52,9 @@ public class UserController {
 		if (value == 1) {
 			 // 성공 시 메시지 전달
 	        rttr.addFlashAttribute("msg", "회원가입 성공!! 상세정보를 입력해주세요");
-	        rttr.addAttribute("user_pk", uv.getUser_pk()); // 회원번호 전달
+	        Integer user_pk = (Integer)session.getAttribute("user_pk");
+	        session.setAttribute("user_pk", user_pk); // 회원번호 전달
+	        System.out.println("회원번호 확인 : " + user_pk);
 	        return "redirect:/user/detail/userDetail.aws"; // 로그인 페이지로 리다이렉트
 		} else {
 			rttr.addFlashAttribute("msg", "회원가입 실패 다시 작성해주세요");
@@ -94,7 +96,7 @@ public class UserController {
 			HttpSession session) {
 		UserVo uv = userService.userLoginCheck(userid); // 로그인 확인하는 메서드 
 		String path = ""; // 리턴값 초기화
-		
+
 		if(uv != null) {	// uv가 null이 아니라면 >> uv에 뭐라도 담았다면?
 			String reservedPwd = uv.getUserpwd();// uv에 있는 비밀번호를 변수에 담아준다
 			//System.out.println("비밀번호 담겼나 확인 : " + reservedPwd);
@@ -110,7 +112,14 @@ public class UserController {
 				//session.setAttribute("detail_pk", u_dv.getDetail_pk()); // 상세정보 입력 여부 저장
 				//System.out.println("세션에 저장된 detail_pk : " + session.getAttribute("detail_pk"));
 				//System.out.println("[DEBUG] 로그인 성공: user_pk = " + uv.getUser_pk());
-	            path = "redirect:/user/mainPage.aws"; // 메인 페이지로 이동
+				
+				  if (session.getAttribute("saveUrl") != null) { path = "redirect:" +
+						  session.getAttribute("saveUrl").toString();
+						  System.out.println("이전 url값 확인하기  : " + path);
+						  
+						  } else { path = "redirect:/user/mainPage.aws";
+						  
+						  }
 	        } else {
 	            rttr.addFlashAttribute("msg", "아이디 또는 비밀번호가 잘못되었습니다.");
 	            path = "redirect:/user/userLogin.aws";
@@ -124,15 +133,9 @@ public class UserController {
 	}
 	// ========= 이전 url 기억하기 추가 예정 ============
 	
-	/*
-	 * if (session.getAttribute("saveUrl") != null) { path = "redirect:" +
-	 * session.getAttribute("saveUrl").toString();
-	 * System.out.println("이전 url값 확인하기  : " + path);
-	 * 
-	 * } else { path = "redirect:/user/mainPage.aws";
-	 * 
-	 * }
-	 */
+	
+
+	 
 	// 로그아웃 기능 완성
 	@RequestMapping(value = "userLogout.aws", method = RequestMethod.GET)	
 	public String userLogout(HttpSession session) {
