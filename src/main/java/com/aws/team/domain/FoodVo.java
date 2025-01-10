@@ -4,7 +4,7 @@ public class FoodVo {
 	
 	
 	private int foodPk;
-	private int userPk;
+	private int user_pk;
 	private String selectdate;
 	private String foodtype;
 	private int foodlistPk;
@@ -31,8 +31,16 @@ public class FoodVo {
                '}';
     }
 	
+    
+    
 	
 
+	public int getUser_pk() {
+		return user_pk;
+	}
+	public void setUser_pk(int user_pk) {
+		this.user_pk = user_pk;
+	}
 	public String getMenuName() {
 		return menuName;
 	}
@@ -72,12 +80,6 @@ public class FoodVo {
 	}
 	public void setFoodPk(int foodPk) {
 		this.foodPk = foodPk;
-	}
-	public int getUserPk() {
-		return userPk;
-	}
-	public void setUserPk(int userPk) {
-		this.userPk = userPk;
 	}
 	public int getFoodlistPk() {
 		return foodlistPk;

@@ -1,16 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!-- 게시물 입력 작성 실패시 띄우는 메세지-->
-<%
-String msg = "";
-if(request.getAttribute("msg") != null) {
-msg = (String)request.getAttribute("msg");
-}
-
-if(msg != "") {  
-out.println("<script>alert('"+msg+"');</script>");
-}
-%>
+<!-- 메세지 출력 -->
+<c:set var="msg" value="${requestScope.msg}" />
+<c:if test="${!empty msg}">
+    <script>alert('${msg}');</script>
+</c:if>  
 <!DOCTYPE html>
 <html>
 <head>

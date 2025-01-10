@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- 메세지 출력 -->
+<c:set var="msg" value="${requestScope.msg}" />
+<c:if test="${!empty msg}">
+    <script>alert('${msg}');</script>
+</c:if> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,9 +12,10 @@
 <title>식단 메인</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<link href= "<%=request.getContextPath()%>/resources/css/food/foodMain.css" type="text/css" rel="stylesheet">
+<link href= "${pageContext.request.contextPath}/resources/css/food/foodMain.css" type="text/css" rel="stylesheet">
 </head>
 <body>
+
 
 <!-- header -->
 <jsp:include page="/WEB-INF/include/header_format.jsp" />
@@ -53,25 +59,29 @@
 
   <!-- 기록하기 숨겨진 박스 -->
 <div class="parent-container">  
-  <form name="meal-frm" id="hiddenBox">
+  <form name="meal-frm" id="hiddenBox" action="/food/foodWriteAction.aws" method="post">
+  
+  
   	<div class="date-container">
-  <input type="date" id="dateInput" class="hidden-date-picker" style="display: none;" />
+  <input type="date" id="dateInput" name="selectdate" class="hidden-date-picker" style="display: none;" />
 	<button type="button" id="dateButton" class="image-button">
 		<img src="/resources/image/클릭.png" alt="달력 버튼" />
     </button>
     </div>
     
     
-<!-- 여기에 두 번째 이미지의 콘텐츠를 추가 -->
+<!-- 식단 입력 영역 -->
 <div class="meal-container">
+
   <!-- 아침 식단 -->
   <div class="meal">
     <img src="/resources/image/아침.png" alt="아침 식단 아이콘" class="meal-icon">
     <div class="meal-content">
       <p>아침식단</p>
       <div class="input-group">
-      <input type="text" placeholder="음식과 명칭 입력" class="meal-input">
-      <input type="text" placeholder="칼로리 입력" class="calorie-input">
+	      <input type="hidden" name="foodtype" value="B"> <!-- 아침 식단 -->
+	      <input type="text" name="menu_B[]" placeholder="음식과 명칭 입력" class="meal-input"><!-- 메뉴를 배열로 저장 -->
+	      <input type="number" name="kcal_B[]" placeholder="칼로리 입력" class="calorie-input"> <!-- 칼로리를 배열로 저장 -->
       </div>
     </div>  	    	
     <button type="button" class="add-button">
@@ -85,8 +95,9 @@
     <div class="meal-content">
       <p>점심식단</p>
       <div class="input-group">
-      <input type="text" placeholder="음식과 명칭 입력" class="meal-input">
-      <input type="text" placeholder="칼로리 입력" class="calorie-input">
+	      <input type="hidden" name="foodtype" value="L"> <!-- 점심 식단 -->
+	      <input type="text" name="menu_L[]" placeholder="음식과 명칭 입력" class="meal-input">
+	      <input type="number" name="kcal_L[]" placeholder="칼로리 입력" class="calorie-input">
       </div>
     </div>  	    	
     <button type="button" class="add-button">
@@ -100,8 +111,9 @@
     <div class="meal-content">
       <p>저녁식단</p>
       <div class="input-group">
-      <input type="text" placeholder="음식과 명칭 입력" class="meal-input">
-      <input type="text" placeholder="칼로리 입력" class="calorie-input">
+	      <input type="hidden" name="foodtype" value="D"> <!-- 저녁 식단 -->
+	      <input type="text" name="menu_D[]" placeholder="음식과 명칭 입력" class="meal-input">
+	      <input type="number" name="kcal_D[]" placeholder="칼로리 입력" class="calorie-input">
       </div> 
     </div>     	
     <button type="button" class="add-button">
