@@ -10,4 +10,6 @@ public interface TodoService {
 
 	public int todoInsert(TodoVo tv);
 
+	public int todoCount(String selectdate);
+
 }

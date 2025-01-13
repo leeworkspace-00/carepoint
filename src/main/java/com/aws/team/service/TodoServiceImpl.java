@@ -34,6 +34,14 @@ public class TodoServiceImpl implements TodoService {
 		
 		return value;
 	}
+
+	@Override
+	public int todoCount(String selectdate) {
+
+		int num = tm.todoCount(selectdate);
+		
+		return num;
+	}
 	
 	
 }

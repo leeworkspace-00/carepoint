@@ -174,14 +174,13 @@
                 body: JSON.stringify({
                     selectdate: selectdate,
                     content: content,
-                    num: 4,            // 기본값 예시
                     user_pk: '${user_pk}'   // 사용자 ID
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.status === "success") {
-                    alert("일정이 성공적으로 추가되었습니다.");
+                    alert("일정이 추가되었습니다.");
                     calendar.addEvent({
                         title: content,
                         start: selectdate

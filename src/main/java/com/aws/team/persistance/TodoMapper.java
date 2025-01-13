@@ -9,4 +9,7 @@ public interface TodoMapper {
 	public ArrayList<TodoVo> todoSelectAll(int user_pk);
 	
 	public int todoInsert(TodoVo tv);
+	
+	public int todoCount(String selectdate);
+
 }

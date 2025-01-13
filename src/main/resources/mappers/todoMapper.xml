@@ -13,4 +13,9 @@
 	VALUES(#{selectdate}, #{content}, #{num}, #{user_pk})
 </insert>
 
+<select id="todoCount" parameterType="string" resultType="int">
+	SELECT COUNT(*) FROM todo 
+	WHERE selectdate = #{selectdate};
+</select>
+
 </mapper>

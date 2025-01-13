@@ -49,7 +49,12 @@ public class TodoController {
 	    Map<String, Object> result = new HashMap<>();
 	    
 	    try {
+	    	int num = todoService.todoCount(tv.getSelectdate());
+	    	
+	    	tv.setNum(num + 1);
+	    	
 	        int value = todoService.todoInsert(tv);
+	        
 	        result.put("status", "success");
 	        result.put("value", value);
 	    } catch (Exception e) {
