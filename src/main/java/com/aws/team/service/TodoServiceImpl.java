@@ -42,6 +42,21 @@ public class TodoServiceImpl implements TodoService {
 		
 		return num;
 	}
+
+	@Override
+	public int todoDelete(TodoVo tv) {
+		
+		int value = tm.todoDelete(tv);
+		
+		return value;
+	}
+
+	@Override
+	public int todoReorder(String selectdate) {
+		
+		return tm.todoReorder(selectdate);
+		
+	}
 	
 	
 }

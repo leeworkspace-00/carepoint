@@ -11,5 +11,9 @@ public interface TodoMapper {
 	public int todoInsert(TodoVo tv);
 	
 	public int todoCount(String selectdate);
+	
+	public int todoDelete(TodoVo tv);
+
+	public int todoReorder(String selectdate);
 
 }

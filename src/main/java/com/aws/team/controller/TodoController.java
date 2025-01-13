@@ -1,5 +1,6 @@
 package com.aws.team.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +61,32 @@ public class TodoController {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        result.put("status", "fail");
+	    }
+	    return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "todoDeleteAction.aws", method = RequestMethod.DELETE)
+	public Map<String, Object> todoDeleteAction(@RequestBody TodoVo tv) {
+		
+	    Map<String, Object> result = new HashMap<>();
+	    
+	    try {	    	
+	        int value = todoService.todoDelete(tv);
+	        
+	        if (value > 0) {
+	            // num 재정렬 호출
+	            todoService.todoReorder(tv.getSelectdate());
+	            
+	            result.put("status", "success");
+	        } else {
+	            result.put("status", "fail");
+	            result.put("message", "삭제할 데이터가 없습니다.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        result.put("status", "fail");
+	        result.put("message", "오류 발생: " + e.getMessage());
 	    }
 	    return result;
 	}
