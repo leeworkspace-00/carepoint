@@ -10,6 +10,11 @@ public interface FoodService {
     public List<FoodVo> getFoodInfo(String foodName);
     public int foodInsert(FoodVo foodVo, List<FoodVo> menuList);
     
+    // 부모 데이터 확인 및 삽입 메서드 추가
+    public boolean isFoodExists(int user_pk, java.sql.Date selectDate, String foodType);
+    public int insertParentFood(FoodVo foodVo);
+
+    
 
 
 }

@@ -96,26 +96,36 @@ public class FoodServiceImpl implements FoodService {
 	    @Override
 	    @Transactional
 	    public int foodInsert(FoodVo foodVo, List<FoodVo> menuList) {
-	        // 1. Food 테이블에 Insert or Update
-	        int result = fm.foodInsert(foodVo);
+	        // 1. 부모 테이블 데이터 확인 및 삽입
+	        if (!isFoodExists(foodVo.getUser_pk(), foodVo.getSelectdate(), foodVo.getFoodtype())) {
+	            insertParentFood(foodVo); // 부모 테이블에 데이터 삽입
+	        }
 
-	        // 2. 메뉴 데이터 삽입
-	        if (result > 0) {
-	            for (FoodVo menuItem : menuList) {
-	                menuItem.setFoodPk(foodVo.getFoodPk());
-	                fm.foodListInsert(menuItem);
-	            }
+	        // 2. 자식 테이블 데이터 삽입
+	        int result = 0;
+	        for (FoodVo menuItem : menuList) {
+	            menuItem.setFoodPk(foodVo.getFoodPk()); // 부모의 PK 설정
+	            result += fm.foodListInsert(menuItem); // 자식 데이터 삽입
 	        }
 	        return result;
 	    }
 	    
+
+	    @Override
+	    public boolean isFoodExists(int user_pk, java.sql.Date selectDate, String foodType) {
+	        // 부모 테이블에 데이터가 존재하는지 확인하는 쿼리 호출
+	        return fm.isFoodExists(user_pk, selectDate, foodType) > 0;
+	    }
+
+	    @Override
+	    public int insertParentFood(FoodVo foodVo) {
+	        // 부모 테이블에 데이터 삽입
+	        return fm.foodInsert(foodVo);
+	    }
 	    
 	    
 	    
-	    
-	    
-	    
-	    
+
 	    
 	}
 

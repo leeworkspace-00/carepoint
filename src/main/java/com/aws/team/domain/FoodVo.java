@@ -5,7 +5,7 @@ public class FoodVo {
 	
 	private int foodPk;
 	private int user_pk;
-	private String selectdate;
+	private java.sql.Date selectdate; // 날짜 필드 추가
 	private String foodtype;
 	private int foodlistPk;
 	private String menu;
@@ -87,12 +87,13 @@ public class FoodVo {
 	public void setFoodlistPk(int foodlistPk) {
 		this.foodlistPk = foodlistPk;
 	}	
-	public String getSelectdate() {
-		return selectdate;
-	}
-	public void setSelectdate(String selectdate) {
-		this.selectdate = selectdate;
-	}
+    public java.sql.Date getSelectdate() {
+        return selectdate;
+    }
+
+    public void setSelectdate(java.sql.Date selectdate) {
+        this.selectdate = selectdate;
+    }
 	public String getFoodtype() {
 		return foodtype;
 	}
