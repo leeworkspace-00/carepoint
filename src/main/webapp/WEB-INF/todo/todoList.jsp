@@ -18,6 +18,7 @@
         const eventForm = document.getElementById('event-form'); // 폼 요소
         const eventTitleInput = document.getElementById('event-title'); // 일정 제목 입력 필드
         const eventDateInput = document.getElementById('event-date'); // 일정 날짜 입력 필드
+        const tlist = JSON.parse('${tlist}');
 
         const calendar = new FullCalendar.Calendar(calendarEl, {
             dayMaxEventRows: true, // 한 칸에서 최대 이벤트 줄 수 제한
@@ -81,15 +82,11 @@
                     }
                 }, 0);
             },
-            events: [
-                { id: '1', title: '운동가기', start: '2025-01-27' },
-                { id: '2', title: '병원갔다 오기', start: '2025-01-27' },
-                { id: '3', title: '약먹기', start: '2025-01-27' },
-                { id: '4', title: '장보기', start: '2025-01-27' },
-                { id: '5', title: '집안일 하기', start: '2025-01-27' },
-                { id: '6', title: '과제하기', start: '2025-01-27' },
-                { id: '7', title: '친구들이랑 약속', start: '2025-01-28' }
-            ],
+            events: tlist.map(todo => ({
+                id: todo.num,
+                title: todo.content,
+                start: todo.selectdate
+            })),
             dateClick: function(info) {
                 const clickedDate = info.dateStr;
 
@@ -101,10 +98,10 @@
                 modalEvents.innerHTML = events.length
                 ? events.map(function(event) {
                     return '<li><input type="checkbox" />' + event.title + 
-                           ' <button class="delete-event" data-event-id="' + event.id + '">x</button></li>';
+                           '<button class="delete-event" data-event-id="' + event.id + '" data-selectdate="' + event.start + '">x</button></li>';
                 }).join('')
                 : '<li>일정이 없습니다.</li>';
-
+                console.log('모달 리스트 완료:', modalEvents.innerHTML);
 
                 // 모달 표시
                 modalBg.style.display = 'block';
@@ -113,19 +110,61 @@
                 document.querySelectorAll('.delete-event').forEach(function(button) {
                     button.addEventListener('click', function(event) {
                         const eventId = this.getAttribute('data-event-id');
-                        const calendarEvent = calendar.getEventById(eventId);
-                        if (calendarEvent) {
-                            calendarEvent.remove(); // 캘린더에서 삭제
-                        }
+                        const rawDate = this.getAttribute('data-selectdate'); // "Wed Jan 15 2025 00:00:00 GMT+0900" 형식
+                        const date = new Date(rawDate);
 
-                        // 모달 업데이트
-                        const updatedEvents = calendar.getEvents().filter(event => event.startStr === modalDate.textContent);
-                        modalEvents.innerHTML = updatedEvents.length
-                            ? updatedEvents.map(function(event) {
-                                return '<li><input type="checkbox" />' + event.title + 
-                                       ' <button class="delete-event" data-event-id="' + event.id + '">x</button></li>';
-                            }).join('')
-                            : '<li>일정이 없습니다.</li>';
+                        // 시간대를 보정하여 UTC 오차를 제거
+                        date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+
+                        // 로컬 시간 기준으로 YYYY-MM-DD 형식 생성
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const selectdate = year + "-" + month + "-" + day;
+                        
+                        // AJAX 요청으로 서버에 삭제 요청
+                        fetch(`/todo/todoDeleteAction.aws`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ 
+                            	num: eventId,
+                            	selectdate: selectdate
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                const calendarEvent = calendar.getEventById(eventId);
+                                console.log('삭제 전 캘린더 이벤트:', calendarEvent);
+                                console.log('event.startStr:', event.startStr);
+                                console.log('modalDate.textContent:', modalDate.textContent);
+                                
+                                if (calendarEvent) {
+                                    calendarEvent.remove(); // 캘린더에서 삭제
+                                }
+                                console.log('삭제 후 캘린더 이벤트 목록:', calendar.getEvents());
+                                alert("일정이 삭제되었습니다.");
+                                
+                                // 모달 업데이트
+                                const updatedEvents = calendar.getEvents().filter(event => event.startStr === modalDate.textContent);
+                                
+                                console.log('모달 업데이트용 이벤트 목록:', updatedEvents);
+                                console.log('모달 내용 업데이트 중...');
+                                modalEvents.innerHTML = updatedEvents.length
+                                    ? updatedEvents.map(function(event) {
+                                    	return '<li><input type="checkbox" />' + event.title + 
+											   '<button class="delete-event" data-event-id="' + event.id + '" data-selectdate="' + event.start + '">x</button></li>';
+		                             }).join('')
+		                             : '<li>일정이 없습니다.</li>';
+		                             
+		                        console.log('모달 업데이트 완료:', modalEvents.innerHTML);
+                            } else {
+                                alert('삭제 실패: ' + data.message);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
                     });
                 });
             }
@@ -177,14 +216,13 @@
                 body: JSON.stringify({
                     selectdate: selectdate,
                     content: content,
-                    num: 1,            // 기본값 예시
-                    user_pk: '${user_pk}'   // 사용자 ID
+                    user_pk: '${user_pk}'
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.status === "success") {
-                    alert("일정이 성공적으로 추가되었습니다.");
+                    alert("일정이 추가되었습니다.");
                     calendar.addEvent({
                         title: content,
                         start: selectdate
@@ -201,22 +239,6 @@
                 }
             })
             .catch(error => console.error("Error:", error));
-         	
-            /* if (title && date) {
-                // FullCalendar에 일정 추가
-                calendar.addEvent({
-				    id: Date.now().toString(), // 고유 ID 생성
-				    title: title,
-				    start: date
-				})
-
-                // 입력 필드 초기화
-                eventTitleInput.value = '';
-                eventDateInput.value = '';
-
-                // 일정 추가 폼 숨기기
-                addEventForm.style.display = 'none';
-            } */
         });
     });
 </script>

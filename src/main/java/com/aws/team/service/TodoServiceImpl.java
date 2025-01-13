@@ -1,5 +1,7 @@
 package com.aws.team.service;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,14 @@ public class TodoServiceImpl implements TodoService {
 	public TodoServiceImpl(SqlSession sqlSession) {
 		this.tm = sqlSession.getMapper(TodoMapper.class);      
 	}
+	
+	@Override
+	public ArrayList<TodoVo> todoSelectAll(int user_pk) {
+		
+		ArrayList<TodoVo> tlist = tm.todoSelectAll(user_pk);
+		
+		return tlist;
+	}
 
 	@Override
 	public int todoInsert(TodoVo tv) {
@@ -23,6 +33,29 @@ public class TodoServiceImpl implements TodoService {
 		int value = tm.todoInsert(tv);
 		
 		return value;
+	}
+
+	@Override
+	public int todoCount(String selectdate) {
+
+		int num = tm.todoCount(selectdate);
+		
+		return num;
+	}
+
+	@Override
+	public int todoDelete(TodoVo tv) {
+		
+		int value = tm.todoDelete(tv);
+		
+		return value;
+	}
+
+	@Override
+	public int todoReorder(String selectdate) {
+		
+		return tm.todoReorder(selectdate);
+		
 	}
 	
 	

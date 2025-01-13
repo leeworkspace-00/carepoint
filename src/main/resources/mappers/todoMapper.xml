@@ -3,9 +3,37 @@
 
 <mapper namespace="com.aws.team.persistance.TodoMapper">
 
+<select id="todoSelectAll" parameterType="int" resultType="tv">
+	SELECT * FROM todo
+   	WHERE user_pk = #{user_pk}
+   	ORDER BY selectdate, num
+</select>
+
 <insert id="todoInsert" parameterType="tv">
 	INSERT INTO todo(selectdate, content, num, user_pk)
 	VALUES(#{selectdate}, #{content}, #{num}, #{user_pk})
 </insert>
+
+<select id="todoCount" parameterType="string" resultType="int">
+	SELECT COUNT(*) FROM todo 
+	WHERE selectdate = #{selectdate}
+</select>
+
+<delete id="todoDelete" parameterType="tv">
+    DELETE FROM todo 
+    WHERE num = #{num} AND selectdate = #{selectdate}
+</delete>
+
+<update id="todoReorder" parameterType="string">
+    UPDATE todo t
+    JOIN (
+        SELECT todo_pk, @num := @num + 1 AS new_num
+        FROM (SELECT @num := 0) init, todo
+        WHERE selectdate = #{selectdate}
+        ORDER BY num ASC
+    ) sub
+    ON t.todo_pk = sub.todo_pk
+    SET t.num = sub.new_num;
+</update>
 
 </mapper>
