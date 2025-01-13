@@ -316,46 +316,50 @@ document.getElementById('dateButton').addEventListener('click', function () {
 
 
 
-//플러스 버튼 클릭 이벤트 추가
 document.querySelectorAll('.add-button').forEach((button) => {
-  button.addEventListener('click', function () {
-    // 현재 버튼의 부모 요소에서 meal-content를 찾음
-    const mealContent = this.previousElementSibling;
+	  button.addEventListener('click', function () {
+	    // 현재 버튼의 부모 요소에서 meal-content를 찾음
+	    const mealContent = this.previousElementSibling;
 
-    // 현재 input-group의 개수를 확인
-    const inputGroups = mealContent.querySelectorAll('.input-group');
-    if (inputGroups.length >= 5) {
-      alert('최대 5개의 항목만 추가할 수 있습니다.');
-      return; // 더 이상 추가하지 않음
-    }
+	    // 현재 식단 유형(B, L, D)을 가져옴
+	    const foodType = mealContent.querySelector('input[name="foodtype"]').value;
 
-    // 새로운 input-group 생성
-    const newInputGroup = document.createElement('div');
-    newInputGroup.classList.add('input-group'); // 클래스 추가
+	    // 현재 input-group의 개수를 확인
+	    const inputGroups = mealContent.querySelectorAll('.input-group');
+	    if (inputGroups.length >= 5) {
+	      alert('최대 5개의 항목만 추가할 수 있습니다.');
+	      return; // 더 이상 추가하지 않음
+	    }
 
-    // 음식명 입력 필드 생성
-    const newMealInput = document.createElement('input');
-    newMealInput.type = 'text';
-    newMealInput.placeholder = '음식과 명칭 입력';
-    newMealInput.classList.add('meal-input'); // 클래스 추가
+	    // 새로운 input-group 생성
+	    const newInputGroup = document.createElement('div');
+	    newInputGroup.classList.add('input-group'); // 클래스 추가
 
-    // 칼로리 입력 필드 생성
-    const newCalorieInput = document.createElement('input');
-    newCalorieInput.type = 'text';
-    newCalorieInput.placeholder = '칼로리 입력';
-    newCalorieInput.classList.add('calorie-input'); // 클래스 추가
+	    // 음식명 입력 필드 생성
+	    const newMealInput = document.createElement('input');
+	    newMealInput.type = 'text';
+	    newMealInput.name = 'menu_' + foodType + '[]'; // 식단 유형에 따라 name 설정 (menu_B[], menu_L[], menu_D[])
+	    newMealInput.placeholder = '음식과 명칭 입력';
+	    newMealInput.classList.add('meal-input'); // 클래스 추가
 
-    // 새로운 input-group에 추가
-    newInputGroup.appendChild(newMealInput);
-    newInputGroup.appendChild(newCalorieInput);
+	    // 칼로리 입력 필드 생성
+	    const newCalorieInput = document.createElement('input');
+	    newCalorieInput.type = 'number';
+	    newCalorieInput.name = 'kcal_' + foodType + '[]'; // 식단 유형에 따라 name 설정 (kcal_B[], kcal_L[], kcal_D[])
+	    newCalorieInput.placeholder = '칼로리 입력';
+	    newCalorieInput.classList.add('calorie-input'); // 클래스 추가
 
-    // meal-content에 새로운 input-group 추가
-    mealContent.appendChild(newInputGroup);
-    
-    // 새롭게 추가된 input-group에도 CSS 적용 확인 (디버깅용)
-    console.log(newInputGroup);
-  });
-});
+	    // 새로운 input-group에 추가
+	    newInputGroup.appendChild(newMealInput);
+	    newInputGroup.appendChild(newCalorieInput);
+
+	    // meal-content에 새로운 input-group 추가
+	    mealContent.appendChild(newInputGroup);
+
+	    // 디버깅용 콘솔 출력
+	    console.log(`새로운 입력 그룹 추가됨: ${newMealInput.name}, ${newCalorieInput.name}`);
+	  });
+	});
 
 </script>
 

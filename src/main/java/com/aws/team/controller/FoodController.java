@@ -1,7 +1,11 @@
 package com.aws.team.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,73 +90,92 @@ public class FoodController {
 	    return foodList;
 	}
 	
+	   	
+	
+	@RequestMapping(value = "foodWriteAction.aws", method = RequestMethod.POST)
+	public String foodWriteAction(
+	        @ModelAttribute FoodVo foodVo,
+	        @RequestParam("menu_B[]") List<String> menuB,
+	        @RequestParam("kcal_B[]") List<Integer> kcalB,
+	        @RequestParam("menu_L[]") List<String> menuL,
+	        @RequestParam("kcal_L[]") List<Integer> kcalL,
+	        @RequestParam("menu_D[]") List<String> menuD,
+	        @RequestParam("kcal_D[]") List<Integer> kcalD,
+	        @RequestParam("selectdate") String selectDate,
+	        HttpServletRequest request,
+	        RedirectAttributes rttr
+	) {
+	    // 날짜를 java.sql.Date로 변환
+	    java.sql.Date sqlDate = java.sql.Date.valueOf(selectDate);
 	    
-    @RequestMapping(value = "foodWriteAction.aws", method = RequestMethod.POST)
-    public String foodWriteAction(
-    						 @ModelAttribute FoodVo foodVo,
-                             @RequestParam("menu_B[]") List<String> menuB,
-                             @RequestParam("kcal_B[]") List<Integer> kcalB,
-                             @RequestParam("menu_L[]") List<String> menuL,
-                             @RequestParam("kcal_L[]") List<Integer> kcalL,
-                             @RequestParam("menu_D[]") List<String> menuD,
-                             @RequestParam("kcal_D[]") List<Integer> kcalD,
-                             RedirectAttributes rttr) {
-    	
-        // 쉼표로 구분된 값 분리
-        String[] foodTypes = foodVo.getFoodtype().split(",");
-        
-        for (String foodType : foodTypes) {
-            System.out.println("Processed foodtype: " + foodType);
-            // 각각의 foodType을 처리하는 로직 추가
-        }
+	    String user_pk = request.getSession().getAttribute("user_pk").toString();
+	    int user_pk_int = Integer.parseInt(user_pk);
 
-    	System.out.println("Received foodtype: " + foodVo.getFoodtype());
-        // 메뉴 리스트 생성
-        List<FoodVo> menuList = new ArrayList<>();
+	    // 메뉴 리스트 생성
+	    List<FoodVo> menuList = new ArrayList<>();
 
-        // 아침
-        for (int i = 0; i < menuB.size(); i++) {
-            FoodVo menu = new FoodVo();
-            menu.setFoodtype("B");
-            menu.setMenu(menuB.get(i));
-            menu.setKcal(kcalB.get(i));
-            menuList.add(menu);
-        }
+	    // 아침 식단 처리
+	    for (int i = 0; i < menuB.size(); i++) {
+	        FoodVo menu = new FoodVo();
+	        menu.setUser_pk(user_pk_int);
+	        menu.setFoodtype("B");
+	        menu.setMenu(menuB.get(i));
+	        menu.setKcal(kcalB.get(i));
+	        menu.setSelectdate(sqlDate);
+	        menuList.add(menu);
+	    }
 
-        // 점심
-        for (int i = 0; i < menuL.size(); i++) {
-            FoodVo menu = new FoodVo();
-            menu.setFoodtype("L");
-            menu.setMenu(menuL.get(i));
-            menu.setKcal(kcalL.get(i));
-            menuList.add(menu);
-        }
+	    // 점심 식단 처리
+	    for (int i = 0; i < menuL.size(); i++) {
+	        FoodVo menu = new FoodVo();
+	        menu.setUser_pk(user_pk_int);
+	        menu.setFoodtype("L");
+	        menu.setMenu(menuL.get(i));
+	        menu.setKcal(kcalL.get(i));
+	        menu.setSelectdate(sqlDate);
+	        menuList.add(menu);
+	    }
 
-        // 저녁
-        for (int i = 0; i < menuD.size(); i++) {
-            FoodVo menu = new FoodVo();
-            menu.setFoodtype("D");
-            menu.setMenu(menuD.get(i));
-            menu.setKcal(kcalD.get(i));
-            menuList.add(menu);
-        }
+	    // 저녁 식단 처리
+	    for (int i = 0; i < menuD.size(); i++) {
+	        FoodVo menu = new FoodVo();
+	        menu.setUser_pk(user_pk_int);
+	        menu.setFoodtype("D");
+	        menu.setMenu(menuD.get(i));
+	        menu.setKcal(kcalD.get(i));
+	        menu.setSelectdate(sqlDate);
+	        menuList.add(menu);
+	    }
 
-        // 서비스 호출
-        int value = foodService.foodInsert(foodVo, menuList);
+	    // 각 식단 데이터를 데이터베이스에 저장
+	    int value = 0;
 
-        String path = "";
-        
-        // 성공 여부에 따른 경로 설정
-        if (value > 0) {
-            rttr.addFlashAttribute("msg", "저장이 성공했습니다.");
-            path = "redirect:/food/foodMain.aws";
-        } else {
-            rttr.addFlashAttribute("msg", "입력이 잘못되었습니다.");
-            path = "redirect:/food/foodMain.aws";
-        }
-        return path;
-    }
-    
+	    for (FoodVo menu : menuList) {
+	        // 부모 데이터 확인 및 삽입
+	        boolean isFoodExists = foodService.isFoodExists(user_pk_int, sqlDate, menu.getFoodtype());
+	        
+	        if (!isFoodExists) {
+	            foodService.insertParentFood(menu); // 부모 테이블 데이터 삽입
+	        }
+
+	        // 자식 데이터 삽입
+	        value += foodService.foodInsert(menu, Arrays.asList(menu));
+	    }
+
+	    String path;
+
+	    // 성공 여부에 따른 경로 설정
+	    if (value > 0) {
+	        rttr.addFlashAttribute("msg", "저장이 성공했습니다.");
+	        path = "redirect:/food/foodMain.aws";
+	    } else {
+	        rttr.addFlashAttribute("msg", "입력이 잘못되었습니다.");
+	        path = "redirect:/food/foodMain.aws";
+	    }
+	    
+	    return path;
+	}
+
     
     
 }
