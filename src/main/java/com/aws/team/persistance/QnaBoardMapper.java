@@ -36,6 +36,7 @@ public interface QnaBoardMapper {
 	// 게시글 답변 생성
 	public int qnaReplyInsert(BoardVo bv);
 	
+	// 원글에 달린 답변 갯수 세기
 	public int countReplies(int origin_num);
 
 }

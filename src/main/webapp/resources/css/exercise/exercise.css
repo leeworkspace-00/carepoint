@@ -240,6 +240,7 @@ h3 {
     width: 1300px;
     margin-left: auto;  /* 왼쪽 여백 자동 */
     margin-right: auto; /* 오른쪽 여백 자동 */
+    height: auto;
 }
 
 /* 날짜에 마우스 올렸을 때 커서 변경 */
@@ -379,6 +380,15 @@ a.fc-event:hover {
     visibility: visible; /* 텍스트가 보이도록 설정 */
 }
 
+.exercise-event {
+	margin-top: 5px;
+    background-color: #6495ED;
+    color: #E6E6E6;
+    height: 25px;
+    align-items: center;
+    align-content: center;
+    border-radius: 4px;
+}
 
 
 
