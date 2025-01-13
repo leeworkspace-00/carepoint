@@ -48,8 +48,8 @@ if (msg != "") {
     <div class="login-container">
       <h1>로그인</h1>
       <form name="frm" class="login-form">
-        <label for="user-id">아이디</label>
-        <input type="text" id="userid" name="userid" placeholder="아이디를 입력하세요" required>
+        <label for="user-id">이름</label>
+        <input type="text" id="username" name="userid" placeholder="아이디를 입력하세요" required>
 
         <label for="password">비밀번호</label>
         <input type="password" id="userpwd" name="userpwd" placeholder="비밀번호를 입력하세요" required>
@@ -57,7 +57,7 @@ if (msg != "") {
         <button type="submit" class="login-btn" onclick="check();">로그인하기</button>
 
         <div class="options">
-          <a href="${pageContext.request.contextPath}/user/findId.aws" class="find-id">비밀번호 찾기</a>
+          <a href="${pageContext.request.contextPath}/user/password/findPwd.aws" class="find-pwd">비밀번호 찾기</a>
           <a href="${pageContext.request.contextPath}/user/userJoin.aws" class="register">회원가입</a>
         </div>
       </form>

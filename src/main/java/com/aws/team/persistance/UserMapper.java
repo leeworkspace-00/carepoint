@@ -1,5 +1,9 @@
 package com.aws.team.persistance;
 
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.aws.team.domain.UserVo;
 
 public interface UserMapper {
@@ -17,4 +21,9 @@ public interface UserMapper {
 	// 마이페이지에 회원정보 1개 가져오는 메서드
 	public UserVo userSelectOne(int user_pk);
 	
+	//비번 변경시 회원 확인하는 메서드
+	public Integer userCheck(@Param("username")String username, @Param("userid")String userid, @Param("useremail")String useremail);
+	
+	// 랜덤 비번으로 db에 업데이트
+	public int updatePwd(String userid, String newEncryPwd);
 }
