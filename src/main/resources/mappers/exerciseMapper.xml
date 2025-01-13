@@ -13,5 +13,10 @@
     SELECT *
     FROM exercise
 </select>
+
+<insert id="graphInsert" parameterType="com.aws.team.domain.GraphVo">
+	INSERT INTO graph(weight, blood_press, blood_sugar, user_pk)
+    VALUE(#{weight}, #{blood_press}, #{blood_sugar}, #{user_pk})
+</insert>
     
 </mapper>

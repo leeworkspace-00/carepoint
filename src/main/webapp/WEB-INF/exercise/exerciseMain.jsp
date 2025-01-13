@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!-- 메세지 출력 -->
+<c:set var="msg" value="${msg}" />
+<c:if test="${!empty msg}">
+    <script>alert('${msg}');</script>
+</c:if>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
+        height: '1250px', // 컨텐츠 크기에 따라 높이 자동 조정
         resources: [
             {
                 id: 'a',
@@ -112,15 +119,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 0);
         },
         eventContent: function(arg) {
+        	console.log('Event Title:', arg.event.title); // title 확인
+            console.log('Extended Props:', arg.event.extendedProps); // eventType 확인
         	// 이벤트에 따라 이미지를 다르게 표시
             if (arg.event.extendedProps.eventType === 'success') {
                 return { html: `<div><img src="/resources/image/success.png" class="event-icon" /></div>` };
             } else if (arg.event.extendedProps.eventType === 'fail') {
                 return { html: `<div><img src="/resources/image/fail.png" class="event-icon" /></div>` };
             } else if (arg.event.extendedProps.eventType === 'exercise') {
-            	return { html: `<div>운동 시간 : ~시 ~분</div>` };
+            	const safeTitle = arg.event.title.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return { html: "<div class='exercise-event'>" + safeTitle + "</div>" };
             }
         },
+        
         dayMaxEvents: true
     });
 
@@ -201,8 +212,8 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault(); // 기본 폼 제출 방지
 
         // 'select' 태그에서 값 가져오기
-        var hour = hourInput.value.trim() || '0';  // 선택된 시간
-        var minute = minuteInput.value.trim() || '0'; // 선택된 분
+        var hour = hourInput.value;  // 선택된 시간
+        var minute = minuteInput.value; // 선택된 분
         
         // 선택된 날짜 값 가져오기
         var selectedDateInput = document.getElementById('selected-date');
@@ -222,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var isoDate = selectedDate.toISOString().split('T')[0]; // "2025-01-01"
         console.log('ISO Date:', isoDate);
 
-     // 중복 이벤트 확인
+        // 중복 이벤트 확인
         var existingEvents = calendar.getEvents();
         var isDuplicate = existingEvents.some((event) => 
             event.startStr === isoDate && event.extendedProps.eventType === 'exercise'
@@ -254,26 +265,35 @@ document.addEventListener('DOMContentLoaded', function() {
                     fetch('/exercise/calendar-events.aws')
                         .then((response) => response.json())
                         .then((events) => {
-                            // 운동 기록 이벤트 추가
-                            var exerciseEvent = {
-                                id: new Date().getTime().toString(),
-                                resourceId: 'a',
-                                title: `운동 시간 : ${hour}시간 ${minute}분`,
-                                start: isoDate,
-                                extendedProps: {
-                                    eventType: 'exercise', // 추가 속성으로 구분 가능    
-                                    hour: hour,
-                                    minute: minute
+                        	
+                        	// 기존의 exercise 이벤트만 제거
+                            calendar.getEvents().forEach(event => {
+                                if (event.extendedProps?.eventType === 'exercise') {
+                                    event.remove();
                                 }
-                            };
-                            
-                            calendar.addEvent(exerciseEvent);       
-                            
-                            storedEvents.push(exerciseEvent);
-                            localStorage.setItem('calendarEvents', JSON.stringify(storedEvents));
-                        })
-                        .catch((error) => {
-                            console.error('캘린더 이벤트 가져오기 오류:', error);
+                            });
+                        	
+                         	// 새로운 이벤트 추가
+                            events.forEach((event) => {
+                                const isAlreadyAdded = calendar.getEvents().some((existingEvent) => 
+                                    existingEvent.start === event.start && 
+                                    existingEvent.title === event.title
+                                );
+                                if (!isAlreadyAdded) {
+                                    calendar.addEvent(event); // 중복이 아닌 경우만 추가
+                                }
+                            });
+                         	
+                         	// 캘린더 전체로 포커스 이동
+                            setTimeout(() => {
+                                var calendarEl = document.getElementById('calendar'); // 캘린더의 DOM 요소 가져오기
+                                if (calendarEl) {
+                                    calendarEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); // 스크롤 이동
+                                    calendarEl.focus(); // 포커스 설정 (선택사항)
+                                }
+                            }, 300);
+                         
+                            calendar.render(); // 강제 렌더링
                         });
                 } else {
                     alert('운동 기록 저장 실패!');
@@ -284,6 +304,39 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 });
+
+</script>
+
+<script>
+
+function saveCheck() {
+
+	// 유효성 검사하기
+    let fm = document.forms["graph-frm"]; // 올바른 방식으로 폼 객체 가져오기
+
+    // 입력 값 가져오기
+    let bloodSugar = document.getElementById("blood_sugar").value;
+    let bloodPress = document.getElementById("blood_press").value;
+    let weight = document.getElementById("weight").value;
+	
+ 	// 유효성 검사: 하나라도 입력되었는지 확인
+    if (bloodSugar === "" && bloodPress === "" && weight === "") {
+        alert("수치를 하나 이상 입력해주세요");
+        document.getElementById("blood_sugar").focus(); // 첫 번째 입력 필드에 포커스
+        return;
+    }
+
+    let ans = confirm("저장하시겠습니까?");
+
+    if (ans === true) {
+        let fm = document.forms["graph-frm"]; // 폼 객체 가져오기
+        fm.action = "${pageContext.request.contextPath}/exercise/graphInsert.aws";
+        fm.method = "post";
+        fm.submit();
+    }	  
+	
+	return;
+}
 
 </script>
 
@@ -322,16 +375,19 @@ document.addEventListener('DOMContentLoaded', function() {
             <form name="success-frm">
             <p>관절 가동성을 높이기 위해 손목과 발목을 부드럽게 돌리기<button id="success-btn" class="success-btn">success</button></p>
             </form>
-         </div>
+         </div>         
          <div class="graph">
-            <h3>오늘의 수치 기록하기</h3>
-            <p>
-               혈당 <input type="text" id="blood-sugar" name="blood-sugar" required> mg/dL
-               <br>
-               혈압 <input type="text" id="blood-press" name="blood-press" required> mmHg
-               <br>
-               몸무게 <input type="text" id="weight" name="weight" class="weight" required> kg
-               <button>저장</button></p>
+         	<form name="graph-frm">
+	            <h3>오늘의 수치 기록하기</h3>
+	            <p>
+	               혈당 <input type="text" id="blood_sugar" name="blood_sugar" required> mg/dL
+	               <br>
+	               혈압 <input type="text" id="blood_press" name="blood_press" required> mmHg
+	               <br>
+	               몸무게 <input type="text" id="weight" name="weight" class="weight" required> kg
+	               <button type="button" class="save-button" onclick="saveCheck();">저장</button>
+	            </p>
+            </form>
          </div>
       </div>
    </div>

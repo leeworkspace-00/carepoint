@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aws.team.domain.BoardVo;
 import com.aws.team.domain.ExerciseVo;
+import com.aws.team.domain.GraphVo;
 import com.aws.team.persistance.ExerciseMapper;
 
 @Service
@@ -33,5 +35,13 @@ public class ExerciseServiceImpl implements ExerciseService{
 		
         return em.selectAllExercises();
     }
+	
+	@Override
+	public int graphInsert(GraphVo gv) {
+	
+		int value = em.graphInsert(gv);
+		
+		return value;
+	}
 
 }
